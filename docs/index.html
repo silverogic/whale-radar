@@ -135,18 +135,24 @@
     <!-- 검색 및 필터 바 -->
     <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-2xl space-y-4">
       <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-        <!-- 실시간 검색창 -->
-        <div class="relative flex-1">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+        <!-- 실시간 검색창 & 자동완성 드롭다운 -->
+        <div class="relative flex-1" id="search-container">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm pointer-events-none"></i>
           <input 
             type="text" 
             id="search-input"
-            placeholder="특정 종목 티커(NVDA, TSLA, CRWD), 기업명, 내부자/기관명 검색..." 
-            class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+            placeholder="티커 (NVDA, TSLA, AAPL, PLTR), 한글명(애플, 테슬라, 엔비디아), 기업명, 임원명 검색..." 
+            class="w-full pl-10 pr-9 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition shadow-inner"
+            autocomplete="off"
           >
-          <button id="clear-search-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 hidden text-xs">
+          <button id="clear-search-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 hidden text-xs p-1" title="검색어 지우기">
             <i class="fa-solid fa-xmark"></i>
           </button>
+
+          <!-- 실시간 자동완성 제안 드롭다운 -->
+          <div id="search-suggestions" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-800/60 max-h-72 overflow-y-auto">
+            <!-- JS 동적 렌더링 -->
+          </div>
         </div>
 
         <!-- 정렬 선택 -->
@@ -342,6 +348,40 @@
     if (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
+
+    // 한글 종목명/인물명 검색 지원 사전
+    const KOREAN_STOCK_ALIASES = {
+      '애플': 'AAPL', '아이폰': 'AAPL',
+      '테슬라': 'TSLA', '일론': 'TSLA', '머스크': 'TSLA',
+      '엔비디아': 'NVDA', '젠슨황': 'NVDA', '젠슨': 'NVDA',
+      '팔란티어': 'PLTR', '카프': 'PLTR',
+      '마이크로소프트': 'MSFT', '마소': 'MSFT',
+      '아마존': 'AMZN', '베조스': 'AMZN',
+      '구글': 'GOOGL', '알파벳': 'GOOGL',
+      '메타': 'META', '페이스북': 'META', '저커버그': 'META',
+      '코인베이스': 'COIN',
+      '마이크로스트래티지': 'MSTR',
+      '슈퍼마이크로': 'SMCI', '슈마컴': 'SMCI',
+      '브로드컴': 'AVGO', '퀄컴': 'QCOM', '인텔': 'INTC', '암': 'ARM'
+    };
+
+    // 주요 미국 대형주 및 인기 종목 정의
+    const POPULAR_TICKERS = [
+      { ticker: 'NVDA', name: 'NVIDIA Corp.', ko: '엔비디아' },
+      { ticker: 'TSLA', name: 'Tesla, Inc.', ko: '테슬라' },
+      { ticker: 'AAPL', name: 'Apple Inc.', ko: '애플' },
+      { ticker: 'PLTR', name: 'Palantir Technologies Inc.', ko: '팔란티어' },
+      { ticker: 'MSFT', name: 'Microsoft Corporation', ko: '마이크로소프트' },
+      { ticker: 'AMZN', name: 'Amazon.com Inc.', ko: '아마존' },
+      { ticker: 'META', name: 'Meta Platforms Inc.', ko: '메타' },
+      { ticker: 'GOOGL', name: 'Alphabet Inc.', ko: '구글' },
+      { ticker: 'AMD', name: 'Advanced Micro Devices', ko: 'AMD' },
+      { ticker: 'COIN', name: 'Coinbase Global Inc.', ko: '코인베이스' },
+      { ticker: 'MSTR', name: 'MicroStrategy Inc.', ko: '마이크로스트래티지' },
+      { ticker: 'SMCI', name: 'Super Micro Computer Inc.', ko: '슈퍼마이크로' },
+      { ticker: 'ASPI', name: 'ASP Isotopes Inc.', ko: 'ASP아이소토프' },
+      { ticker: 'CRWD', name: 'CrowdStrike Holdings', ko: '크라우드스트라이크' }
+    ];
 
     let allTrades = [];
     let isSupabaseConnected = false;
@@ -712,22 +752,129 @@
       render();
     }
 
+    function updateSearchSuggestions(val) {
+      const container = document.getElementById('search-suggestions');
+      if (!container) return;
+      val = (val || '').trim().toLowerCase();
+      if (!val) {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      const resolved = KOREAN_STOCK_ALIASES[val];
+      const valUpper = val.toUpperCase();
+
+      // 1. allTrades에서 수집된 고유 티커 목록 매칭
+      const collectedMap = {};
+      allTrades.forEach(t => {
+        if (t.ticker && !collectedMap[t.ticker]) {
+          collectedMap[t.ticker] = {
+            ticker: t.ticker,
+            issuer_name: t.issuer_name,
+            count: 0
+          };
+        }
+        if (t.ticker) collectedMap[t.ticker].count++;
+      });
+
+      const matchedList = [];
+      const seenTickers = new Set();
+
+      // A. 수집된 종목 중 매칭
+      Object.values(collectedMap).forEach(item => {
+        const isMatch = item.ticker.includes(valUpper) ||
+          (item.issuer_name && item.issuer_name.toLowerCase().includes(val)) ||
+          (resolved && item.ticker === resolved);
+        if (isMatch) {
+          matchedList.push({
+            ticker: item.ticker,
+            name: item.issuer_name,
+            badge: `수집 완료 (${item.count}건)`,
+            badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+          });
+          seenTickers.add(item.ticker);
+        }
+      });
+
+      // B. 주요 유명 미국 주식 목록 중 매칭 (미수집 포함)
+      POPULAR_TICKERS.forEach(p => {
+        if (!seenTickers.has(p.ticker)) {
+          const isMatch = p.ticker.includes(valUpper) ||
+            p.name.toLowerCase().includes(val) ||
+            (p.ko && p.ko.includes(val)) ||
+            (resolved && p.ticker === resolved);
+          if (isMatch) {
+            matchedList.push({
+              ticker: p.ticker,
+              name: p.name,
+              badge: '온디맨드 SEC 조회',
+              badgeColor: 'bg-slate-800 text-slate-300 border-slate-700'
+            });
+            seenTickers.add(p.ticker);
+          }
+        }
+      });
+
+      if (matchedList.length === 0) {
+        container.classList.add('hidden');
+        container.innerHTML = '';
+        return;
+      }
+
+      container.innerHTML = matchedList.slice(0, 6).map(m => `
+        <div 
+          onclick="selectSearchSuggestion('${m.ticker}')"
+          class="p-3 hover:bg-slate-800/80 cursor-pointer transition flex items-center justify-between gap-3 group"
+        >
+          <div class="flex items-center gap-2.5">
+            <span class="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-700 text-slate-100 font-mono text-xs font-bold group-hover:border-emerald-500/50 group-hover:text-emerald-300 transition">
+              $${m.ticker}
+            </span>
+            <span class="text-xs font-medium text-slate-200 truncate max-w-[180px] sm:max-w-[280px]">
+              ${m.name}
+            </span>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded-md border font-medium ${m.badgeColor} whitespace-nowrap">
+            ${m.badge}
+          </span>
+        </div>
+      `).join('');
+
+      container.classList.remove('hidden');
+    }
+
+    function selectSearchSuggestion(ticker) {
+      const searchInput = document.getElementById('search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+      const dropdown = document.getElementById('search-suggestions');
+      if (searchInput) searchInput.value = ticker;
+      if (clearBtn) clearBtn.classList.remove('hidden');
+      if (dropdown) dropdown.classList.add('hidden');
+      searchSupabaseOnDemand(ticker);
+      render();
+    }
+
     function renderStockSpotlight(filtered) {
       const spotlightEl = document.getElementById('stock-spotlight');
       if (!spotlightEl) return;
 
       const rawQuery = document.getElementById('search-input').value.trim();
-      const queryUpper = rawQuery.toUpperCase();
-
       if (!rawQuery) {
         spotlightEl.classList.add('hidden');
         spotlightEl.innerHTML = '';
         return;
       }
 
-      // 검색어가 티커와 정확히 일치하거나, 필터링 결과가 단일 종목에 귀속되는지 판별
+      const queryLower = rawQuery.toLowerCase();
+      const resolvedAlias = KOREAN_STOCK_ALIASES[queryLower] || null;
+      const queryUpper = rawQuery.toUpperCase();
+
+      // 검색어가 allTrades의 특정 티커와 일치하거나, 필터링 결과가 단일 종목에 귀속되는지 판별
       let targetTicker = null;
-      if (allTrades.some(t => t.ticker && t.ticker.toUpperCase() === queryUpper)) {
+      if (resolvedAlias && allTrades.some(t => t.ticker && t.ticker.toUpperCase() === resolvedAlias)) {
+        targetTicker = resolvedAlias;
+      } else if (allTrades.some(t => t.ticker && t.ticker.toUpperCase() === queryUpper)) {
         targetTicker = queryUpper;
       } else if (filtered.length > 0) {
         const uniqueFilteredTickers = Array.from(new Set(filtered.map(t => t.ticker).filter(Boolean)));
@@ -843,25 +990,26 @@
           </div>
         `;
         spotlightEl.classList.remove('hidden');
-      } else if (filtered.length === 0 && rawQuery.length >= 1 && rawQuery.length <= 6) {
+      } else if (filtered.length === 0 && rawQuery.length >= 1 && rawQuery.length <= 8) {
+        const displayTicker = resolvedAlias || queryUpper;
         // 미포착 종목 가이드 배너
         spotlightEl.innerHTML = `
           <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-2">
             <div class="space-y-1">
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-1 text-sm font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-lg font-mono">
-                  $${queryUpper}
+                  $${displayTicker}
                 </span>
                 <h3 class="text-sm font-semibold text-slate-200">미포착 종목 조회 가이드</h3>
               </div>
               <p class="text-xs text-slate-400">
-                현재 수집된 기본 데이터셋에 $${queryUpper}의 최근 공시가 포함되어 있지 않습니다.<br>
-                SEC EDGAR 공식 시스템에서 바로 확인하거나, 파이썬 파이프라인에서 온디맨드로 수집할 수 있습니다.
+                현재 수집된 기본 데이터셋에 $${displayTicker}의 최근 공시가 포함되어 있지 않습니다.<br>
+                아래 SEC EDGAR 공식 시스템에서 실시간으로 직접 확인하거나, 파이썬 파이프라인에서 온디맨드로 수집할 수 있습니다.
               </p>
             </div>
             <div class="flex items-center gap-2 flex-wrap">
               <a 
-                href="https://www.sec.gov/edgar/searchedgar/companysearch?companySearchBox=${queryUpper}" 
+                href="https://www.sec.gov/edgar/searchedgar/companysearch?companySearchBox=${displayTicker}" 
                 target="_blank" 
                 class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition border border-slate-700"
               >
@@ -869,7 +1017,7 @@
               </a>
               <div class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-emerald-400 font-mono select-all flex items-center gap-1.5" title="클릭하여 복사 후 실행">
                 <i class="fa-solid fa-terminal text-slate-500"></i>
-                <span>python -m src.main --ticker ${queryUpper}</span>
+                <span>python -m src.main --ticker ${displayTicker}</span>
               </div>
             </div>
           </div>
@@ -882,7 +1030,11 @@
     }
 
     function getFilteredTrades() {
-      const query = document.getElementById('search-input').value.toLowerCase().trim();
+      const rawQuery = document.getElementById('search-input').value.trim();
+      const queryLower = rawQuery.toLowerCase();
+      const isSearching = rawQuery.length > 0;
+      const resolvedAlias = KOREAN_STOCK_ALIASES[queryLower] || null;
+      const queryUpper = rawQuery.toUpperCase();
       const sortType = document.getElementById('sort-select').value;
 
       return allTrades.filter(t => {
@@ -905,8 +1057,26 @@
           if (cat !== '13G') return false;
         }
 
+        // 검색어 매칭 (티커, 한글명 별칭, 기업명, 내부자/기관명, 직책)
+        const tTicker = (t.ticker || '').toUpperCase();
+        const tIssuer = (t.issuer_name || '').toLowerCase();
+        const tReporter = (t.reporter_name || '').toLowerCase();
+        const tRole = (t.role_summary || '').toLowerCase();
+
+        const matchQuery = !isSearching ||
+          (resolvedAlias && tTicker === resolvedAlias) ||
+          tTicker === queryUpper ||
+          tTicker.includes(queryUpper) ||
+          tIssuer.includes(queryLower) ||
+          tReporter.includes(queryLower) ||
+          tRole.includes(queryLower);
+
+        if (!matchQuery) return false;
+
         // 기간 필터 (최근 N일)
-        if (activeFilterDays !== 'all') {
+        // 💡 특정 종목/인물을 직접 검색 중인 경우, 기간 필터(30일)로 인해 과거의 유의미한 거래가 0건으로 사라지지 않도록
+        // 전체 기간 공시를 보여줍니다.
+        if (!isSearching && activeFilterDays !== 'all') {
           const days = parseInt(activeFilterDays, 10);
           if (!isNaN(days) && t.transaction_date) {
             const tDate = parseTradeDate(t.transaction_date);
@@ -918,15 +1088,6 @@
             }
           }
         }
-
-        // 검색어 필터
-        const matchQuery = !query || 
-          (t.ticker && t.ticker.toLowerCase().includes(query)) ||
-          (t.issuer_name && t.issuer_name.toLowerCase().includes(query)) ||
-          (t.reporter_name && t.reporter_name.toLowerCase().includes(query)) ||
-          (t.role_summary && t.role_summary.toLowerCase().includes(query));
-
-        if (!matchQuery) return false;
 
         // 금액 필터 (내부자 거래에 적용)
         if (cat === 'INSIDER' && (t.total_value_usd || 0) < activeFilterMin) return false;
@@ -1289,7 +1450,7 @@
         render();
       });
 
-      // 검색창
+      // 검색창 & 자동완성 연동
       const searchInput = document.getElementById('search-input');
       const clearBtn = document.getElementById('clear-search-btn');
       let searchDebounceTimer = null;
@@ -1298,20 +1459,41 @@
         const val = searchInput.value.trim();
         if (val.length > 0) {
           clearBtn.classList.remove('hidden');
+          updateSearchSuggestions(val);
           clearTimeout(searchDebounceTimer);
           searchDebounceTimer = setTimeout(() => {
             searchSupabaseOnDemand(val);
           }, 350);
         } else {
           clearBtn.classList.add('hidden');
+          const suggestions = document.getElementById('search-suggestions');
+          if (suggestions) suggestions.classList.add('hidden');
         }
         render();
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const suggestions = document.getElementById('search-suggestions');
+          if (suggestions) suggestions.classList.add('hidden');
+        }
       });
 
       clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         clearBtn.classList.add('hidden');
+        const suggestions = document.getElementById('search-suggestions');
+        if (suggestions) suggestions.classList.add('hidden');
         render();
+      });
+
+      // 바깥 영역 클릭 시 자동완성 드롭다운 닫기
+      document.addEventListener('click', (e) => {
+        const searchContainer = document.getElementById('search-container');
+        const suggestions = document.getElementById('search-suggestions');
+        if (searchContainer && !searchContainer.contains(e.target) && suggestions) {
+          suggestions.classList.add('hidden');
+        }
       });
 
       // 정렬
