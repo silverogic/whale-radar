@@ -8,8 +8,11 @@ SEC_ATOM_FEED_URL = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&
 SEC_ARCHIVE_BASE_URL = "https://www.sec.gov/Archives/edgar/data"
 
 # Filtering Rules
-MIN_PURCHASE_VALUE_USD = float(os.getenv("MIN_PURCHASE_VALUE_USD", "100000.0"))  # 최소 매수 금액 $100,000
-TARGET_TRANSACTION_CODE = "P"  # Open Market Purchase
+MIN_PURCHASE_VALUE_USD = float(os.getenv("MIN_PURCHASE_VALUE_USD", "100000.0"))  # 최소 거래 금액 $100,000
+TARGET_TRANSACTION_CODES = {
+    "P": "BUY",   # Open Market Purchase (장내 매수)
+    "S": "SELL"   # Open Market Sale (장내 매도)
+}
 
 # Network & Rate Limiting
 REQUEST_DELAY_SECONDS = 0.15  # SEC Rate limit: 초당 10회 미만 (안전하게 0.15초 대기)

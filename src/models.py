@@ -13,16 +13,17 @@ class Form4Meta:
 
 @dataclass
 class TransactionItem:
-    """개별 매수 내역"""
+    """개별 매수/매도 내역"""
     security_title: str
     transaction_date: str
     shares: float
     price_per_share: float
     total_value: float
+    trade_type: str = "BUY"  # "BUY" or "SELL"
 
 @dataclass
 class InsiderTrade:
-    """필터링을 통과한 유의미한 내부자 매수 신호"""
+    """필터링을 통과한 유의미한 내부자 거래 신호"""
     accession_number: str
     ticker: str
     issuer_name: str
@@ -38,6 +39,7 @@ class InsiderTrade:
     pct_increase: Optional[float]
     transaction_date: str
     sec_form4_url: str
+    trade_type: str = "BUY"  # "BUY" or "SELL"
     items: List[TransactionItem] = field(default_factory=list)
 
     @property

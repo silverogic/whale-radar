@@ -99,6 +99,41 @@ SAMPLE_SMALL_VALUE_XML = """<?xml version="1.0"?>
 </ownershipDocument>
 """
 
+SAMPLE_VALID_SELL_XML = """<?xml version="1.0"?>
+<ownershipDocument>
+    <documentType>4</documentType>
+    <periodOfReport>2026-09-04</periodOfReport>
+    <issuer>
+        <issuerTradingSymbol>TECH</issuerTradingSymbol>
+        <issuerName>BIG TECH INC</issuerName>
+    </issuer>
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerName>Smith John</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerRelationship>
+            <isOfficer>1</isOfficer>
+            <officerTitle>Chief Financial Officer</officerTitle>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+    <nonDerivativeTable>
+        <nonDerivativeTransaction>
+            <securityTitle><value>Common Stock</value></securityTitle>
+            <transactionDate><value>2026-09-04</value></transactionDate>
+            <transactionCoding><transactionCode>S</transactionCode></transactionCoding>
+            <transactionAmounts>
+                <transactionShares><value>5000</value></transactionShares>
+                <transactionPricePerShare><value>120.00</value></transactionPricePerShare>
+                <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+            </transactionAmounts>
+            <postTransactionAmounts>
+                <sharesOwnedFollowingTransaction><value>20000</value></sharesOwnedFollowingTransaction>
+            </postTransactionAmounts>
+        </nonDerivativeTransaction>
+    </nonDerivativeTable>
+</ownershipDocument>
+"""
+
 class TestForm4Parser(unittest.TestCase):
     def setUp(self):
         self.parser = Form4Parser(min_purchase_value=100000.0)
@@ -116,6 +151,7 @@ class TestForm4Parser(unittest.TestCase):
         trade = self.parser.parse_and_filter(SAMPLE_VALID_XML, self.dummy_meta)
         self.assertIsNotNone(trade)
         self.assertEqual(trade.ticker, "NVEC")
+        self.assertEqual(trade.trade_type, "BUY")
         self.assertEqual(trade.reporter_name, "Baker Daniel A")
         self.assertEqual(trade.role_title, "President and CEO")
         self.assertTrue(trade.is_officer)
@@ -126,13 +162,25 @@ class TestForm4Parser(unittest.TestCase):
         self.assertEqual(trade.shares_owned_after, 144500)
         self.assertEqual(len(trade.items), 2)
 
+    def test_valid_insider_selling(self):
+        # 5000 * 120 = $600,000 (>= $100k), Code S, AcquiredDisposed D
+        trade = self.parser.parse_and_filter(SAMPLE_VALID_SELL_XML, self.dummy_meta)
+        self.assertIsNotNone(trade)
+        self.assertEqual(trade.ticker, "TECH")
+        self.assertEqual(trade.trade_type, "SELL")
+        self.assertEqual(trade.reporter_name, "Smith John")
+        self.assertEqual(trade.role_title, "Chief Financial Officer")
+        self.assertEqual(trade.total_shares, 5000)
+        self.assertEqual(trade.total_value_usd, 600000.0)
+        self.assertEqual(trade.shares_owned_after, 20000)
+        # prior shares = 20000 + 5000 = 25000 -> - (5000/25000)*100 = -20%
+        self.assertAlmostEqual(trade.pct_increase, -20.0, places=1)
+
     def test_filter_out_option_exercise(self):
-        # Transaction Code 'M'은 옵션 행사로 제외되어야 함
         trade = self.parser.parse_and_filter(SAMPLE_OPTION_EXERCISE_XML, self.dummy_meta)
         self.assertIsNone(trade)
 
     def test_filter_out_small_purchase(self):
-        # 100 * 50 = $5,000 (< $100,000) 제외되어야 함
         trade = self.parser.parse_and_filter(SAMPLE_SMALL_VALUE_XML, self.dummy_meta)
         self.assertIsNone(trade)
 

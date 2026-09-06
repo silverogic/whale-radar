@@ -147,18 +147,25 @@
 
       <!-- 필터 칩 그룹 -->
       <div class="flex flex-wrap gap-2 items-center text-xs pt-2 border-t border-slate-800/60">
-        <span class="text-slate-400 font-medium mr-1">금액 필터:</span>
+        <span class="text-slate-400 font-medium mr-1">거래 유형:</span>
+        <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-type="all">전체</button>
+        <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1" data-type="BUY">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 🟢 매수만
+        </button>
+        <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1" data-type="SELL">
+          <span class="w-2 h-2 rounded-full bg-rose-400"></span> 🔴 매도만
+        </button>
+
+        <span class="text-slate-400 font-medium ml-2 mr-1">금액 필터:</span>
         <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-min="0">전체</button>
         <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="100000">$100k+ (1.3억+)</button>
         <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="500000">$500k+ (6.7억+)</button>
         <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="1000000">$1M+ (13.5억+)</button>
-        <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="5000000">$5M+ (67억+)</button>
 
         <span class="text-slate-400 font-medium ml-2 mr-1">직책:</span>
         <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-role="all">전체</button>
         <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="officer">경영진 (Officer)</button>
         <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="director">이사회 (Director)</button>
-        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="ten_percent">10% 지분권자</button>
 
         <!-- 내 관심종목 필터 버튼 -->
         <button id="filter-watchlist-btn" class="ml-auto px-3 py-1.5 rounded-lg border border-amber-500/30 bg-slate-950 hover:bg-amber-500/10 text-slate-300 transition flex items-center gap-1.5">
@@ -266,6 +273,7 @@
     }
 
     let allTrades = [];
+    let activeFilterTradeType = 'all'; // 'all', 'BUY', 'SELL'
     let activeFilterMin = 0;
     let activeFilterRole = 'all';
     let filterWatchlistOnly = false;
@@ -463,6 +471,12 @@
           return false;
         }
 
+        // 거래 유형 필터 (BUY / SELL)
+        const tType = t.trade_type || 'BUY';
+        if (activeFilterTradeType !== 'all' && tType !== activeFilterTradeType) {
+          return false;
+        }
+
         // 검색어 필터
         const matchQuery = !query || 
           (t.ticker && t.ticker.toLowerCase().includes(query)) ||
@@ -501,21 +515,34 @@
 
       emptyState.classList.add('hidden');
       container.innerHTML = filtered.map(trade => {
+        const isBuy = (trade.trade_type || 'BUY') === 'BUY';
+        const typeLabel = isBuy ? '매수' : '매도';
+        const typeBadge = isBuy 
+          ? `<span class="px-2 py-0.5 text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-md flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> 장내매수</span>`
+          : `<span class="px-2 py-0.5 text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-md flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> 장내매도</span>`;
+
         const hasSplits = trade.items && trade.items.length > 1;
         const isStarred = userWatchlist.has(trade.ticker);
-        const changeBadge = trade.pct_increase !== null && trade.pct_increase !== undefined
-          ? `<span class="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-md font-mono">+${trade.pct_increase.toFixed(2)}% 지분 확대</span>`
-          : '';
+        
+        let changeBadge = '';
+        if (trade.pct_increase !== null && trade.pct_increase !== undefined) {
+          if (trade.pct_increase > 0) {
+            changeBadge = `<span class="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-md font-mono">+${trade.pct_increase.toFixed(2)}% 지분 확대</span>`;
+          } else {
+            changeBadge = `<span class="px-2 py-0.5 text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/30 rounded-md font-mono">${trade.pct_increase.toFixed(2)}% 지분 축소</span>`;
+          }
+        }
 
         return `
           <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between group relative">
             <div class="space-y-4">
-              <!-- 헤더: 티커 & 회사명 & 관심종목 별표 & 날짜 -->
+              <!-- 헤더: 티커 & 회사명 & 거래유형배지 & 관심종목 별표 & 날짜 -->
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-2.5 flex-wrap">
-                  <span class="px-2.5 py-1 text-sm font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg font-mono">
+                  <span class="px-2.5 py-1 text-sm font-bold bg-slate-950 text-slate-100 border border-slate-700 rounded-lg font-mono">
                     ${trade.ticker || 'N/A'}
                   </span>
+                  ${typeBadge}
                   <!-- 관심종목 ⭐️ 버튼 -->
                   <button 
                     onclick="toggleWatchlist('${trade.ticker}')" 
@@ -533,29 +560,29 @@
                 </span>
               </div>
 
-              <!-- 매수자 및 직책 -->
+              <!-- 내부자 거래자 및 직책 -->
               <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800/60 space-y-1">
-                <div class="text-xs text-slate-400">내부자 매수자</div>
+                <div class="text-xs text-slate-400">내부자 (${typeLabel}자)</div>
                 <div class="text-sm font-bold text-white flex items-center justify-between">
                   <span>${trade.reporter_name}</span>
-                  <span class="text-xs font-medium text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/40">
+                  <span class="text-xs font-medium ${isBuy ? 'text-emerald-400 bg-emerald-950/50 border-emerald-800/40' : 'text-rose-400 bg-rose-950/50 border-rose-800/40'} px-2 py-0.5 rounded border">
                     ${trade.role_summary || 'Insider'}
                   </span>
                 </div>
               </div>
 
-              <!-- 매수 규모 & 지표 -->
+              <!-- 거래 규모 & 지표 -->
               <div class="grid grid-cols-2 gap-3 pt-1">
                 <div class="space-y-0.5">
-                  <div class="text-xs text-slate-400">총 매수 금액</div>
-                  <div class="text-lg font-extrabold text-emerald-400 font-mono">
+                  <div class="text-xs text-slate-400">총 ${typeLabel} 금액</div>
+                  <div class="text-lg font-extrabold ${isBuy ? 'text-emerald-400' : 'text-rose-400'} font-mono">
                     ${formatUSD(trade.total_value_usd)}
                   </div>
                   <div class="text-xs text-slate-400">약 ${formatKRW(trade.total_value_usd)}</div>
                 </div>
 
                 <div class="space-y-0.5">
-                  <div class="text-xs text-slate-400">매수 규모 / 단가</div>
+                  <div class="text-xs text-slate-400">${typeLabel} 규모 / 단가</div>
                   <div class="text-sm font-bold text-slate-200 font-mono">
                     ${formatNumber(trade.total_shares)}주
                   </div>
@@ -566,12 +593,12 @@
               <!-- 지분 변동 배지 -->
               ${changeBadge ? `<div class="pt-1">${changeBadge}</div>` : ''}
 
-              <!-- 분할 매수 아코디언 -->
+              <!-- 분할 거래 아코디언 -->
               ${hasSplits ? `
                 <div class="pt-2 border-t border-slate-800/60">
                   <button onclick="toggleSplits('${trade.accession_number}')" class="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition">
                     <i class="fa-solid fa-chevron-right text-[10px] transition-transform duration-200" id="icon-${trade.accession_number}"></i>
-                    <span>분할 매수 상세 내역 (${trade.items.length}회)</span>
+                    <span>분할 ${typeLabel} 상세 내역 (${trade.items.length}회)</span>
                   </button>
                   <div id="splits-${trade.accession_number}" class="hidden mt-2 space-y-1.5 pl-3 border-l-2 border-slate-800 text-xs text-slate-400">
                     ${trade.items.map((it, i) => `
@@ -593,7 +620,7 @@
               <a 
                 href="${trade.sec_form4_url}" 
                 target="_blank" 
-                class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/30 transition"
+                class="inline-flex items-center gap-1.5 text-xs font-semibold ${isBuy ? 'text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/30' : 'text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border-rose-500/30'} px-3 py-1.5 rounded-lg border transition"
               >
                 SEC Form 4 원문 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
               </a>
@@ -732,6 +759,18 @@
 
       // 새로고침 버튼
       document.getElementById('refresh-btn').addEventListener('click', loadData);
+
+      // 거래 유형 필터 칩 (전체, BUY, SELL)
+      document.querySelectorAll('.filter-chip-type').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip-type').forEach(b => {
+            b.className = 'filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1';
+          });
+          btn.className = 'filter-chip-type px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold flex items-center gap-1';
+          activeFilterTradeType = btn.dataset.type;
+          render();
+        });
+      });
 
       // 금액 필터 칩
       document.querySelectorAll('.filter-chip-value').forEach(btn => {

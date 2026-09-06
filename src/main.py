@@ -32,22 +32,26 @@ def format_krw(usd_val: float) -> str:
     return f"{krw:,.0f}원"
 
 def display_trade(trade: InsiderTrade, index: int, total: int):
+    is_buy = trade.trade_type == "BUY"
+    icon = "🟢" if is_buy else "🔴"
+    type_label = "매수" if is_buy else "매도"
+    
     print("\n" + "=" * 65)
-    print(f" 🟢 [{index}/{total}] {trade.ticker} ({trade.issuer_name}) - 경영진 장내 매수 포착!")
+    print(f" {icon} [{index}/{total}] [{trade.trade_type}] {trade.ticker} ({trade.issuer_name}) - 경영진 장내 {type_label} 포착!")
     print("=" * 65)
-    print(f" • 매수자 (내부자)  : {trade.reporter_name} ({trade.role_summary})")
-    print(f" • 총 매수 규모     : {trade.total_shares:,.0f}주 (${trade.total_value_usd:,.2f} / 약 {format_krw(trade.total_value_usd)})")
-    print(f" • 가중 평균 매수가 : ${trade.avg_price:.2f}")
+    print(f" • 거래자 (내부자)  : {trade.reporter_name} ({trade.role_summary})")
+    print(f" • 총 {type_label} 규모     : {trade.total_shares:,.0f}주 (${trade.total_value_usd:,.2f} / 약 {format_krw(trade.total_value_usd)})")
+    print(f" • 가중 평균 {type_label}가 : ${trade.avg_price:.2f}")
     
     if trade.pct_increase is not None:
-        print(f" • 보유 지분 변동   : {trade.shares_owned_after - trade.total_shares:,.0f}주 ➡️ {trade.shares_owned_after:,.0f}주 (+{trade.pct_increase:.2f}%)")
-    else:
-        print(f" • 매수 후 보유 주식: {trade.shares_owned_after:,.0f}주")
+        sign = "+" if trade.pct_increase > 0 else ""
+        print(f" • 보유 지분 변동   : {trade.pct_increase:+.2f}%")
         
+    print(f" • 거래 후 보유 주식: {trade.shares_owned_after:,.0f}주")
     print(f" • 거래 일자        : {trade.transaction_date}")
     
     if len(trade.items) > 1:
-        print(f" • 세부 분할 매수 ({len(trade.items)}회):")
+        print(f" • 세부 분할 {type_label} ({len(trade.items)}회):")
         for idx, item in enumerate(trade.items, 1):
             print(f"    - {idx}) {item.shares:,.0f}주 @ ${item.price_per_share:.2f} (${item.total_value:,.2f}) [{item.transaction_date}]")
             

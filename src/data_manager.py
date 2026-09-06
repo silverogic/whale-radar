@@ -29,6 +29,7 @@ def trade_to_dict(trade: InsiderTrade) -> Dict[str, Any]:
         "pct_increase": round(trade.pct_increase, 2) if trade.pct_increase is not None else None,
         "transaction_date": trade.transaction_date,
         "sec_form4_url": trade.sec_form4_url,
+        "trade_type": trade.trade_type,
         "items": [
             {
                 "security_title": item.security_title,
@@ -36,6 +37,7 @@ def trade_to_dict(trade: InsiderTrade) -> Dict[str, Any]:
                 "shares": item.shares,
                 "price_per_share": round(item.price_per_share, 2),
                 "total_value": round(item.total_value, 2),
+                "trade_type": item.trade_type,
             }
             for item in trade.items
         ]
