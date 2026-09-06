@@ -112,9 +112,18 @@ class Schedule13Parser:
         if not event_date:
             event_date = meta.filing_date
 
-        # 4. Reporting Persons (보고 기관/투자자) 정보 추출
+        # 4. Reporting Persons (보고 기관/투자자) 정보 추출 (13D 및 13G 스키마 모두 지원)
+        rpt_person_list = []
         rpt_persons_container = _find_child_by_local_name(form_data, "reportingPersons")
-        rpt_person_list = _find_all_children_by_local_name(rpt_persons_container, "reportingPersonInfo")
+        if rpt_persons_container is not None:
+            rpt_person_list.extend(_find_all_children_by_local_name(rpt_persons_container, "reportingPersonInfo"))
+
+        # 13G 전용 태그 지원 (coverPageHeaderReportingPersonDetails)
+        if form_data is not None:
+            for child in form_data:
+                tag_name = _local_tag(child).lower()
+                if "reportingperson" in tag_name and child not in rpt_person_list and child is not rpt_persons_container:
+                    rpt_person_list.append(child)
 
         if not rpt_person_list:
             return None
@@ -127,8 +136,17 @@ class Schedule13Parser:
 
         for rpt in rpt_person_list:
             inv_name = _get_text(rpt, ["reportingPersonName"], "Unknown")
+            
+            # 주식 수 추출 (13D: aggregateAmountOwned, 13G: reportingPersonBeneficiallyOwnedAggregateNumberOfShares)
             shares_str = _get_text(rpt, ["aggregateAmountOwned"])
+            if not shares_str:
+                shares_str = _get_text(rpt, ["reportingPersonBeneficiallyOwnedAggregateNumberOfShares"])
+                
+            # 지분율 추출 (13D: percentOfClass, 13G: classPercent)
             pct_str = _get_text(rpt, ["percentOfClass"])
+            if not pct_str:
+                pct_str = _get_text(rpt, ["classPercent"])
+
             type_code = _get_text(rpt, ["typeOfReportingPerson"])
 
             shares = _to_float(shares_str)
