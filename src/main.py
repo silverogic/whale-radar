@@ -15,6 +15,7 @@ from src.config import (
     DEFAULT_FEED_COUNT,
     MIN_PURCHASE_VALUE_USD,
     MIN_INSTITUTION_PERCENT,
+    get_realtime_usd_krw_rate,
 )
 from src.models import InsiderTrade
 from src.sec_client import SECClient
@@ -22,17 +23,15 @@ from src.parser import Form4Parser
 from src.schedule13_parser import Schedule13Parser
 from src.data_manager import save_trades
 
-USD_TO_KRW = 1350.0  # 원화 환산 참고 환율
-
-def format_krw(usd_val: float) -> str:
-    krw = usd_val * USD_TO_KRW
+def format_krw(usd_val: float, rate: float = 1350.0) -> str:
+    krw = usd_val * rate
     if krw >= 100_000_000:
         return f"{krw / 100_000_000:.1f}억 원"
     elif krw >= 10_000:
         return f"{krw / 10_000:,.0f}만 원"
     return f"{krw:,.0f}원"
 
-def display_trade(trade: InsiderTrade, index: int, total: int):
+def display_trade(trade: InsiderTrade, index: int, total: int, rate: float = 1350.0):
     if trade.category in ("13D", "13G"):
         icon = "🟣" if trade.category == "13D" else "🔵"
         cat_name = "행동주의/경영참여 (13D)" if trade.category == "13D" else "대형기관단순투자 (13G)"
@@ -56,7 +55,7 @@ def display_trade(trade: InsiderTrade, index: int, total: int):
     print(f" {icon} [{index}/{total}] [{trade.trade_type}] {trade.ticker} ({trade.issuer_name}) - 경영진 장내 {type_label} 포착!")
     print("=" * 65)
     print(f" • 거래자 (내부자)  : {trade.reporter_name} ({trade.role_summary})")
-    print(f" • 총 {type_label} 규모     : {trade.total_shares:,.0f}주 (${trade.total_value_usd:,.2f} / 약 {format_krw(trade.total_value_usd)})")
+    print(f" • 총 {type_label} 규모     : {trade.total_shares:,.0f}주 (${trade.total_value_usd:,.2f} / 약 {format_krw(trade.total_value_usd, rate)})")
     print(f" • 가중 평균 {type_label}가 : ${trade.avg_price:.2f}")
     
     if trade.pct_increase is not None:
@@ -74,9 +73,11 @@ def display_trade(trade: InsiderTrade, index: int, total: int):
     print("=" * 65)
 
 def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTION_PERCENT, save_to_json: bool = True) -> List[InsiderTrade]:
+    current_rate = get_realtime_usd_krw_rate()
     print(f"📡 [Whale Radar] SEC EDGAR 통합 스캔 시작...")
     print(f"   1) Form 4 내부자 거래 (최근 {count}건, ${min_val:,.0f}+)")
     print(f"   2) Schedule 13D/13G 기관 5%+ 대량 지분 (최근 {count//2}건, {min_inst_pct}%+)")
+    print(f"   3) 실시간 기준 환율 적용: 1 USD = {current_rate:,.1f} KRW")
     
     client = SECClient()
     form4_parser = Form4Parser(min_purchase_value=min_val)
@@ -113,13 +114,13 @@ def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTI
     print(f"✅ 전체 스캔 완료! 총 {len(detected_trades)}건의 유의미한 내부자/기관 거래 신호 포착.")
     
     for idx, trade in enumerate(detected_trades, 1):
-        display_trade(trade, idx, len(detected_trades))
+        display_trade(trade, idx, len(detected_trades), rate=current_rate)
         
     if save_to_json and detected_trades:
-        added = save_trades(detected_trades)
+        added = save_trades(detected_trades, usd_to_krw_rate=current_rate)
         print(f"💾 [저장 완료] docs/data/trades.json 에 {len(detected_trades)}건 반영 (신규: {added}건)")
     elif save_to_json:
-        save_trades([])
+        save_trades([], usd_to_krw_rate=current_rate)
 
     return detected_trades
 

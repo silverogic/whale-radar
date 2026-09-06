@@ -55,7 +55,12 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- 실시간 환율 뱃지 -->
+        <span id="rate-display-badge" class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300 hidden sm:inline-flex items-center gap-1.5 shadow-sm" title="실시간 USD/KRW 시장 환율 연동">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>USD/KRW: <strong id="current-rate-text" class="text-emerald-400 font-semibold">1,350.0</strong>원</span>
+        </span>
         <span id="last-updated-text" class="text-xs text-slate-400 hidden lg:inline-block">
           <i class="fa-regular fa-clock mr-1"></i>데이터 확인 중...
         </span>
@@ -274,7 +279,39 @@
 
   <script>
     const DATA_URL = 'data/trades.json';
-    const USD_TO_KRW = 1350;
+    let usdToKrwRate = 1350.0;
+
+    async function fetchRealtimeExchangeRate() {
+      const endpoints = [
+        'https://open.er-api.com/v6/latest/USD',
+        'https://api.exchangerate-api.com/v4/latest/USD'
+      ];
+      for (const url of endpoints) {
+        try {
+          const res = await fetch(url);
+          if (res.ok) {
+            const data = await res.json();
+            const rate = data && data.rates && data.rates.KRW;
+            if (rate && !isNaN(rate) && rate > 500) {
+              usdToKrwRate = parseFloat(rate);
+              updateExchangeRateUI();
+              return usdToKrwRate;
+            }
+          }
+        } catch (e) {
+          // fallback to next
+        }
+      }
+      updateExchangeRateUI();
+      return usdToKrwRate;
+    }
+
+    function updateExchangeRateUI() {
+      const el = document.getElementById('current-rate-text');
+      if (el) {
+        el.innerText = new Intl.NumberFormat('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(usdToKrwRate);
+      }
+    }
 
     // Supabase 설정 (실제 Supabase 클라우드 연동 완료)
     const SUPABASE_URL = "https://wjhowfyyahlffdewmtzh.supabase.co"; 
@@ -303,13 +340,13 @@
     }
 
     function formatKRW(usd) {
-      const krw = usd * USD_TO_KRW;
+      const krw = usd * usdToKrwRate;
       if (krw >= 100000000) {
         return `${(krw / 100000000).toFixed(1)}억 원`;
       } else if (krw >= 10000) {
-        return `${Math.round(krw / 10000)}만 원`;
+        return `${Math.round(krw / 10000).toLocaleString('ko-KR')}만 원`;
       }
-      return `${Math.round(krw)}원`;
+      return `${Math.round(krw).toLocaleString('ko-KR')}원`;
     }
 
     function formatDate(dateStr) {
@@ -439,6 +476,11 @@
         
         allTrades = data.trades || [];
         
+        if (data.usd_to_krw_rate) {
+          usdToKrwRate = parseFloat(data.usd_to_krw_rate);
+          updateExchangeRateUI();
+        }
+
         if (data.last_updated) {
           const date = new Date(data.last_updated);
           document.getElementById('last-updated-text').innerHTML = 
@@ -447,6 +489,12 @@
 
         updateStats(data);
         render();
+
+        // 비동기 실시간 환율 갱신 후 화면 즉시 재계산
+        fetchRealtimeExchangeRate().then(() => {
+          updateStats(data);
+          render();
+        });
 
       } catch (err) {
         console.error('Error loading trades:', err);

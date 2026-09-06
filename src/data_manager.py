@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from typing import List, Dict, Any
 
 from src.models import InsiderTrade
+from src.config import get_realtime_usd_krw_rate
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +64,7 @@ def load_existing_trades(file_path: str = DEFAULT_DATA_PATH) -> Dict[str, Any]:
         "trades": []
     }
 
-def save_trades(new_trades: List[InsiderTrade], file_path: str = DEFAULT_DATA_PATH) -> int:
+def save_trades(new_trades: List[InsiderTrade], file_path: str = DEFAULT_DATA_PATH, usd_to_krw_rate: float = None) -> int:
     """새로 감지된 거래를 기존 데이터와 중복 없이 병합(Merge)하여 JSON 저장"""
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     
@@ -92,8 +93,11 @@ def save_trades(new_trades: List[InsiderTrade], file_path: str = DEFAULT_DATA_PA
     total_buy_volume = sum(t.get("total_value_usd", 0.0) for t in merged_trades if t.get("trade_type") == "BUY" and t.get("category", "INSIDER") == "INSIDER")
     total_sell_volume = sum(t.get("total_value_usd", 0.0) for t in merged_trades if t.get("trade_type") == "SELL")
     
+    current_rate = usd_to_krw_rate if usd_to_krw_rate is not None else get_realtime_usd_krw_rate()
+
     output_data = {
         "last_updated": datetime.now(timezone.utc).isoformat(),
+        "usd_to_krw_rate": round(current_rate, 2),
         "total_count": len(merged_trades),
         "total_volume_usd": round(total_volume, 2),
         "total_buy_volume_usd": round(total_buy_volume, 2),

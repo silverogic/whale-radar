@@ -20,3 +20,25 @@ TARGET_TRANSACTION_CODES = {
 REQUEST_DELAY_SECONDS = 0.15  # SEC Rate limit: 초당 10회 미만 (안전하게 0.15초 대기)
 REQUEST_TIMEOUT_SECONDS = 15
 DEFAULT_FEED_COUNT = 80  # 최신 공시 조회 건수
+
+def get_realtime_usd_krw_rate() -> float:
+    """실시간 USD/KRW 환율 조회 (실패 시 1,350.0 기본값 폴백)"""
+    import urllib.request
+    import json
+
+    endpoints = [
+        "https://open.er-api.com/v6/latest/USD",
+        "https://api.exchangerate-api.com/v4/latest/USD"
+    ]
+    for url in endpoints:
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "WhaleRadar/1.0"})
+            with urllib.request.urlopen(req, timeout=4) as response:
+                if response.status == 200:
+                    data = json.loads(response.read().decode())
+                    rate = data.get("rates", {}).get("KRW")
+                    if rate and float(rate) > 500:
+                        return float(rate)
+        except Exception:
+            continue
+    return 1350.0
