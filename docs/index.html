@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InsiderRadar - 미국 주식 경영진 장내매수 레이더</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              500: '#10b981',
+              600: '#059669',
+              900: '#064e3b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-emerald-500 selection:text-black">
+
+  <!-- 상단 네비게이션 -->
+  <header class="border-b border-slate-800/80 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+          <i class="fa-solid fa-satellite-dish text-white text-lg animate-pulse"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight text-white">InsiderRadar</h1>
+            <span class="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 hidden sm:block">미국 주식 경영진 장내매수(SEC Form 4) 실시간 감지</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span id="last-updated-text" class="text-xs text-slate-400 hidden md:inline-block">
+          <i class="fa-regular fa-clock mr-1"></i>데이터 확인 중...
+        </span>
+        <button id="refresh-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-rotate-right" id="refresh-icon"></i> 새로고침
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 컨테이너 -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- 히어로 & 핵심 통계 카드 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
+        <div class="text-xs font-medium text-slate-400">포착된 경영진 매수</div>
+        <div id="stat-count" class="text-3xl font-extrabold text-white mt-1 font-mono">-</div>
+        <div class="text-xs text-emerald-400 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-arrow-trend-up"></i> $100k+ 순수 장내매수만 선별
+        </div>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
+        <div class="text-xs font-medium text-slate-400">총 매수 금액 (Volume)</div>
+        <div id="stat-volume" class="text-3xl font-extrabold text-emerald-400 mt-1 font-mono">-</div>
+        <div id="stat-volume-krw" class="text-xs text-slate-400 mt-2">약 - 원</div>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
+        <div class="text-xs font-medium text-slate-400">대상 기업 수</div>
+        <div id="stat-tickers" class="text-3xl font-extrabold text-white mt-1 font-mono">-</div>
+        <div class="text-xs text-slate-400 mt-2">유의미한 내부자 매수 기업</div>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
+        <div class="text-xs font-medium text-slate-400">노이즈 제거율</div>
+        <div class="text-3xl font-extrabold text-white mt-1 font-mono">100%</div>
+        <div class="text-xs text-slate-400 mt-2">스톡옵션·증여·소액 매수 제외</div>
+      </div>
+    </div>
+
+    <!-- 검색 및 필터 바 -->
+    <div class="bg-slate-900/80 border border-slate-800 p-4 rounded-2xl space-y-4">
+      <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <!-- 실시간 검색창 -->
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+          <input 
+            type="text" 
+            id="search-input"
+            placeholder="티커(NVEC, LILA), 기업명, 매수자 이름 검색..." 
+            class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
+          >
+          <button id="clear-search-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 hidden text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- 정렬 선택 -->
+        <div class="flex items-center gap-2">
+          <label for="sort-select" class="text-xs text-slate-400 whitespace-nowrap">정렬:</label>
+          <select id="sort-select" class="bg-slate-950 border border-slate-800 text-xs text-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:border-emerald-500">
+            <option value="date-desc">최신 거래순</option>
+            <option value="value-desc">매수 금액 높은순</option>
+            <option value="value-asc">매수 금액 낮은순</option>
+            <option value="ticker-asc">티커 알파벳순</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 필터 칩 그룹 -->
+      <div class="flex flex-wrap gap-2 items-center text-xs pt-2 border-t border-slate-800/60">
+        <span class="text-slate-400 font-medium mr-1">금액 필터:</span>
+        <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-min="0">전체</button>
+        <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="100000">$100k+ (1.3억+)</button>
+        <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="500000">$500k+ (6.7억+)</button>
+        <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="1000000">$1M+ (13.5억+)</button>
+        <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="5000000">$5M+ (67억+)</button>
+
+        <span class="text-slate-400 font-medium ml-2 mr-1">직책:</span>
+        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-role="all">전체</button>
+        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="officer">경영진 (Officer)</button>
+        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="director">이사회 (Director)</button>
+        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="ten_percent">10% 지분권자</button>
+      </div>
+    </div>
+
+    <!-- 로딩 스피너 -->
+    <div id="loading-state" class="py-20 text-center space-y-3">
+      <i class="fa-solid fa-circle-notch fa-spin text-emerald-400 text-3xl"></i>
+      <p class="text-sm text-slate-400">최신 내부자 매수 레이더 데이터를 불러오는 중...</p>
+    </div>
+
+    <!-- 검색 결과 없을 때 -->
+    <div id="empty-state" class="py-20 text-center space-y-3 hidden">
+      <div class="w-16 h-16 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center mx-auto text-slate-500 text-2xl">
+        <i class="fa-solid fa-inbox"></i>
+      </div>
+      <h3 class="text-base font-semibold text-slate-200">검색 조건에 맞는 매수 내역이 없습니다.</h3>
+      <p class="text-xs text-slate-500 max-w-sm mx-auto">검색어를 변경하거나 금액/직책 필터를 완화해 보세요.</p>
+    </div>
+
+    <!-- 거래 카드 목록 컨테이너 -->
+    <div id="trades-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- 자바스크립트로 동적 렌더링 -->
+    </div>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 mt-16 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <p>데이터 원천: <a href="https://www.sec.gov/edgar" target="_blank" class="text-slate-400 hover:text-emerald-400 underline">SEC EDGAR Public System (Form 4)</a></p>
+      <p>본 서비스는 투자 권유가 아니며, 공개 공시 정보에 기반한 데이터 시각화 도구입니다.</p>
+      <p class="pt-2 text-slate-600 font-mono">InsiderRadar • 100% Serverless on GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script>
+    const DATA_URL = 'data/trades.json';
+    const USD_TO_KRW = 1350;
+
+    let allTrades = [];
+    let activeFilterMin = 0;
+    let activeFilterRole = 'all';
+
+    function formatNumber(num) {
+      return new Intl.NumberFormat('en-US').format(Math.round(num));
+    }
+
+    function formatUSD(num) {
+      return '$' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num);
+    }
+
+    function formatKRW(usd) {
+      const krw = usd * USD_TO_KRW;
+      if (krw >= 100000000) {
+        return `${(krw / 100000000).toFixed(1)}억 원`;
+      } else if (krw >= 10000) {
+        return `${Math.round(krw / 10000)}만 원`;
+      }
+      return `${Math.round(krw)}원`;
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      return dateStr;
+    }
+
+    // 데이터 로드
+    async function loadData() {
+      const refreshIcon = document.getElementById('refresh-icon');
+      refreshIcon.classList.add('fa-spin');
+      
+      try {
+        const res = await fetch(DATA_URL + '?t=' + Date.now());
+        if (!res.ok) throw new Error('Failed to load trades.json');
+        const data = await res.json();
+        
+        allTrades = data.trades || [];
+        
+        // 마지막 업데이트 시간 표시
+        if (data.last_updated) {
+          const date = new Date(data.last_updated);
+          document.getElementById('last-updated-text').innerHTML = 
+            `<i class="fa-regular fa-clock mr-1"></i>최근 갱신: ${date.toLocaleString('ko-KR')}`;
+        }
+
+        updateStats(data);
+        render();
+
+      } catch (err) {
+        console.error('Error loading trades:', err);
+        document.getElementById('loading-state').innerHTML = `
+          <div class="text-rose-400 py-10">
+            <i class="fa-solid fa-triangle-exclamation text-2xl mb-2"></i>
+            <p>데이터를 불러오지 못했습니다. (아직 첫 크롤링 데이터가 생성되지 않았거나 경로 오류)</p>
+          </div>
+        `;
+      } finally {
+        refreshIcon.classList.remove('fa-spin');
+        document.getElementById('loading-state').classList.add('hidden');
+      }
+    }
+
+    // 통계 지표 갱신
+    function updateStats(data) {
+      const trades = data.trades || [];
+      const totalVolume = trades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
+      const uniqueTickers = new Set(trades.map(t => t.ticker)).size;
+
+      document.getElementById('stat-count').innerText = `${trades.length}건`;
+      document.getElementById('stat-volume').innerText = formatUSD(totalVolume);
+      document.getElementById('stat-volume-krw').innerText = `약 ${formatKRW(totalVolume)}`;
+      document.getElementById('stat-tickers').innerText = `${uniqueTickers}개`;
+    }
+
+    // 필터 및 검색 적용
+    function getFilteredTrades() {
+      const query = document.getElementById('search-input').value.toLowerCase().trim();
+      const sortType = document.getElementById('sort-select').value;
+
+      return allTrades.filter(t => {
+        // 검색어 필터
+        const matchQuery = !query || 
+          (t.ticker && t.ticker.toLowerCase().includes(query)) ||
+          (t.issuer_name && t.issuer_name.toLowerCase().includes(query)) ||
+          (t.reporter_name && t.reporter_name.toLowerCase().includes(query));
+
+        if (!matchQuery) return false;
+
+        // 금액 필터
+        if (t.total_value_usd < activeFilterMin) return false;
+
+        // 직책 필터
+        if (activeFilterRole === 'officer' && !t.is_officer) return false;
+        if (activeFilterRole === 'director' && !t.is_director) return false;
+        if (activeFilterRole === 'ten_percent' && !t.is_ten_percent) return false;
+
+        return true;
+      }).sort((a, b) => {
+        if (sortType === 'value-desc') return (b.total_value_usd || 0) - (a.total_value_usd || 0);
+        if (sortType === 'value-asc') return (a.total_value_usd || 0) - (b.total_value_usd || 0);
+        if (sortType === 'ticker-asc') return (a.ticker || '').localeCompare(b.ticker || '');
+        // 기본: date-desc
+        return (b.transaction_date || '').localeCompare(a.transaction_date || '');
+      });
+    }
+
+    // 렌더링
+    function render() {
+      const container = document.getElementById('trades-container');
+      const emptyState = document.getElementById('empty-state');
+      const filtered = getFilteredTrades();
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      container.innerHTML = filtered.map((trade, idx) => {
+        const hasSplits = trade.items && trade.items.length > 1;
+        const changeBadge = trade.pct_increase !== null && trade.pct_increase !== undefined
+          ? `<span class="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-md font-mono">+${trade.pct_increase.toFixed(2)}% 지분 확대</span>`
+          : '';
+
+        return `
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between group">
+            <div class="space-y-4">
+              <!-- 헤더: 티커 & 회사명 & 날짜 -->
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <span class="px-2.5 py-1 text-sm font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg font-mono">
+                    ${trade.ticker || 'N/A'}
+                  </span>
+                  <span class="text-sm font-semibold text-slate-200 line-clamp-1" title="${trade.issuer_name}">
+                    ${trade.issuer_name}
+                  </span>
+                </div>
+                <span class="text-xs text-slate-400 whitespace-nowrap bg-slate-950 px-2.5 py-1 rounded-md border border-slate-800">
+                  <i class="fa-regular fa-calendar mr-1"></i>${formatDate(trade.transaction_date)}
+                </span>
+              </div>
+
+              <!-- 매수자 및 직책 -->
+              <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800/60 space-y-1">
+                <div class="text-xs text-slate-400">내부자 매수자</div>
+                <div class="text-sm font-bold text-white flex items-center justify-between">
+                  <span>${trade.reporter_name}</span>
+                  <span class="text-xs font-medium text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/40">
+                    ${trade.role_summary || 'Insider'}
+                  </span>
+                </div>
+              </div>
+
+              <!-- 매수 규모 & 지표 -->
+              <div class="grid grid-cols-2 gap-3 pt-1">
+                <div class="space-y-0.5">
+                  <div class="text-xs text-slate-400">총 매수 금액</div>
+                  <div class="text-lg font-extrabold text-emerald-400 font-mono">
+                    ${formatUSD(trade.total_value_usd)}
+                  </div>
+                  <div class="text-xs text-slate-400">약 ${formatKRW(trade.total_value_usd)}</div>
+                </div>
+
+                <div class="space-y-0.5">
+                  <div class="text-xs text-slate-400">매수 규모 / 단가</div>
+                  <div class="text-sm font-bold text-slate-200 font-mono">
+                    ${formatNumber(trade.total_shares)}주
+                  </div>
+                  <div class="text-xs text-slate-400 font-mono">평균 $${trade.avg_price ? trade.avg_price.toFixed(2) : '-'}</div>
+                </div>
+              </div>
+
+              <!-- 지분 변동 배지 -->
+              ${changeBadge ? `<div class="pt-1">${changeBadge}</div>` : ''}
+
+              <!-- 분할 매수 아코디언 (있을 경우) -->
+              ${hasSplits ? `
+                <div class="pt-2 border-t border-slate-800/60">
+                  <button onclick="toggleSplits('${trade.accession_number}')" class="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-chevron-right text-[10px] transition-transform duration-200" id="icon-${trade.accession_number}"></i>
+                    <span>분할 매수 상세 내역 (${trade.items.length}회)</span>
+                  </button>
+                  <div id="splits-${trade.accession_number}" class="hidden mt-2 space-y-1.5 pl-3 border-l-2 border-slate-800 text-xs text-slate-400">
+                    ${trade.items.map((it, i) => `
+                      <div class="flex justify-between font-mono py-0.5">
+                        <span>#${i+1} [${it.transaction_date}] ${formatNumber(it.shares)}주 @ $${it.price_per_share}</span>
+                        <span class="text-slate-300">${formatUSD(it.total_value)}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- 하단 링크 버튼 -->
+            <div class="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 font-mono truncate max-w-[180px]" title="AccNo: ${trade.accession_number}">
+                ${trade.accession_number}
+              </span>
+              <a 
+                href="${trade.sec_form4_url}" 
+                target="_blank" 
+                class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 px-3 py-1.5 rounded-lg border border-emerald-500/30 transition"
+              >
+                SEC Form 4 원문 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleSplits(id) {
+      const el = document.getElementById('splits-' + id);
+      const icon = document.getElementById('icon-' + id);
+      if (el) {
+        el.classList.toggle('hidden');
+        icon.classList.toggle('rotate-90');
+      }
+    }
+
+    // 이벤트 리스너 세팅
+    document.addEventListener('DOMContentLoaded', () => {
+      loadData();
+
+      // 검색창
+      const searchInput = document.getElementById('search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+
+      searchInput.addEventListener('input', () => {
+        if (searchInput.value.trim().length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+        render();
+      });
+
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+        render();
+      });
+
+      // 정렬
+      document.getElementById('sort-select').addEventListener('change', render);
+
+      // 새로고침 버튼
+      document.getElementById('refresh-btn').addEventListener('click', loadData);
+
+      // 금액 필터 칩
+      document.querySelectorAll('.filter-chip-value').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip-value').forEach(b => {
+            b.className = 'filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition';
+          });
+          btn.className = 'filter-chip-value px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold';
+          activeFilterMin = parseFloat(btn.dataset.min);
+          render();
+        });
+      });
+
+      // 직책 필터 칩
+      document.querySelectorAll('.filter-chip-role').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip-role').forEach(b => {
+            b.className = 'filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition';
+          });
+          btn.className = 'filter-chip-role px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold';
+          activeFilterRole = btn.dataset.role;
+          render();
+        });
+      });
+    });
+  </script>
+</body>
+</html>

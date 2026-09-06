@@ -1,0 +1,46 @@
+name: SEC Form 4 Insider Buying Tracker
+
+on:
+  schedule:
+    # 미국 증시 장 마감 직후 (평일 월~금 UTC 21:30, 23:00 / 한국 시간 익일 06:30, 08:00)
+    - cron: '30 21 * * 1-5'
+    - cron: '0 23 * * 1-5'
+  workflow_dispatch: # GitHub 웹 콘솔에서 수동 실행 가능
+
+permissions:
+  contents: write
+
+jobs:
+  scan-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run SEC Insider Radar Scanner
+        run: |
+          python -m src.main --count 100 --min-value 100000
+
+      - name: Commit and Push Updated Data
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/data/trades.json
+          if git diff --staged --quiet; then
+            echo "No new insider trades detected. Nothing to commit."
+          else
+            git commit -m "Auto-update: SEC Form 4 insider buying data [skip ci]"
+            git push
+          fi

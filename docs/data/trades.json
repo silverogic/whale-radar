@@ -1,0 +1,109 @@
+{
+  "last_updated": "2026-09-06T03:33:47.346293+00:00",
+  "total_count": 3,
+  "total_volume_usd": 10378079.68,
+  "trades": [
+    {
+      "accession_number": "0001193125-26-384027",
+      "ticker": "ENOV",
+      "issuer_name": "Enovis CORP",
+      "reporter_name": "McDonald Damien",
+      "role_title": "Chief Executive Officer",
+      "role_summary": "Chief Executive Officer, Director",
+      "is_officer": true,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 13035.0,
+      "avg_price": 19.15,
+      "total_value_usd": 249620.25,
+      "shares_owned_after": 247077.0,
+      "pct_increase": 5.57,
+      "transaction_date": "2026-09-04",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1686894/000119312526384027/0001193125-26-384027-index.htm",
+      "items": [
+        {
+          "security_title": "Common stock, par value $0.001",
+          "transaction_date": "2026-09-04",
+          "shares": 13035.0,
+          "price_per_share": 19.15,
+          "total_value": 249620.25
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-384028",
+      "ticker": "ENOV",
+      "issuer_name": "Enovis CORP",
+      "reporter_name": "Engert Oliver",
+      "role_title": "Chief Administrative Officer",
+      "role_summary": "Chief Administrative Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 7598.0,
+      "avg_price": 19.74,
+      "total_value_usd": 149970.96,
+      "shares_owned_after": 61238.0,
+      "pct_increase": 14.16,
+      "transaction_date": "2026-09-03",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2105870/000119312526384028/0001193125-26-384028-index.htm",
+      "items": [
+        {
+          "security_title": "Common stock, par value $0.001",
+          "transaction_date": "2026-09-02",
+          "shares": 2458.0,
+          "price_per_share": 20.32,
+          "total_value": 49946.56
+        },
+        {
+          "security_title": "Common stock, par value $0.001",
+          "transaction_date": "2026-09-03",
+          "shares": 5140.0,
+          "price_per_share": 19.46,
+          "total_value": 100024.4
+        }
+      ]
+    },
+    {
+      "accession_number": "0001724519-26-000010",
+      "ticker": "LILA",
+      "issuer_name": "Liberty Latin America Ltd.",
+      "reporter_name": "DE ANGOITIA ALFONSO",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 476190.0,
+      "avg_price": 20.95,
+      "total_value_usd": 9978488.47,
+      "shares_owned_after": 476190.0,
+      "pct_increase": null,
+      "transaction_date": "2026-09-02",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1724519/000172451926000010/0001724519-26-000010-index.htm",
+      "items": [
+        {
+          "security_title": "Series A Preference Shares",
+          "transaction_date": "2026-08-31",
+          "shares": 145490.0,
+          "price_per_share": 21.0,
+          "total_value": 3055275.45
+        },
+        {
+          "security_title": "Series A Preference Shares",
+          "transaction_date": "2026-09-01",
+          "shares": 17596.0,
+          "price_per_share": 20.65,
+          "total_value": 363339.8
+        },
+        {
+          "security_title": "Series A Preference Shares",
+          "transaction_date": "2026-09-02",
+          "shares": 313104.0,
+          "price_per_share": 20.95,
+          "total_value": 6559873.21
+        }
+      ]
+    }
+  ]
+}
