@@ -74,7 +74,7 @@ def display_trade(trade: InsiderTrade, index: int, total: int):
     print("=" * 65)
 
 def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTION_PERCENT, save_to_json: bool = True) -> List[InsiderTrade]:
-    print(f"📡 [Insider Radar] SEC EDGAR 통합 스캔 시작...")
+    print(f"📡 [Whale Radar] SEC EDGAR 통합 스캔 시작...")
     print(f"   1) Form 4 내부자 거래 (최근 {count}건, ${min_val:,.0f}+)")
     print(f"   2) Schedule 13D/13G 기관 5%+ 대량 지분 (최근 {count//2}건, {min_inst_pct}%+)")
     
@@ -124,7 +124,7 @@ def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTI
     return detected_trades
 
 def main():
-    arg_parser = argparse.ArgumentParser(description="SEC Form 4 Insider Buying Radar Engine")
+    arg_parser = argparse.ArgumentParser(description="SEC Whale Radar Engine (Form 4 & Schedule 13D/G)")
     arg_parser.add_argument("--count", type=int, default=DEFAULT_FEED_COUNT, help="조회할 최신 공시 건수 (기본 80)")
     arg_parser.add_argument("--min-value", type=float, default=MIN_PURCHASE_VALUE_USD, help="최소 매수 금액 USD (기본 100,000)")
     arg_parser.add_argument("--no-save", action="store_true", help="JSON 파일 저장 건너뛰기")

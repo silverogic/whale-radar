@@ -1,1 +1,1 @@
-"""InsiderRadar package"""
+"""WhaleRadar package"""

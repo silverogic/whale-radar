@@ -1,7 +1,7 @@
 import os
 
 # SEC EDGAR API Headers (SEC 규정에 따라 User-Agent 필수: AppName ContactEmail)
-SEC_USER_AGENT = os.getenv("SEC_USER_AGENT", "InsiderRadar/1.0 (contact: admin@insiderradar.com)")
+SEC_USER_AGENT = os.getenv("SEC_USER_AGENT", "WhaleRadar/1.0 (contact: admin@whaleradar.com)")
 
 # SEC EDGAR Endpoints
 SEC_ATOM_FEED_URL = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4&company=&dateb=&owner=only&start=0&count={count}&output=atom"
