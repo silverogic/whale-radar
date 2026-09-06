@@ -336,9 +336,9 @@
     const DATA_URL = 'data/trades.json';
     const USD_TO_KRW = 1350;
 
-    // Supabase 설정 (사용자가 나중에 실제 Supabase URL/KEY를 여기에 넣으면 자동 클라우드 연동)
-    const SUPABASE_URL = ""; 
-    const SUPABASE_ANON_KEY = "";
+    // Supabase 설정 (실제 Supabase 클라우드 연동 완료)
+    const SUPABASE_URL = "https://wjhowfyyahlffdewmtzh.supabase.co"; 
+    const SUPABASE_ANON_KEY = "sb_publishable_A8Gdn1_vJMvnNvtMtVIAuQ_jOK0mmva";
     let supabaseClient = null;
     if (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -746,7 +746,20 @@
           if (supabaseClient) {
             const { data, error } = await supabaseClient.auth.signUp({ email, password: pass });
             if (error) throw error;
-            showAuthAlert('가입 확인 이메일이 발송되었습니다. 메일함을 확인해 주세요!', 'success');
+
+            if (data && data.session) {
+              currentUser = { email: data.user.email };
+              localStorage.setItem('insider_user', JSON.stringify(currentUser));
+              loadUserWatchlist();
+              updateAuthUI();
+              showAuthAlert('회원가입 및 로그인이 완료되었습니다!', 'success');
+              setTimeout(() => {
+                closeAuthModal();
+                render();
+              }, 1000);
+            } else {
+              showAuthAlert('회원가입 접수 완료! 가입 확인 메일이 발송되었습니다. 메일함의 링크를 클릭해 주세요.', 'success');
+            }
           } else {
             // 로컬 스토리지 모드
             const users = JSON.parse(localStorage.getItem('registered_users') || '{}');
