@@ -72,12 +72,13 @@ def display_trade(trade: InsiderTrade, index: int, total: int, rate: float = 135
     print(f" • SEC Form 4 원문 : {trade.sec_form4_url}")
     print("=" * 65)
 
-def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTION_PERCENT, save_to_json: bool = True) -> List[InsiderTrade]:
+def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTION_PERCENT, save_to_json: bool = True, ticker: str = None) -> List[InsiderTrade]:
     current_rate = get_realtime_usd_krw_rate()
-    print(f"📡 [Whale Radar] SEC EDGAR 통합 스캔 시작...")
-    print(f"   1) Form 4 내부자 거래 (최근 {count}건, ${min_val:,.0f}+)")
-    print(f"   2) Schedule 13D/13G 기관 5%+ 대량 지분 (최근 {count//2}건, {min_inst_pct}%+)")
-    print(f"   3) 실시간 기준 환율 적용: 1 USD = {current_rate:,.1f} KRW")
+    target_text = f"특정 종목 [{ticker.upper()}]" if ticker else f"최근 전체 피드 ({count}건)"
+    print(f"📡 [Whale Radar] SEC EDGAR 통합 스캔 시작... ({target_text})")
+    print(f"   • 최소 거래 금액 필터 : ${min_val:,.0f}+")
+    print(f"   • 기관 최소 지분율    : {min_inst_pct}%+")
+    print(f"   • 실시간 기준 환율    : 1 USD = {current_rate:,.1f} KRW")
     
     client = SECClient()
     form4_parser = Form4Parser(min_purchase_value=min_val)
@@ -85,30 +86,46 @@ def run_pipeline(count: int, min_val: float, min_inst_pct: float = MIN_INSTITUTI
     
     detected_trades: List[InsiderTrade] = []
 
-    # --- 1. Form 4 수집 & 분석 ---
-    form4_entries = client.fetch_latest_form4_entries(count=count)
-    print(f"📥 수집된 Form 4 공시: {len(form4_entries)}건")
-    for i, meta in enumerate(form4_entries, 1):
-        print(f"\r🔍 [Form 4 {i}/{len(form4_entries)}] 분석 중: {meta.accession_number}...", end="", flush=True)
-        xml_content = client.get_form4_xml_content(meta)
-        if not xml_content:
-            continue
-        trade = form4_parser.parse_and_filter(xml_content, meta)
-        if trade:
-            detected_trades.append(trade)
+    if ticker:
+        # 특정 종목 온디맨드 검색
+        filings = client.fetch_filings_by_ticker(ticker, count=count)
+        print(f"📥 수집된 [{ticker.upper()}] 관련 공시: {len(filings)}건")
+        for i, meta in enumerate(filings, 1):
+            print(f"\r🔍 [{i}/{len(filings)}] 분석 중: {meta.accession_number} ({meta.title})...", end="", flush=True)
+            xml_content = client.get_form4_xml_content(meta)
+            if not xml_content:
+                continue
+            if "13D" in meta.title or "13G" in meta.title:
+                trade = sc13_parser.parse_and_filter(xml_content, meta)
+            else:
+                trade = form4_parser.parse_and_filter(xml_content, meta)
+            if trade:
+                detected_trades.append(trade)
+    else:
+        # --- 1. Form 4 수집 & 분석 ---
+        form4_entries = client.fetch_latest_form4_entries(count=count)
+        print(f"📥 수집된 Form 4 공시: {len(form4_entries)}건")
+        for i, meta in enumerate(form4_entries, 1):
+            print(f"\r🔍 [Form 4 {i}/{len(form4_entries)}] 분석 중: {meta.accession_number}...", end="", flush=True)
+            xml_content = client.get_form4_xml_content(meta)
+            if not xml_content:
+                continue
+            trade = form4_parser.parse_and_filter(xml_content, meta)
+            if trade:
+                detected_trades.append(trade)
 
-    # --- 2. Schedule 13D / 13G 수집 & 분석 ---
-    print(f"\n📥 수집된 Schedule 13D/13G 공시 탐색 중...")
-    sc13_entries = client.fetch_latest_13d_13g_entries(count=max(20, count // 2))
-    print(f"📥 수집된 Schedule 13D/G 공시: {len(sc13_entries)}건")
-    for i, meta in enumerate(sc13_entries, 1):
-        print(f"\r🔍 [13D/G {i}/{len(sc13_entries)}] 분석 중: {meta.accession_number}...", end="", flush=True)
-        xml_content = client.get_form4_xml_content(meta)
-        if not xml_content:
-            continue
-        trade = sc13_parser.parse_and_filter(xml_content, meta)
-        if trade:
-            detected_trades.append(trade)
+        # --- 2. Schedule 13D / 13G 수집 & 분석 ---
+        print(f"\n📥 수집된 Schedule 13D/13G 공시 탐색 중...")
+        sc13_entries = client.fetch_latest_13d_13g_entries(count=max(20, count // 2))
+        print(f"📥 수집된 Schedule 13D/G 공시: {len(sc13_entries)}건")
+        for i, meta in enumerate(sc13_entries, 1):
+            print(f"\r🔍 [13D/G {i}/{len(sc13_entries)}] 분석 중: {meta.accession_number}...", end="", flush=True)
+            xml_content = client.get_form4_xml_content(meta)
+            if not xml_content:
+                continue
+            trade = sc13_parser.parse_and_filter(xml_content, meta)
+            if trade:
+                detected_trades.append(trade)
 
     print("\n" + "-" * 65)
     print(f"✅ 전체 스캔 완료! 총 {len(detected_trades)}건의 유의미한 내부자/기관 거래 신호 포착.")
@@ -128,6 +145,7 @@ def main():
     arg_parser = argparse.ArgumentParser(description="SEC Whale Radar Engine (Form 4 & Schedule 13D/G)")
     arg_parser.add_argument("--count", type=int, default=DEFAULT_FEED_COUNT, help="조회할 최신 공시 건수 (기본 80)")
     arg_parser.add_argument("--min-value", type=float, default=MIN_PURCHASE_VALUE_USD, help="최소 매수 금액 USD (기본 100,000)")
+    arg_parser.add_argument("--ticker", type=str, default=None, help="특정 종목 티커 검색 (예: TSLA, NVDA)")
     arg_parser.add_argument("--no-save", action="store_true", help="JSON 파일 저장 건너뛰기")
     arg_parser.add_argument("--debug", action="store_true", help="디버그 로그 출력")
     
@@ -136,7 +154,7 @@ def main():
     log_level = logging.DEBUG if args.debug else logging.INFO
     logging.basicConfig(level=log_level, format="%(asctime)s [%(levelname)s] %(message)s")
     
-    run_pipeline(count=args.count, min_val=args.min_value, save_to_json=not args.no_save)
+    run_pipeline(count=args.count, min_val=args.min_value, save_to_json=not args.no_save, ticker=args.ticker)
 
 if __name__ == "__main__":
     main()

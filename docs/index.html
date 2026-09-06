@@ -92,13 +92,13 @@
   <!-- 메인 컨테이너 -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- 히어로 & 핵심 통계 카드 (5열 레이아웃) -->
+    <!-- 히어로 & 핵심 통계 카드 (5열 레이아웃: 필터 조건 실시간 연동) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
-        <div class="text-xs font-medium text-slate-400">포착된 경영진 거래</div>
+        <div class="text-xs font-medium text-slate-400">조회된 거래 공시</div>
         <div id="stat-count" class="text-3xl font-extrabold text-white mt-1 font-mono">-</div>
-        <div class="text-xs text-slate-400 mt-2 flex items-center gap-1">
-          <i class="fa-solid fa-arrow-trend-up text-emerald-400"></i> $50k+ 순수 장내거래
+        <div id="stat-count-sub" class="text-xs text-slate-400 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-filter text-emerald-400"></i> <span id="stat-period-label">최근 30일</span> 조건 일치
         </div>
       </div>
 
@@ -115,9 +115,9 @@
       </div>
 
       <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
-        <div class="text-xs font-medium text-slate-400">대상 기업 수</div>
-        <div id="stat-tickers" class="text-3xl font-extrabold text-white mt-1 font-mono">-</div>
-        <div class="text-xs text-slate-400 mt-2">유의미한 거래 기업</div>
+        <div class="text-xs font-medium text-slate-300">순매수 흐름 (Net Flow)</div>
+        <div id="stat-net-flow" class="text-2xl font-extrabold font-mono mt-1 text-slate-200">-</div>
+        <div id="stat-net-flow-sub" class="text-xs text-slate-400 mt-2 flex items-center gap-1 font-medium">-</div>
       </div>
 
       <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-purple-500/40 transition">
@@ -136,7 +136,7 @@
           <input 
             type="text" 
             id="search-input"
-            placeholder="티커(NVDA, VNRX, CRWD), 기업명, 내부자/기관명(Lagoda, Gilinski) 검색..." 
+            placeholder="특정 종목 티커(NVDA, TSLA, CRWD), 기업명, 내부자/기관명 검색..." 
             class="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
           >
           <button id="clear-search-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 hidden text-xs">
@@ -155,21 +155,39 @@
         </div>
       </div>
 
+      <!-- 포착 종목 퀵 필터 칩 목록 (동적 생성) -->
+      <div class="flex items-center gap-2 pt-1 text-xs overflow-x-auto pb-1">
+        <span class="text-slate-400 whitespace-nowrap font-medium flex items-center gap-1">
+          <i class="fa-solid fa-bolt text-amber-400"></i> 종목 바로가기:
+        </span>
+        <div id="quick-tickers-container" class="flex items-center gap-1.5 flex-wrap">
+          <!-- JS로 동적 생성 -->
+        </div>
+      </div>
+
       <!-- 필터 칩 그룹 -->
       <div class="flex flex-wrap gap-2 items-center text-xs pt-2 border-t border-slate-800/60">
-        <span class="text-slate-400 font-medium mr-1">공시 구분:</span>
+        <!-- 기간 필터 -->
+        <span class="text-slate-400 font-medium mr-1">조회 기간:</span>
+        <button class="filter-chip-period px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-days="all">전체</button>
+        <button class="filter-chip-period px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-days="7">최근 7일</button>
+        <button class="filter-chip-period px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-days="30">최근 30일</button>
+        <button class="filter-chip-period px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-days="90">최근 90일</button>
+        <button class="filter-chip-period px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-days="180">최근 180일</button>
+
+        <span class="text-slate-400 font-medium ml-2 mr-1">공시 구분:</span>
         <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-type="all">전체</button>
         <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1" data-type="BUY">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 🟢 내부자 매수
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 🟢 매수만
         </button>
         <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1" data-type="SELL">
-          <span class="w-2 h-2 rounded-full bg-rose-400"></span> 🔴 내부자 매도
+          <span class="w-2 h-2 rounded-full bg-rose-400"></span> 🔴 매도만
         </button>
         <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1" data-type="13D">
-          <span class="w-2 h-2 rounded-full bg-purple-400"></span> 🟣 13D (경영참여 5%+)
+          <span class="w-2 h-2 rounded-full bg-purple-400"></span> 🟣 13D (경영참여)
         </button>
         <button class="filter-chip-type px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition flex items-center gap-1" data-type="13G">
-          <span class="w-2 h-2 rounded-full bg-indigo-400"></span> 🔵 13G (단순투자 5%+)
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span> 🔵 13G (단순투자)
         </button>
 
         <span class="text-slate-400 font-medium ml-2 mr-1">금액 필터:</span>
@@ -178,18 +196,17 @@
         <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="100000">$100k+ (1.3억+)</button>
         <button class="filter-chip-value px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-min="1000000">$1M+ (13.5억+)</button>
 
-        <span class="text-slate-400 font-medium ml-2 mr-1">주체 구분:</span>
-        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold" data-role="all">전체</button>
-        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="officer">경영진 (Officer)</button>
-        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="director">이사회 (Director)</button>
-        <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="institution">기관투자자 (13D/G)</button>
-
         <!-- 내 관심종목 필터 버튼 -->
         <button id="filter-watchlist-btn" class="ml-auto px-3 py-1.5 rounded-lg border border-amber-500/30 bg-slate-950 hover:bg-amber-500/10 text-slate-300 transition flex items-center gap-1.5">
           <i class="fa-solid fa-star text-amber-400"></i>
           <span>내 관심종목</span> (<span id="watchlist-count" class="font-mono">0</span>)
         </button>
       </div>
+    </div>
+
+    <!-- 특정 종목 검색 시 나타나는 종목 심층 브리핑 카드 -->
+    <div id="stock-spotlight" class="hidden bg-slate-900/90 border border-slate-800 p-6 rounded-2xl relative overflow-hidden shadow-xl space-y-4">
+      <!-- 자바스크립트로 종목명, 티커, 총매수/매도/순매수, 거래 임원/기관 명단 렌더링 -->
     </div>
 
     <!-- 로딩 스피너 -->
@@ -322,7 +339,8 @@
     }
 
     let allTrades = [];
-    let activeFilterTradeType = 'all'; // 'all', 'BUY', 'SELL'
+    let activeFilterDays = '30'; // 'all', '7', '30', '90', '180'
+    let activeFilterTradeType = 'all'; // 'all', 'BUY', 'SELL', '13D', '13G'
     let activeFilterMin = 0;
     let activeFilterRole = 'all';
     let filterWatchlistOnly = false;
@@ -351,7 +369,23 @@
 
     function formatDate(dateStr) {
       if (!dateStr) return '-';
-      return dateStr;
+      return dateStr.substring(0, 10);
+    }
+
+    function parseTradeDate(dateStr) {
+      if (!dateStr) return null;
+      const ymd = dateStr.substring(0, 10);
+      const parts = ymd.split('-');
+      if (parts.length === 3) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+          return new Date(y, m, d);
+        }
+      }
+      const dt = new Date(dateStr);
+      return isNaN(dt.getTime()) ? null : dt;
     }
 
     // ==========================================
@@ -487,12 +521,10 @@
             `<i class="fa-regular fa-clock mr-1"></i>최근 갱신: ${date.toLocaleString('ko-KR')}`;
         }
 
-        updateStats(data);
         render();
 
         // 비동기 실시간 환율 갱신 후 화면 즉시 재계산
         fetchRealtimeExchangeRate().then(() => {
-          updateStats(data);
           render();
         });
 
@@ -510,8 +542,8 @@
       }
     }
 
-    function updateStats(data) {
-      const trades = data.trades || [];
+    function updateStats(trades) {
+      trades = trades || [];
       const insiderTrades = trades.filter(t => !t.category || t.category === 'INSIDER');
       const buyTrades = insiderTrades.filter(t => (t.trade_type || 'BUY') === 'BUY');
       const sellTrades = insiderTrades.filter(t => t.trade_type === 'SELL');
@@ -519,16 +551,263 @@
 
       const buyVolume = buyTrades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
       const sellVolume = sellTrades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
-      const uniqueTickers = new Set(trades.map(t => t.ticker)).size;
+      const netFlow = buyVolume - sellVolume;
 
-      document.getElementById('stat-count').innerText = `${insiderTrades.length}건`;
-      document.getElementById('stat-volume-buy').innerText = formatUSD(buyVolume);
-      document.getElementById('stat-volume-buy-krw').innerText = `약 ${formatKRW(buyVolume)}`;
-      document.getElementById('stat-volume-sell').innerText = formatUSD(sellVolume);
-      document.getElementById('stat-volume-sell-krw').innerText = `약 ${formatKRW(sellVolume)}`;
-      document.getElementById('stat-tickers').innerText = `${uniqueTickers}개`;
+      // 1. 공시 건수 및 기간 라벨
+      const countEl = document.getElementById('stat-count');
+      if (countEl) countEl.innerText = `${trades.length}건`;
+      const periodLabel = document.getElementById('stat-period-label');
+      if (periodLabel) {
+        periodLabel.innerText = activeFilterDays === 'all' ? '전체 기간' : `최근 ${activeFilterDays}일`;
+      }
+
+      // 2. 총 매수 / 매도 금액
+      const buyEl = document.getElementById('stat-volume-buy');
+      if (buyEl) buyEl.innerText = formatUSD(buyVolume);
+      const buyKrwEl = document.getElementById('stat-volume-buy-krw');
+      if (buyKrwEl) buyKrwEl.innerText = `약 ${formatKRW(buyVolume)}`;
+
+      const sellEl = document.getElementById('stat-volume-sell');
+      if (sellEl) sellEl.innerText = formatUSD(sellVolume);
+      const sellKrwEl = document.getElementById('stat-volume-sell-krw');
+      if (sellKrwEl) sellKrwEl.innerText = `약 ${formatKRW(sellVolume)}`;
+
+      // 3. 순매수 흐름 (Net Flow)
+      const netFlowEl = document.getElementById('stat-net-flow');
+      const netFlowSubEl = document.getElementById('stat-net-flow-sub');
+      if (netFlowEl && netFlowSubEl) {
+        if (netFlow > 0) {
+          netFlowEl.className = 'text-2xl font-extrabold font-mono mt-1 text-emerald-400';
+          netFlowEl.innerText = `+${formatUSD(netFlow)}`;
+          netFlowSubEl.innerHTML = `<span class="text-emerald-400 font-medium flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up"></i>순매수 우위 (+${formatKRW(netFlow)})</span>`;
+        } else if (netFlow < 0) {
+          netFlowEl.className = 'text-2xl font-extrabold font-mono mt-1 text-rose-400';
+          netFlowEl.innerText = `-${formatUSD(Math.abs(netFlow))}`;
+          netFlowSubEl.innerHTML = `<span class="text-rose-400 font-medium flex items-center gap-1"><i class="fa-solid fa-arrow-trend-down"></i>순매도 우위 (-${formatKRW(Math.abs(netFlow))})</span>`;
+        } else {
+          netFlowEl.className = 'text-2xl font-extrabold font-mono mt-1 text-slate-300';
+          netFlowEl.innerText = '$0';
+          netFlowSubEl.innerHTML = `<span class="text-slate-400 font-medium">순유출입 균형</span>`;
+        }
+      }
+
+      // 4. 기관 대량 지분 건수
       const instEl = document.getElementById('stat-institution');
       if (instEl) instEl.innerText = `${instTrades.length}건`;
+    }
+
+    function renderQuickTickers() {
+      const container = document.getElementById('quick-tickers-container');
+      if (!container) return;
+
+      const tickerCounts = {};
+      allTrades.forEach(t => {
+        if (t.ticker) {
+          tickerCounts[t.ticker] = (tickerCounts[t.ticker] || 0) + 1;
+        }
+      });
+
+      const sortedTickers = Object.keys(tickerCounts).sort((a, b) => tickerCounts[b] - tickerCounts[a]);
+      const currentQuery = document.getElementById('search-input').value.trim().toUpperCase();
+
+      container.innerHTML = sortedTickers.slice(0, 12).map(ticker => {
+        const isSelected = currentQuery === ticker;
+        const btnClass = isSelected
+          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 font-bold shadow-sm shadow-emerald-500/20'
+          : 'bg-slate-950 text-slate-300 hover:text-white hover:bg-slate-800 border-slate-800';
+        return `
+          <button 
+            type="button"
+            onclick="toggleQuickTicker('${ticker}')" 
+            class="px-2.5 py-1 rounded-lg border text-xs font-mono transition flex items-center gap-1 ${btnClass}"
+          >
+            <span>$${ticker}</span>
+            <span class="text-[10px] text-slate-500 font-sans">(${tickerCounts[ticker]})</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleQuickTicker(ticker) {
+      const searchInput = document.getElementById('search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchInput.value.trim().toUpperCase() === ticker) {
+        searchInput.value = '';
+        clearBtn.classList.add('hidden');
+      } else {
+        searchInput.value = ticker;
+        clearBtn.classList.remove('hidden');
+      }
+      render();
+    }
+
+    function renderStockSpotlight(filtered) {
+      const spotlightEl = document.getElementById('stock-spotlight');
+      if (!spotlightEl) return;
+
+      const rawQuery = document.getElementById('search-input').value.trim();
+      const queryUpper = rawQuery.toUpperCase();
+
+      if (!rawQuery) {
+        spotlightEl.classList.add('hidden');
+        spotlightEl.innerHTML = '';
+        return;
+      }
+
+      // 검색어가 티커와 정확히 일치하거나, 필터링 결과가 단일 종목에 귀속되는지 판별
+      let targetTicker = null;
+      if (allTrades.some(t => t.ticker && t.ticker.toUpperCase() === queryUpper)) {
+        targetTicker = queryUpper;
+      } else if (filtered.length > 0) {
+        const uniqueFilteredTickers = Array.from(new Set(filtered.map(t => t.ticker).filter(Boolean)));
+        if (uniqueFilteredTickers.length === 1) {
+          targetTicker = uniqueFilteredTickers[0];
+        }
+      }
+
+      if (targetTicker) {
+        const companyTrades = allTrades.filter(t => t.ticker && t.ticker.toUpperCase() === targetTicker);
+        const companyName = (companyTrades[0] && companyTrades[0].issuer_name) || targetTicker;
+
+        const buyList = companyTrades.filter(t => (!t.category || t.category === 'INSIDER') && (t.trade_type || 'BUY') === 'BUY');
+        const sellList = companyTrades.filter(t => (!t.category || t.category === 'INSIDER') && t.trade_type === 'SELL');
+        const instList = companyTrades.filter(t => t.category === '13D' || t.category === '13G');
+
+        const totalBuy = buyList.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
+        const totalSell = sellList.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
+        const netFlow = totalBuy - totalSell;
+
+        // 포착된 주요 내부자/기관 목록
+        const insiderRoles = [];
+        const seenReporters = new Set();
+        companyTrades.forEach(t => {
+          if (t.reporter_name && !seenReporters.has(t.reporter_name)) {
+            seenReporters.add(t.reporter_name);
+            insiderRoles.push({
+              name: t.reporter_name,
+              role: t.role_summary || (t.category ? `13${t.category.slice(2)} 대량보유자` : 'Insider'),
+              type: t.category || t.trade_type || 'BUY'
+            });
+          }
+        });
+
+        const netColor = netFlow > 0 ? 'text-emerald-400' : (netFlow < 0 ? 'text-rose-400' : 'text-slate-300');
+        const netSign = netFlow > 0 ? '+' : (netFlow < 0 ? '-' : '');
+
+        spotlightEl.innerHTML = `
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-xl font-bold font-mono text-base">
+                  $${targetTicker}
+                </span>
+                <h2 class="text-lg font-bold text-white">${companyName}</h2>
+                <span class="px-2 py-0.5 rounded text-[11px] bg-slate-800 text-slate-300 border border-slate-700">
+                  종목 심층 분석 리포트
+                </span>
+              </div>
+              <p class="text-xs text-slate-400">
+                총 ${companyTrades.length}건 공시 포착 (내부자 거래 ${buyList.length + sellList.length}건 • 기관 5%+ 지분 ${instList.length}건)
+              </p>
+            </div>
+
+            <!-- 외부 분석/차트 바로가기 버튼군 -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <a 
+                href="https://www.sec.gov/edgar/searchedgar/companysearch?companySearchBox=${targetTicker}" 
+                target="_blank" 
+                class="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold transition flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-building-columns text-slate-400"></i> SEC EDGAR 원문
+              </a>
+              <a 
+                href="https://finance.yahoo.com/quote/${targetTicker}" 
+                target="_blank" 
+                class="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold transition flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-chart-line text-slate-400"></i> Yahoo Finance
+              </a>
+              <a 
+                href="https://www.tradingview.com/symbols/${targetTicker}/" 
+                target="_blank" 
+                class="px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 text-xs font-semibold transition flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-chart-candlestick text-blue-400"></i> TradingView
+              </a>
+            </div>
+          </div>
+
+          <!-- 종목 집계 메트릭 3열 -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+            <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80">
+              <div class="text-xs text-emerald-400 font-medium">내부자 총 매수</div>
+              <div class="text-xl font-extrabold text-emerald-400 font-mono mt-0.5">${formatUSD(totalBuy)}</div>
+              <div class="text-xs text-slate-500">약 ${formatKRW(totalBuy)} (${buyList.length}회)</div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80">
+              <div class="text-xs text-rose-400 font-medium">내부자 총 매도</div>
+              <div class="text-xl font-extrabold text-rose-400 font-mono mt-0.5">${formatUSD(totalSell)}</div>
+              <div class="text-xs text-slate-500">약 ${formatKRW(totalSell)} (${sellList.length}회)</div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80">
+              <div class="text-xs text-slate-300 font-medium">내부자 순매수 (Net Flow)</div>
+              <div class="text-xl font-extrabold ${netColor} font-mono mt-0.5">${netSign}${formatUSD(Math.abs(netFlow))}</div>
+              <div class="text-xs text-slate-500">약 ${formatKRW(Math.abs(netFlow))} ${netFlow >= 0 ? '순유입' : '순유출'}</div>
+            </div>
+          </div>
+
+          <!-- 거래 참여 내부자/기관 프로필 칩 -->
+          <div class="pt-2 space-y-1.5">
+            <div class="text-xs font-semibold text-slate-400">포착된 주요 내부자 및 보고 기관:</div>
+            <div class="flex items-center gap-2 flex-wrap">
+              ${insiderRoles.map(p => `
+                <div class="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-xs flex items-center gap-1.5">
+                  <span class="font-medium text-slate-200">${p.name}</span>
+                  <span class="text-[10px] text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800">${p.role}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        spotlightEl.classList.remove('hidden');
+      } else if (filtered.length === 0 && rawQuery.length >= 1 && rawQuery.length <= 6) {
+        // 미포착 종목 가이드 배너
+        spotlightEl.innerHTML = `
+          <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-2">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 text-sm font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-lg font-mono">
+                  $${queryUpper}
+                </span>
+                <h3 class="text-sm font-semibold text-slate-200">미포착 종목 조회 가이드</h3>
+              </div>
+              <p class="text-xs text-slate-400">
+                현재 수집된 기본 데이터셋에 $${queryUpper}의 최근 공시가 포함되어 있지 않습니다.<br>
+                SEC EDGAR 공식 시스템에서 바로 확인하거나, 파이썬 파이프라인에서 온디맨드로 수집할 수 있습니다.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <a 
+                href="https://www.sec.gov/edgar/searchedgar/companysearch?companySearchBox=${queryUpper}" 
+                target="_blank" 
+                class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition border border-slate-700"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i> SEC EDGAR 실시간 공시 검색
+              </a>
+              <div class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-emerald-400 font-mono select-all flex items-center gap-1.5" title="클릭하여 복사 후 실행">
+                <i class="fa-solid fa-terminal text-slate-500"></i>
+                <span>python -m src.main --ticker ${queryUpper}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        spotlightEl.classList.remove('hidden');
+      } else {
+        spotlightEl.classList.add('hidden');
+        spotlightEl.innerHTML = '';
+      }
     }
 
     function getFilteredTrades() {
@@ -555,6 +834,20 @@
           if (cat !== '13G') return false;
         }
 
+        // 기간 필터 (최근 N일)
+        if (activeFilterDays !== 'all') {
+          const days = parseInt(activeFilterDays, 10);
+          if (!isNaN(days) && t.transaction_date) {
+            const tDate = parseTradeDate(t.transaction_date);
+            if (tDate) {
+              const now = new Date();
+              const diffTime = now.getTime() - tDate.getTime();
+              const diffDays = diffTime / (1000 * 3600 * 24);
+              if (diffDays > days) return false;
+            }
+          }
+        }
+
         // 검색어 필터
         const matchQuery = !query || 
           (t.ticker && t.ticker.toLowerCase().includes(query)) ||
@@ -565,7 +858,7 @@
         if (!matchQuery) return false;
 
         // 금액 필터 (내부자 거래에 적용)
-        if (cat === 'INSIDER' && t.total_value_usd < activeFilterMin) return false;
+        if (cat === 'INSIDER' && (t.total_value_usd || 0) < activeFilterMin) return false;
 
         // 직책/주체 구분 필터
         if (activeFilterRole === 'officer' && !t.is_officer) return false;
@@ -588,6 +881,13 @@
       const container = document.getElementById('trades-container');
       const emptyState = document.getElementById('empty-state');
       const filtered = getFilteredTrades();
+
+      // 필터된 결과에 맞춰 상단 핵심 통계 카드 실시간 동적 재계산
+      updateStats(filtered);
+
+      // 종목 심층 브리핑 카드 및 퀵 티커 바 렌더링
+      renderStockSpotlight(filtered);
+      renderQuickTickers();
 
       if (filtered.length === 0) {
         container.innerHTML = '';
@@ -943,7 +1243,19 @@
       // 새로고침 버튼
       document.getElementById('refresh-btn').addEventListener('click', loadData);
 
-      // 거래 유형 필터 칩 (전체, BUY, SELL)
+      // 기간 필터 칩 (전체, 7일, 30일, 90일, 180일)
+      document.querySelectorAll('.filter-chip-period').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip-period').forEach(b => {
+            b.className = 'filter-chip-period px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition';
+          });
+          btn.className = 'filter-chip-period px-3 py-1.5 rounded-lg border border-emerald-500/50 bg-emerald-500/20 text-emerald-300 font-semibold';
+          activeFilterDays = btn.dataset.days;
+          render();
+        });
+      });
+
+      // 거래 유형 필터 칩 (전체, BUY, SELL, 13D, 13G)
       document.querySelectorAll('.filter-chip-type').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.filter-chip-type').forEach(b => {

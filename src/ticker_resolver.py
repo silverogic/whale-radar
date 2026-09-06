@@ -15,6 +15,7 @@ class TickerResolver:
     """SEC CIK 번호를 티커(Ticker) 및 회사명으로 100% 오차 없이 매핑하는 캐시 리졸버"""
     
     _cik_to_ticker: Dict[str, Tuple[str, str]] = {}
+    _ticker_to_info: Dict[str, Tuple[str, str]] = {}
     _loaded = False
 
     @classmethod
@@ -54,6 +55,7 @@ class TickerResolver:
     @classmethod
     def _populate(cls, data: dict):
         cls._cik_to_ticker.clear()
+        cls._ticker_to_info.clear()
         for item in data.values():
             cik_int = item.get("cik_str")
             ticker = item.get("ticker", "").strip().upper()
@@ -62,6 +64,7 @@ class TickerResolver:
                 # 숫자, 0 패딩된 10자리, 일반 문자열 모두 매핑
                 cls._cik_to_ticker[str(cik_int)] = (ticker, title)
                 cls._cik_to_ticker[f"{cik_int:010d}"] = (ticker, title)
+                cls._ticker_to_info[ticker] = (f"{cik_int:010d}", title)
 
     @classmethod
     def get_ticker_and_title(cls, cik: str) -> Tuple[Optional[str], Optional[str]]:
@@ -78,3 +81,9 @@ class TickerResolver:
             return cls._cik_to_ticker[padded_cik]
 
         return None, None
+
+    @classmethod
+    def get_info_by_ticker(cls, ticker: str) -> Tuple[Optional[str], Optional[str]]:
+        """티커(예: 'NVDA', 'TSLA')로 (10자리 CIK, 회사명) 조회"""
+        cls.load()
+        return cls._ticker_to_info.get(ticker.strip().upper(), (None, None))

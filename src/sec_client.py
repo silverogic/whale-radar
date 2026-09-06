@@ -23,8 +23,7 @@ class SECClient:
         self.session = requests.Session()
         self.session.headers.update({
             "User-Agent": user_agent,
-            "Accept-Encoding": "gzip, deflate",
-            "Host": "www.sec.gov"
+            "Accept-Encoding": "gzip, deflate"
         })
         self._last_request_time = 0.0
 
@@ -161,6 +160,52 @@ class SECClient:
             ))
 
         logger.info(f"Retrieved {len(entries)} unique Schedule 13D/G submissions.")
+        return entries
+
+    def fetch_filings_by_ticker(self, ticker: str, count: int = 30) -> List[Form4Meta]:
+        """특정 티커(예: TSLA, NVDA)의 최근 Form 4 및 Schedule 13D/13G 공시 목록 직접 조회"""
+        from src.ticker_resolver import TickerResolver
+        cik, title = TickerResolver.get_info_by_ticker(ticker)
+        if not cik:
+            logger.warning(f"Could not resolve CIK for ticker '{ticker}'")
+            return []
+
+        url = f"https://data.sec.gov/submissions/CIK{cik}.json"
+        logger.info(f"Fetching filings for ticker {ticker} (CIK: {cik}) from {url}")
+        resp = self._get(url)
+        data = resp.json()
+        
+        recent = data.get("filings", {}).get("recent", {})
+        acc_nums = recent.get("accessionNumber", [])
+        forms = recent.get("form", [])
+        filing_dates = recent.get("filingDate", [])
+        
+        entries: List[Form4Meta] = []
+        clean_cik = cik.lstrip("0")
+        
+        for i in range(len(forms)):
+            form_type = forms[i]
+            if form_type not in ("4", "4/A", "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A"):
+                continue
+                
+            acc_no = acc_nums[i]
+            clean_acc_no = acc_no.replace("-", "")
+            f_date = filing_dates[i]
+            index_url = f"{SEC_ARCHIVE_BASE_URL}/{clean_cik}/{clean_acc_no}/{acc_no}-index.htm"
+            
+            entries.append(Form4Meta(
+                accession_number=acc_no,
+                cik=clean_cik,
+                clean_acc_no=clean_acc_no,
+                filing_date=f_date,
+                title=f"{form_type} - {title or ticker}",
+                index_url=index_url
+            ))
+            
+            if len(entries) >= count:
+                break
+                
+        logger.info(f"Retrieved {len(entries)} filings for {ticker}.")
         return entries
 
     def get_form4_xml_content(self, meta: Form4Meta) -> Optional[str]:
