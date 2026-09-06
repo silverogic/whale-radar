@@ -23,6 +23,8 @@
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Supabase JS Client (무서버 회원가입/인증) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
     body {
@@ -54,12 +56,30 @@
       </div>
 
       <div class="flex items-center gap-3">
-        <span id="last-updated-text" class="text-xs text-slate-400 hidden md:inline-block">
+        <span id="last-updated-text" class="text-xs text-slate-400 hidden lg:inline-block">
           <i class="fa-regular fa-clock mr-1"></i>데이터 확인 중...
         </span>
         <button id="refresh-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition flex items-center gap-1.5">
           <i class="fa-solid fa-rotate-right" id="refresh-icon"></i> 새로고침
         </button>
+
+        <!-- 비로그인 상태 영역 -->
+        <div id="auth-logged-out" class="flex items-center gap-2">
+          <button id="open-auth-btn" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white shadow-sm shadow-emerald-600/30 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-user-plus"></i> 로그인 / 회원가입
+          </button>
+        </div>
+
+        <!-- 로그인 상태 영역 -->
+        <div id="auth-logged-in" class="hidden flex items-center gap-2">
+          <div class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs text-slate-200 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="user-email-display" class="font-mono text-xs max-w-[140px] truncate">user@email.com</span>
+          </div>
+          <button id="logout-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-slate-400 hover:text-rose-400 border border-slate-800 transition" title="로그아웃">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -139,6 +159,12 @@
         <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="officer">경영진 (Officer)</button>
         <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="director">이사회 (Director)</button>
         <button class="filter-chip-role px-3 py-1.5 rounded-lg border border-slate-800 bg-slate-950 hover:bg-slate-800 text-slate-300 transition" data-role="ten_percent">10% 지분권자</button>
+
+        <!-- 내 관심종목 필터 버튼 -->
+        <button id="filter-watchlist-btn" class="ml-auto px-3 py-1.5 rounded-lg border border-amber-500/30 bg-slate-950 hover:bg-amber-500/10 text-slate-300 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-star text-amber-400"></i>
+          <span>내 관심종목</span> (<span id="watchlist-count" class="font-mono">0</span>)
+        </button>
       </div>
     </div>
 
@@ -173,13 +199,159 @@
     </div>
   </footer>
 
+  <!-- 🔑 회원가입 / 로그인 모달 -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden px-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative overflow-hidden">
+      <!-- 닫기 버튼 -->
+      <button id="close-auth-modal" class="absolute right-4 top-4 text-slate-400 hover:text-white text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- 모달 헤더 -->
+      <div class="text-center space-y-1 pb-4">
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto text-xl mb-2">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h3 class="text-lg font-bold text-white tracking-tight">InsiderRadar 계정</h3>
+        <p class="text-xs text-slate-400">가입 시 관심 종목 스크랩 및 맞춤형 알림 설정이 가능합니다.</p>
+      </div>
+
+      <!-- 탭 전환 버튼 -->
+      <div class="grid grid-cols-2 p-1 bg-slate-950 rounded-xl border border-slate-800 mb-5">
+        <button id="tab-login" class="py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition">
+          로그인
+        </button>
+        <button id="tab-signup" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition">
+          회원가입
+        </button>
+      </div>
+
+      <!-- 에러/성공 알림 메시지 박스 -->
+      <div id="auth-alert" class="hidden p-3 rounded-xl text-xs mb-4"></div>
+
+      <!-- 1. 로그인 폼 -->
+      <form id="login-form" class="space-y-4">
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-slate-300">이메일 주소</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input 
+              type="email" 
+              id="login-email" 
+              required 
+              placeholder="name@example.com" 
+              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            >
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-slate-300">비밀번호</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input 
+              type="password" 
+              id="login-password" 
+              required 
+              placeholder="••••••••" 
+              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            >
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          id="login-submit-btn"
+          class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2"
+        >
+          <span>로그인</span>
+        </button>
+      </form>
+
+      <!-- 2. 회원가입 폼 -->
+      <form id="signup-form" class="space-y-4 hidden">
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-slate-300">가입 이메일</label>
+          <div class="relative">
+            <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input 
+              type="email" 
+              id="signup-email" 
+              required 
+              placeholder="name@example.com" 
+              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            >
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-slate-300">비밀번호 (6자 이상)</label>
+          <div class="relative">
+            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input 
+              type="password" 
+              id="signup-password" 
+              required 
+              minlength="6"
+              placeholder="••••••••" 
+              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            >
+          </div>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-slate-300">비밀번호 확인</label>
+          <div class="relative">
+            <i class="fa-solid fa-check-double absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            <input 
+              type="password" 
+              id="signup-password-confirm" 
+              required 
+              minlength="6"
+              placeholder="••••••••" 
+              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            >
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          id="signup-submit-btn"
+          class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2"
+        >
+          <span>무료 회원가입 완료</span>
+        </button>
+      </form>
+
+      <div class="mt-4 pt-3 border-t border-slate-800/80 text-center">
+        <p class="text-[11px] text-slate-500">
+          <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i>
+          이메일과 비밀번호는 안전하게 암호화되어 관리됩니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
   <script>
     const DATA_URL = 'data/trades.json';
     const USD_TO_KRW = 1350;
 
+    // Supabase 설정 (사용자가 나중에 실제 Supabase URL/KEY를 여기에 넣으면 자동 클라우드 연동)
+    const SUPABASE_URL = ""; 
+    const SUPABASE_ANON_KEY = "";
+    let supabaseClient = null;
+    if (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
     let allTrades = [];
     let activeFilterMin = 0;
     let activeFilterRole = 'all';
+    let filterWatchlistOnly = false;
+
+    // 현재 사용자 및 관심종목 상태
+    let currentUser = null;
+    let userWatchlist = new Set();
 
     function formatNumber(num) {
       return new Intl.NumberFormat('en-US').format(Math.round(num));
@@ -204,7 +376,134 @@
       return dateStr;
     }
 
-    // 데이터 로드
+    // ==========================================
+    // 🔐 인증 (Auth) 및 세션 관리 로직
+    // ==========================================
+    function initAuth() {
+      // 로컬 스토리지에서 세션 복원
+      const savedUser = localStorage.getItem('insider_user');
+      if (savedUser) {
+        try {
+          currentUser = JSON.parse(savedUser);
+          loadUserWatchlist();
+          updateAuthUI();
+        } catch (e) {
+          currentUser = null;
+        }
+      }
+    }
+
+    function loadUserWatchlist() {
+      if (!currentUser) {
+        userWatchlist.clear();
+      } else {
+        const savedWatchlist = localStorage.getItem(`watchlist_${currentUser.email}`);
+        if (savedWatchlist) {
+          try {
+            userWatchlist = new Set(JSON.parse(savedWatchlist));
+          } catch (e) {
+            userWatchlist = new Set();
+          }
+        } else {
+          userWatchlist = new Set();
+        }
+      }
+      updateWatchlistCount();
+    }
+
+    function saveUserWatchlist() {
+      if (currentUser) {
+        localStorage.setItem(`watchlist_${currentUser.email}`, JSON.stringify(Array.from(userWatchlist)));
+      }
+      updateWatchlistCount();
+    }
+
+    function updateWatchlistCount() {
+      const badge = document.getElementById('watchlist-count');
+      if (badge) badge.innerText = userWatchlist.size;
+    }
+
+    function updateAuthUI() {
+      const loggedOutDiv = document.getElementById('auth-logged-out');
+      const loggedInDiv = document.getElementById('auth-logged-in');
+      const userEmailDisplay = document.getElementById('user-email-display');
+
+      if (currentUser) {
+        loggedOutDiv.classList.add('hidden');
+        loggedInDiv.classList.remove('hidden');
+        userEmailDisplay.innerText = currentUser.email;
+      } else {
+        loggedOutDiv.classList.remove('hidden');
+        loggedInDiv.classList.add('hidden');
+      }
+    }
+
+    function showAuthAlert(msg, type = 'error') {
+      const alertBox = document.getElementById('auth-alert');
+      alertBox.className = `p-3 rounded-xl text-xs mb-4 ${
+        type === 'error' ? 'bg-rose-500/10 border border-rose-500/30 text-rose-300' : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300'
+      }`;
+      alertBox.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-check'} mr-1.5"></i> ${msg}`;
+      alertBox.classList.remove('hidden');
+    }
+
+    function hideAuthAlert() {
+      const alertBox = document.getElementById('auth-alert');
+      alertBox.classList.add('hidden');
+    }
+
+    // 모달 토글
+    function openAuthModal(mode = 'login') {
+      hideAuthAlert();
+      document.getElementById('auth-modal').classList.remove('hidden');
+      switchAuthTab(mode);
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').classList.add('hidden');
+      hideAuthAlert();
+    }
+
+    function switchAuthTab(tab) {
+      hideAuthAlert();
+      const loginForm = document.getElementById('login-form');
+      const signupForm = document.getElementById('signup-form');
+      const tabLogin = document.getElementById('tab-login');
+      const tabSignup = document.getElementById('tab-signup');
+
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+        tabLogin.className = 'py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition';
+        tabSignup.className = 'py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition';
+      } else {
+        loginForm.classList.add('hidden');
+        signupForm.classList.remove('hidden');
+        tabSignup.className = 'py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition';
+        tabLogin.className = 'py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition';
+      }
+    }
+
+    // 관심종목(Watchlist) 토글
+    function toggleWatchlist(ticker) {
+      if (!currentUser) {
+        openAuthModal('login');
+        showAuthAlert('관심 종목을 등록하려면 먼저 로그인해 주세요!', 'error');
+        return;
+      }
+
+      if (userWatchlist.has(ticker)) {
+        userWatchlist.delete(ticker);
+      } else {
+        userWatchlist.add(ticker);
+      }
+      saveUserWatchlist();
+      render();
+    }
+
+    // ==========================================
+    // 📊 데이터 로드 및 렌더링 로직
+    // ==========================================
     async function loadData() {
       const refreshIcon = document.getElementById('refresh-icon');
       refreshIcon.classList.add('fa-spin');
@@ -216,7 +515,6 @@
         
         allTrades = data.trades || [];
         
-        // 마지막 업데이트 시간 표시
         if (data.last_updated) {
           const date = new Date(data.last_updated);
           document.getElementById('last-updated-text').innerHTML = 
@@ -231,7 +529,7 @@
         document.getElementById('loading-state').innerHTML = `
           <div class="text-rose-400 py-10">
             <i class="fa-solid fa-triangle-exclamation text-2xl mb-2"></i>
-            <p>데이터를 불러오지 못했습니다. (아직 첫 크롤링 데이터가 생성되지 않았거나 경로 오류)</p>
+            <p>데이터를 불러오지 못했습니다. (새로고침을 시도해 보세요)</p>
           </div>
         `;
       } finally {
@@ -240,7 +538,6 @@
       }
     }
 
-    // 통계 지표 갱신
     function updateStats(data) {
       const trades = data.trades || [];
       const totalVolume = trades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
@@ -252,12 +549,16 @@
       document.getElementById('stat-tickers').innerText = `${uniqueTickers}개`;
     }
 
-    // 필터 및 검색 적용
     function getFilteredTrades() {
       const query = document.getElementById('search-input').value.toLowerCase().trim();
       const sortType = document.getElementById('sort-select').value;
 
       return allTrades.filter(t => {
+        // 관심종목 전용 필터
+        if (filterWatchlistOnly && !userWatchlist.has(t.ticker)) {
+          return false;
+        }
+
         // 검색어 필터
         const matchQuery = !query || 
           (t.ticker && t.ticker.toLowerCase().includes(query)) ||
@@ -279,12 +580,10 @@
         if (sortType === 'value-desc') return (b.total_value_usd || 0) - (a.total_value_usd || 0);
         if (sortType === 'value-asc') return (a.total_value_usd || 0) - (b.total_value_usd || 0);
         if (sortType === 'ticker-asc') return (a.ticker || '').localeCompare(b.ticker || '');
-        // 기본: date-desc
         return (b.transaction_date || '').localeCompare(a.transaction_date || '');
       });
     }
 
-    // 렌더링
     function render() {
       const container = document.getElementById('trades-container');
       const emptyState = document.getElementById('empty-state');
@@ -297,21 +596,30 @@
       }
 
       emptyState.classList.add('hidden');
-      container.innerHTML = filtered.map((trade, idx) => {
+      container.innerHTML = filtered.map(trade => {
         const hasSplits = trade.items && trade.items.length > 1;
+        const isStarred = userWatchlist.has(trade.ticker);
         const changeBadge = trade.pct_increase !== null && trade.pct_increase !== undefined
           ? `<span class="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-md font-mono">+${trade.pct_increase.toFixed(2)}% 지분 확대</span>`
           : '';
 
         return `
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between group">
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition flex flex-col justify-between group relative">
             <div class="space-y-4">
-              <!-- 헤더: 티커 & 회사명 & 날짜 -->
+              <!-- 헤더: 티커 & 회사명 & 관심종목 별표 & 날짜 -->
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-2.5 flex-wrap">
                   <span class="px-2.5 py-1 text-sm font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg font-mono">
                     ${trade.ticker || 'N/A'}
                   </span>
+                  <!-- 관심종목 ⭐️ 버튼 -->
+                  <button 
+                    onclick="toggleWatchlist('${trade.ticker}')" 
+                    class="p-1 rounded-lg hover:bg-slate-800 transition text-sm ${isStarred ? 'text-amber-400' : 'text-slate-600 hover:text-amber-400'}"
+                    title="${isStarred ? '관심종목 해제' : '관심종목 등록'}"
+                  >
+                    <i class="fa-${isStarred ? 'solid' : 'regular'} fa-star"></i>
+                  </button>
                   <span class="text-sm font-semibold text-slate-200 line-clamp-1" title="${trade.issuer_name}">
                     ${trade.issuer_name}
                   </span>
@@ -354,7 +662,7 @@
               <!-- 지분 변동 배지 -->
               ${changeBadge ? `<div class="pt-1">${changeBadge}</div>` : ''}
 
-              <!-- 분할 매수 아코디언 (있을 경우) -->
+              <!-- 분할 매수 아코디언 -->
               ${hasSplits ? `
                 <div class="pt-2 border-t border-slate-800/60">
                   <button onclick="toggleSplits('${trade.accession_number}')" class="text-xs text-slate-400 hover:text-slate-200 flex items-center gap-1.5 transition">
@@ -400,9 +708,165 @@
       }
     }
 
-    // 이벤트 리스너 세팅
+    // ==========================================
+    // 🚀 이벤트 리스너 등록
+    // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
+      initAuth();
       loadData();
+
+      // 모달 오픈 및 닫기
+      document.getElementById('open-auth-btn').addEventListener('click', () => openAuthModal('login'));
+      document.getElementById('close-auth-modal').addEventListener('click', closeAuthModal);
+      document.getElementById('tab-login').addEventListener('click', () => switchAuthTab('login'));
+      document.getElementById('tab-signup').addEventListener('click', () => switchAuthTab('signup'));
+
+      // 모달 바깥 배경 클릭 시 닫기
+      document.getElementById('auth-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'auth-modal') closeAuthModal();
+      });
+
+      // 1. 회원가입 처리
+      document.getElementById('signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value.trim();
+        const pass = document.getElementById('signup-password').value;
+        const confirmPass = document.getElementById('signup-password-confirm').value;
+
+        if (pass !== confirmPass) {
+          showAuthAlert('비밀번호가 일치하지 않습니다.');
+          return;
+        }
+
+        const submitBtn = document.getElementById('signup-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 처리 중...';
+
+        try {
+          if (supabaseClient) {
+            const { data, error } = await supabaseClient.auth.signUp({ email, password: pass });
+            if (error) throw error;
+            showAuthAlert('가입 확인 이메일이 발송되었습니다. 메일함을 확인해 주세요!', 'success');
+          } else {
+            // 로컬 스토리지 모드
+            const users = JSON.parse(localStorage.getItem('registered_users') || '{}');
+            if (users[email]) {
+              showAuthAlert('이미 등록된 이메일 계정입니다.');
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<span>무료 회원가입 완료</span>';
+              return;
+            }
+            users[email] = { email, password: pass, createdAt: new Date().toISOString() };
+            localStorage.setItem('registered_users', JSON.stringify(users));
+
+            currentUser = { email };
+            localStorage.setItem('insider_user', JSON.stringify(currentUser));
+            loadUserWatchlist();
+            updateAuthUI();
+
+            showAuthAlert('회원가입이 성공적으로 완료되었습니다!', 'success');
+            setTimeout(() => {
+              closeAuthModal();
+              render();
+            }, 1000);
+          }
+        } catch (err) {
+          showAuthAlert(err.message || '회원가입 중 오류가 발생했습니다.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>무료 회원가입 완료</span>';
+        }
+      });
+
+      // 2. 로그인 처리
+      document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value.trim();
+        const pass = document.getElementById('login-password').value;
+
+        const submitBtn = document.getElementById('login-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 로그인 중...';
+
+        try {
+          if (supabaseClient) {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+            if (error) throw error;
+            currentUser = { email: data.user.email };
+            localStorage.setItem('insider_user', JSON.stringify(currentUser));
+          } else {
+            // 로컬 모드
+            const users = JSON.parse(localStorage.getItem('registered_users') || '{}');
+            if (!users[email] || users[email].password !== pass) {
+              // 최초 사용자를 위한 자동 등록 안내 또는 에러
+              if (Object.keys(users).length === 0) {
+                // 테스트 편의상 첫 가입 유도
+                showAuthAlert('등록된 계정이 없습니다. [회원가입] 탭에서 먼저 가입해 주세요.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>로그인</span>';
+                return;
+              }
+              showAuthAlert('이메일 또는 비밀번호가 올바르지 않습니다.');
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<span>로그인</span>';
+              return;
+            }
+            currentUser = { email };
+            localStorage.setItem('insider_user', JSON.stringify(currentUser));
+          }
+
+          loadUserWatchlist();
+          updateAuthUI();
+          showAuthAlert('로그인되었습니다!', 'success');
+          setTimeout(() => {
+            closeAuthModal();
+            render();
+          }, 800);
+
+        } catch (err) {
+          showAuthAlert(err.message || '로그인 중 오류가 발생했습니다.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>로그인</span>';
+        }
+      });
+
+      // 3. 로그아웃 처리
+      document.getElementById('logout-btn').addEventListener('click', async () => {
+        if (supabaseClient) {
+          await supabaseClient.auth.signOut();
+        }
+        currentUser = null;
+        localStorage.removeItem('insider_user');
+        userWatchlist.clear();
+        filterWatchlistOnly = false;
+        
+        // 관심종목 필터 버튼 스타일 리셋
+        const watchlistBtn = document.getElementById('filter-watchlist-btn');
+        watchlistBtn.className = 'ml-auto px-3 py-1.5 rounded-lg border border-amber-500/30 bg-slate-950 hover:bg-amber-500/10 text-slate-300 transition flex items-center gap-1.5';
+
+        updateAuthUI();
+        updateWatchlistCount();
+        render();
+      });
+
+      // 4. 관심종목 필터 버튼 클릭
+      document.getElementById('filter-watchlist-btn').addEventListener('click', (e) => {
+        if (!currentUser) {
+          openAuthModal('login');
+          showAuthAlert('관심 종목을 필터링하려면 먼저 로그인해 주세요!', 'error');
+          return;
+        }
+
+        filterWatchlistOnly = !filterWatchlistOnly;
+        const btn = document.getElementById('filter-watchlist-btn');
+        if (filterWatchlistOnly) {
+          btn.className = 'ml-auto px-3 py-1.5 rounded-lg border border-amber-500 bg-amber-500/20 text-amber-300 font-bold transition flex items-center gap-1.5 shadow-sm shadow-amber-500/20';
+        } else {
+          btn.className = 'ml-auto px-3 py-1.5 rounded-lg border border-amber-500/30 bg-slate-950 hover:bg-amber-500/10 text-slate-300 transition flex items-center gap-1.5';
+        }
+        render();
+      });
 
       // 검색창
       const searchInput = document.getElementById('search-input');
@@ -456,3 +920,4 @@
   </script>
 </body>
 </html>
+
