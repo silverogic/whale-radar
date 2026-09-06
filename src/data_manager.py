@@ -89,11 +89,15 @@ def save_trades(new_trades: List[InsiderTrade], file_path: str = DEFAULT_DATA_PA
     merged_trades.sort(key=lambda x: (x.get("transaction_date", ""), x.get("total_value_usd", 0)), reverse=True)
     
     total_volume = sum(t.get("total_value_usd", 0.0) for t in merged_trades)
+    total_buy_volume = sum(t.get("total_value_usd", 0.0) for t in merged_trades if t.get("trade_type") == "BUY" and t.get("category", "INSIDER") == "INSIDER")
+    total_sell_volume = sum(t.get("total_value_usd", 0.0) for t in merged_trades if t.get("trade_type") == "SELL")
     
     output_data = {
         "last_updated": datetime.now(timezone.utc).isoformat(),
         "total_count": len(merged_trades),
         "total_volume_usd": round(total_volume, 2),
+        "total_buy_volume_usd": round(total_buy_volume, 2),
+        "total_sell_volume_usd": round(total_sell_volume, 2),
         "trades": merged_trades
     }
     

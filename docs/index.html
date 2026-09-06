@@ -87,20 +87,26 @@
   <!-- 메인 컨테이너 -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-    <!-- 히어로 & 핵심 통계 카드 -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- 히어로 & 핵심 통계 카드 (5열 레이아웃) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
         <div class="text-xs font-medium text-slate-400">포착된 경영진 거래</div>
         <div id="stat-count" class="text-3xl font-extrabold text-white mt-1 font-mono">-</div>
-        <div class="text-xs text-emerald-400 mt-2 flex items-center gap-1">
-          <i class="fa-solid fa-arrow-trend-up"></i> $50k+ 순수 장내거래 선별
+        <div class="text-xs text-slate-400 mt-2 flex items-center gap-1">
+          <i class="fa-solid fa-arrow-trend-up text-emerald-400"></i> $50k+ 순수 장내거래
         </div>
       </div>
 
-      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
-        <div class="text-xs font-medium text-slate-400">총 매수 금액 (Volume)</div>
-        <div id="stat-volume" class="text-3xl font-extrabold text-emerald-400 mt-1 font-mono">-</div>
-        <div id="stat-volume-krw" class="text-xs text-slate-400 mt-2">약 - 원</div>
+      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-emerald-500/40 transition">
+        <div class="text-xs font-medium text-emerald-400">총 매수 금액 (BUY)</div>
+        <div id="stat-volume-buy" class="text-3xl font-extrabold text-emerald-400 mt-1 font-mono">-</div>
+        <div id="stat-volume-buy-krw" class="text-xs text-slate-400 mt-2">약 - 원</div>
+      </div>
+
+      <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-rose-500/40 transition">
+        <div class="text-xs font-medium text-rose-400">총 매도 금액 (SELL)</div>
+        <div id="stat-volume-sell" class="text-3xl font-extrabold text-rose-400 mt-1 font-mono">-</div>
+        <div id="stat-volume-sell-krw" class="text-xs text-slate-400 mt-2">약 - 원</div>
       </div>
 
       <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-700 transition">
@@ -110,9 +116,9 @@
       </div>
 
       <div class="bg-slate-900/90 border border-slate-800 p-5 rounded-2xl relative overflow-hidden group hover:border-purple-500/40 transition">
-        <div class="text-xs font-medium text-purple-300">기관 5%+ 지분 (13D/13G)</div>
+        <div class="text-xs font-medium text-purple-300">기관 5%+ 지분 (13D/G)</div>
         <div id="stat-institution" class="text-3xl font-extrabold text-purple-400 mt-1 font-mono">-</div>
-        <div class="text-xs text-slate-400 mt-2">행동주의·헤지펀드 대량 보유</div>
+        <div class="text-xs text-slate-400 mt-2">행동주의·헤지펀드 보유</div>
       </div>
     </div>
 
@@ -459,13 +465,19 @@
     function updateStats(data) {
       const trades = data.trades || [];
       const insiderTrades = trades.filter(t => !t.category || t.category === 'INSIDER');
+      const buyTrades = insiderTrades.filter(t => (t.trade_type || 'BUY') === 'BUY');
+      const sellTrades = insiderTrades.filter(t => t.trade_type === 'SELL');
       const instTrades = trades.filter(t => t.category === '13D' || t.category === '13G');
-      const totalVolume = insiderTrades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
+
+      const buyVolume = buyTrades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
+      const sellVolume = sellTrades.reduce((sum, t) => sum + (t.total_value_usd || 0), 0);
       const uniqueTickers = new Set(trades.map(t => t.ticker)).size;
 
       document.getElementById('stat-count').innerText = `${insiderTrades.length}건`;
-      document.getElementById('stat-volume').innerText = formatUSD(totalVolume);
-      document.getElementById('stat-volume-krw').innerText = `약 ${formatKRW(totalVolume)}`;
+      document.getElementById('stat-volume-buy').innerText = formatUSD(buyVolume);
+      document.getElementById('stat-volume-buy-krw').innerText = `약 ${formatKRW(buyVolume)}`;
+      document.getElementById('stat-volume-sell').innerText = formatUSD(sellVolume);
+      document.getElementById('stat-volume-sell-krw').innerText = `약 ${formatKRW(sellVolume)}`;
       document.getElementById('stat-tickers').innerText = `${uniqueTickers}개`;
       const instEl = document.getElementById('stat-institution');
       if (instEl) instEl.innerText = `${instTrades.length}건`;

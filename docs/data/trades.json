@@ -1,7 +1,9 @@
 {
-  "last_updated": "2026-09-06T04:20:01.287559+00:00",
+  "last_updated": "2026-09-06T04:28:21.751526+00:00",
   "total_count": 25,
   "total_volume_usd": 52806427.14,
+  "total_buy_volume_usd": 10378079.68,
+  "total_sell_volume_usd": 42428347.46,
   "trades": [
     {
       "accession_number": "0001477932-26-005430",
