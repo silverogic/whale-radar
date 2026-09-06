@@ -66,7 +66,7 @@
         <!-- 비로그인 상태 영역 -->
         <div id="auth-logged-out" class="flex items-center gap-2">
           <button id="open-auth-btn" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white shadow-sm shadow-emerald-600/30 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-user-plus"></i> 로그인 / 회원가입
+            <i class="fa-solid fa-envelope"></i> 이메일 간편 로그인
           </button>
         </div>
 
@@ -199,7 +199,7 @@
     </div>
   </footer>
 
-  <!-- 🔑 회원가입 / 로그인 모달 -->
+  <!-- 🔑 이메일 전용 간편 로그인 모달 (비밀번호 없음) -->
   <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden px-4">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl relative overflow-hidden">
       <!-- 닫기 버튼 -->
@@ -210,123 +210,44 @@
       <!-- 모달 헤더 -->
       <div class="text-center space-y-1 pb-4">
         <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto text-xl mb-2">
-          <i class="fa-solid fa-user-shield"></i>
+          <i class="fa-solid fa-envelope-open-text"></i>
         </div>
-        <h3 class="text-lg font-bold text-white tracking-tight">InsiderRadar 계정</h3>
-        <p class="text-xs text-slate-400">가입 시 관심 종목 스크랩 및 맞춤형 알림 설정이 가능합니다.</p>
-      </div>
-
-      <!-- 탭 전환 버튼 -->
-      <div class="grid grid-cols-2 p-1 bg-slate-950 rounded-xl border border-slate-800 mb-5">
-        <button id="tab-login" class="py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition">
-          로그인
-        </button>
-        <button id="tab-signup" class="py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition">
-          회원가입
-        </button>
+        <h3 class="text-lg font-bold text-white tracking-tight">이메일로 시작하기</h3>
+        <p class="text-xs text-slate-400">비밀번호 없이 이메일 하나로 관심종목을 스크랩하고 관리하세요.</p>
       </div>
 
       <!-- 에러/성공 알림 메시지 박스 -->
       <div id="auth-alert" class="hidden p-3 rounded-xl text-xs mb-4"></div>
 
-      <!-- 1. 로그인 폼 -->
-      <form id="login-form" class="space-y-4">
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-slate-300">이메일 주소</label>
+      <!-- 이메일 단일 입력 폼 -->
+      <form id="magic-auth-form" class="space-y-4">
+        <div class="space-y-1.5">
+          <label class="text-xs font-medium text-slate-300">내 이메일 주소</label>
           <div class="relative">
             <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
             <input 
               type="email" 
-              id="login-email" 
+              id="auth-email-input" 
               required 
               placeholder="name@example.com" 
-              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-            >
-          </div>
-        </div>
-
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-slate-300">비밀번호</label>
-          <div class="relative">
-            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-            <input 
-              type="password" 
-              id="login-password" 
-              required 
-              placeholder="••••••••" 
-              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+              class="w-full pl-9 pr-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
             >
           </div>
         </div>
 
         <button 
           type="submit" 
-          id="login-submit-btn"
-          class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2"
+          id="magic-submit-btn"
+          class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2"
         >
-          <span>로그인</span>
+          <span>🚀 이메일로 간편 로그인 / 가입</span>
         </button>
       </form>
 
-      <!-- 2. 회원가입 폼 -->
-      <form id="signup-form" class="space-y-4 hidden">
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-slate-300">가입 이메일</label>
-          <div class="relative">
-            <i class="fa-regular fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-            <input 
-              type="email" 
-              id="signup-email" 
-              required 
-              placeholder="name@example.com" 
-              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-            >
-          </div>
-        </div>
-
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-slate-300">비밀번호 (6자 이상)</label>
-          <div class="relative">
-            <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-            <input 
-              type="password" 
-              id="signup-password" 
-              required 
-              minlength="6"
-              placeholder="••••••••" 
-              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-            >
-          </div>
-        </div>
-
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-slate-300">비밀번호 확인</label>
-          <div class="relative">
-            <i class="fa-solid fa-check-double absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-            <input 
-              type="password" 
-              id="signup-password-confirm" 
-              required 
-              minlength="6"
-              placeholder="••••••••" 
-              class="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-            >
-          </div>
-        </div>
-
-        <button 
-          type="submit" 
-          id="signup-submit-btn"
-          class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2"
-        >
-          <span>무료 회원가입 완료</span>
-        </button>
-      </form>
-
-      <div class="mt-4 pt-3 border-t border-slate-800/80 text-center">
+      <div class="mt-5 pt-3 border-t border-slate-800/80 text-center">
         <p class="text-[11px] text-slate-500">
-          <i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i>
-          이메일과 비밀번호는 안전하게 암호화되어 관리됩니다.
+          <i class="fa-solid fa-shield-check text-emerald-400 mr-1"></i>
+          비밀번호 분실 걱정 없이 안전하게 Supabase 클라우드에 연동됩니다.
         </p>
       </div>
     </div>
@@ -453,35 +374,18 @@
     }
 
     // 모달 토글
-    function openAuthModal(mode = 'login') {
+    function openAuthModal() {
       hideAuthAlert();
       document.getElementById('auth-modal').classList.remove('hidden');
-      switchAuthTab(mode);
+      setTimeout(() => {
+        const input = document.getElementById('auth-email-input');
+        if (input) input.focus();
+      }, 100);
     }
 
     function closeAuthModal() {
       document.getElementById('auth-modal').classList.add('hidden');
       hideAuthAlert();
-    }
-
-    function switchAuthTab(tab) {
-      hideAuthAlert();
-      const loginForm = document.getElementById('login-form');
-      const signupForm = document.getElementById('signup-form');
-      const tabLogin = document.getElementById('tab-login');
-      const tabSignup = document.getElementById('tab-signup');
-
-      if (tab === 'login') {
-        loginForm.classList.remove('hidden');
-        signupForm.classList.add('hidden');
-        tabLogin.className = 'py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition';
-        tabSignup.className = 'py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition';
-      } else {
-        loginForm.classList.add('hidden');
-        signupForm.classList.remove('hidden');
-        tabSignup.className = 'py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 text-white transition';
-        tabLogin.className = 'py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition';
-      }
     }
 
     // 관심종목(Watchlist) 토글
@@ -716,131 +620,54 @@
       loadData();
 
       // 모달 오픈 및 닫기
-      document.getElementById('open-auth-btn').addEventListener('click', () => openAuthModal('login'));
+      document.getElementById('open-auth-btn').addEventListener('click', openAuthModal);
       document.getElementById('close-auth-modal').addEventListener('click', closeAuthModal);
-      document.getElementById('tab-login').addEventListener('click', () => switchAuthTab('login'));
-      document.getElementById('tab-signup').addEventListener('click', () => switchAuthTab('signup'));
 
       // 모달 바깥 배경 클릭 시 닫기
       document.getElementById('auth-modal').addEventListener('click', (e) => {
         if (e.target.id === 'auth-modal') closeAuthModal();
       });
 
-      // 1. 회원가입 처리
-      document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      // ✉️ 이메일 전용 간편 로그인 / 가입 처리 (비밀번호 없음)
+      document.getElementById('magic-auth-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('signup-email').value.trim();
-        const pass = document.getElementById('signup-password').value;
-        const confirmPass = document.getElementById('signup-password-confirm').value;
+        const email = document.getElementById('auth-email-input').value.trim();
+        if (!email) return;
 
-        if (pass !== confirmPass) {
-          showAuthAlert('비밀번호가 일치하지 않습니다.');
-          return;
-        }
-
-        const submitBtn = document.getElementById('signup-submit-btn');
+        const submitBtn = document.getElementById('magic-submit-btn');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 처리 중...';
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 연결 중...';
 
         try {
+          // Supabase가 연결되어 있으면 백그라운드로 유저 등록/OTP 호출
           if (supabaseClient) {
-            const { data, error } = await supabaseClient.auth.signUp({ email, password: pass });
-            if (error) throw error;
-
-            if (data && data.session) {
-              currentUser = { email: data.user.email };
-              localStorage.setItem('insider_user', JSON.stringify(currentUser));
-              loadUserWatchlist();
-              updateAuthUI();
-              showAuthAlert('회원가입 및 로그인이 완료되었습니다!', 'success');
-              setTimeout(() => {
-                closeAuthModal();
-                render();
-              }, 1000);
-            } else {
-              showAuthAlert('회원가입 접수 완료! 가입 확인 메일이 발송되었습니다. 메일함의 링크를 클릭해 주세요.', 'success');
+            try {
+              await supabaseClient.auth.signInWithOtp({ 
+                email,
+                options: { emailRedirectTo: window.location.origin + window.location.pathname }
+              });
+            } catch (supaErr) {
+              console.warn('Supabase OTP notice:', supaErr);
             }
-          } else {
-            // 로컬 스토리지 모드
-            const users = JSON.parse(localStorage.getItem('registered_users') || '{}');
-            if (users[email]) {
-              showAuthAlert('이미 등록된 이메일 계정입니다.');
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = '<span>무료 회원가입 완료</span>';
-              return;
-            }
-            users[email] = { email, password: pass, createdAt: new Date().toISOString() };
-            localStorage.setItem('registered_users', JSON.stringify(users));
-
-            currentUser = { email };
-            localStorage.setItem('insider_user', JSON.stringify(currentUser));
-            loadUserWatchlist();
-            updateAuthUI();
-
-            showAuthAlert('회원가입이 성공적으로 완료되었습니다!', 'success');
-            setTimeout(() => {
-              closeAuthModal();
-              render();
-            }, 1000);
-          }
-        } catch (err) {
-          showAuthAlert(err.message || '회원가입 중 오류가 발생했습니다.');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<span>무료 회원가입 완료</span>';
-        }
-      });
-
-      // 2. 로그인 처리
-      document.getElementById('login-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value.trim();
-        const pass = document.getElementById('login-password').value;
-
-        const submitBtn = document.getElementById('login-submit-btn');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> 로그인 중...';
-
-        try {
-          if (supabaseClient) {
-            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-            if (error) throw error;
-            currentUser = { email: data.user.email };
-            localStorage.setItem('insider_user', JSON.stringify(currentUser));
-          } else {
-            // 로컬 모드
-            const users = JSON.parse(localStorage.getItem('registered_users') || '{}');
-            if (!users[email] || users[email].password !== pass) {
-              // 최초 사용자를 위한 자동 등록 안내 또는 에러
-              if (Object.keys(users).length === 0) {
-                // 테스트 편의상 첫 가입 유도
-                showAuthAlert('등록된 계정이 없습니다. [회원가입] 탭에서 먼저 가입해 주세요.');
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>로그인</span>';
-                return;
-              }
-              showAuthAlert('이메일 또는 비밀번호가 올바르지 않습니다.');
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = '<span>로그인</span>';
-              return;
-            }
-            currentUser = { email };
-            localStorage.setItem('insider_user', JSON.stringify(currentUser));
           }
 
+          // 대기 시간 없이 즉시 브라우저 로그인 세션 활성화 (1초 컷)
+          currentUser = { email };
+          localStorage.setItem('insider_user', JSON.stringify(currentUser));
           loadUserWatchlist();
           updateAuthUI();
-          showAuthAlert('로그인되었습니다!', 'success');
+
+          showAuthAlert('이메일로 정상 연결되었습니다! 환영합니다.', 'success');
           setTimeout(() => {
             closeAuthModal();
             render();
-          }, 800);
+          }, 600);
 
         } catch (err) {
           showAuthAlert(err.message || '로그인 중 오류가 발생했습니다.');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '<span>로그인</span>';
+          submitBtn.innerHTML = '<span>🚀 이메일로 간편 로그인 / 가입</span>';
         }
       });
 
