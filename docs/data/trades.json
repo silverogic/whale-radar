@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-06T04:07:47.111323+00:00",
-  "total_count": 21,
+  "last_updated": "2026-09-06T04:20:01.287559+00:00",
+  "total_count": 25,
   "total_volume_usd": 52806427.14,
   "trades": [
     {
@@ -21,6 +21,10 @@
       "transaction_date": "2026-09-04-05:00",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1921865/000147793226005430/0001477932-26-005430-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -345,6 +349,10 @@
       "transaction_date": "2026-09-04",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1810019/000168471326000003/0001684713-26-000003-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -411,6 +419,10 @@
       "transaction_date": "2026-09-04",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1649245/000164924526000009/0001649245-26-000009-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -448,6 +460,10 @@
       "transaction_date": "2026-09-04",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1686894/000119312526384027/0001193125-26-384027-index.htm",
       "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common stock, par value $0.001",
@@ -477,6 +493,10 @@
       "transaction_date": "2026-09-04",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1823563/000182356326000016/0001823563-26-000016-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -580,6 +600,10 @@
       "transaction_date": "2026-09-03",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1778564/000177856426000155/0001778564-26-000155-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Class A common stock",
@@ -777,6 +801,10 @@
       "transaction_date": "2026-09-03",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1897557/000119312526384042/0001193125-26-384042-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Shares",
@@ -806,6 +834,10 @@
       "transaction_date": "2026-09-03",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2105870/000119312526384028/0001193125-26-384028-index.htm",
       "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common stock, par value $0.001",
@@ -843,6 +875,10 @@
       "transaction_date": "2026-09-03",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2075251/000207525126000006/0002075251-26-000006-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -901,6 +937,10 @@
       "transaction_date": "2026-09-02-05:00",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1951275/000147793226005431/0001477932-26-005431-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -930,6 +970,10 @@
       "transaction_date": "2026-09-02-05:00",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2079961/000147793226005432/0001477932-26-005432-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -959,6 +1003,10 @@
       "transaction_date": "2026-09-02",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1724519/000172451926000010/0001724519-26-000010-index.htm",
       "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Series A Preference Shares",
@@ -1033,6 +1081,10 @@
       "transaction_date": "2026-09-02",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2026373/000202637326000008/0002026373-26-000008-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Class A Ordinary Shares",
@@ -1043,6 +1095,102 @@
           "trade_type": "SELL"
         }
       ]
+    },
+    {
+      "accession_number": "0001892613-26-000008",
+      "ticker": "BNBX",
+      "issuer_name": "BNB PLUS CORP.",
+      "reporter_name": "Comstock MultiChain Fund, L.P.",
+      "role_title": "파트너십/펀드 (Partnership)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D (정정/수정))",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 687815.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 687815.0,
+      "pct_increase": 9.9,
+      "transaction_date": "09/02/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1892613/000189261326000008/0001892613-26-000008-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 9.9,
+      "investor_type": "파트너십/펀드 (Partnership)",
+      "is_amendment": true,
+      "items": []
+    },
+    {
+      "accession_number": "0001193125-26-383916",
+      "ticker": "GPRK",
+      "issuer_name": "GeoPark Limited",
+      "reporter_name": "Jaime Gilinski",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D (정정/수정))",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 18115791.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 18115791.0,
+      "pct_increase": 27.9,
+      "transaction_date": "09/02/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2117865/000119312526383916/0001193125-26-383916-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 27.9,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": true,
+      "items": []
+    },
+    {
+      "accession_number": "0001104659-26-105567",
+      "ticker": "GRNT",
+      "issuer_name": "Granite Ridge Resources, Inc.",
+      "reporter_name": "GREP GP III, LLC",
+      "role_title": "기타 기관 (Other)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D (정정/수정))",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 51648048.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 51648048.0,
+      "pct_increase": 39.2,
+      "transaction_date": "08/19/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1950552/000110465926105567/0001104659-26-105567-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 39.2,
+      "investor_type": "기타 기관 (Other)",
+      "is_amendment": true,
+      "items": []
+    },
+    {
+      "accession_number": "0001493152-26-041611",
+      "ticker": "VNRX",
+      "issuer_name": "VOLITIONRX LTD",
+      "reporter_name": "Lagoda Investment Management, L.P.",
+      "role_title": "투자자문사/헤지펀드 (Investment Adviser)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 1652005.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 1652005.0,
+      "pct_increase": 7.4,
+      "transaction_date": "08/17/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1632108/000149315226041611/0001493152-26-041611-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 7.4,
+      "investor_type": "투자자문사/헤지펀드 (Investment Adviser)",
+      "is_amendment": false,
+      "items": []
     }
   ]
 }

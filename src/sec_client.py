@@ -8,6 +8,7 @@ import requests
 from src.config import (
     SEC_USER_AGENT,
     SEC_ATOM_FEED_URL,
+    SEC_13D_G_FEED_URL,
     SEC_ARCHIVE_BASE_URL,
     REQUEST_DELAY_SECONDS,
     REQUEST_TIMEOUT_SECONDS,
@@ -101,8 +102,69 @@ class SECClient:
         logger.info(f"Retrieved {len(entries)} unique Form 4 submissions.")
         return entries
 
+    def fetch_latest_13d_13g_entries(self, count: int = 50) -> List[Form4Meta]:
+        """SEC 최신 Schedule 13D / 13G (기관 5%+ 지분 공시) 수집 및 중복 제거"""
+        url = SEC_13D_G_FEED_URL.format(count=count)
+        logger.info(f"Fetching latest Schedule 13D/G entries from: {url}")
+        resp = self._get(url)
+
+        root = ET.fromstring(resp.content)
+        ns = {'atom': 'http://www.w3.org/2005/Atom'}
+
+        entries: List[Form4Meta] = []
+        seen_acc_nos = set()
+
+        for entry in root.findall('atom:entry', ns):
+            title_elem = entry.find('atom:title', ns)
+            link_elem = entry.find('atom:link', ns)
+            summary_elem = entry.find('atom:summary', ns)
+
+            title = title_elem.text if title_elem is not None and title_elem.text else ""
+            index_url = link_elem.attrib.get('href', '') if link_elem is not None else ""
+            summary = summary_elem.text if summary_elem is not None and summary_elem.text else ""
+
+            # 13D 또는 13G 공시인지 필터링
+            if "13D" not in title and "13G" not in title:
+                continue
+
+            acc_match = re.search(r"AccNo:\s*</b>\s*([0-9\-]+)", summary)
+            if not acc_match:
+                acc_match = re.search(r"([0-9]{10}-[0-9]{2}-[0-9]{6})", index_url)
+
+            if not acc_match:
+                continue
+
+            acc_no = acc_match.group(1).strip()
+            if acc_no in seen_acc_nos:
+                continue
+            seen_acc_nos.add(acc_no)
+
+            date_match = re.search(r"Filed:\s*</b>\s*([0-9]{4}-[0-9]{2}-[0-9]{2})", summary)
+            filing_date = date_match.group(1) if date_match else ""
+
+            url_match = re.search(r"/data/([0-9]+)/([0-9]+)/", index_url)
+            if url_match:
+                cik = url_match.group(1)
+                clean_acc_no = url_match.group(2)
+            else:
+                clean_acc_no = acc_no.replace("-", "")
+                cik_match = re.search(r"\(([0-9]{10})\)", title)
+                cik = cik_match.group(1) if cik_match else ""
+
+            entries.append(Form4Meta(
+                accession_number=acc_no,
+                cik=cik,
+                clean_acc_no=clean_acc_no,
+                filing_date=filing_date,
+                title=title,
+                index_url=index_url
+            ))
+
+        logger.info(f"Retrieved {len(entries)} unique Schedule 13D/G submissions.")
+        return entries
+
     def get_form4_xml_content(self, meta: Form4Meta) -> Optional[str]:
-        """해당 submission의 원본 Form 4 XML 다운로드"""
+        """해당 submission의 원본 XML 다운로드 (Form 4 및 Schedule 13D/G 공용)"""
         if not meta.cik or not meta.clean_acc_no:
             return None
 
@@ -112,19 +174,17 @@ class SECClient:
             dir_data = resp.json()
             items = dir_data.get("directory", {}).get("item", [])
             
-            # Form 4 XML 파일 찾기: 보통 .xml 확장자이며 xsl로 시작하지 않는 파일
             xml_filename = None
             for item in items:
                 name = item.get("name", "").lower()
                 if name.endswith(".xml") and not name.startswith("xsl"):
-                    # doc4.xml, ownership.xml 또는 submission xml 우선순위
+                    # primary_doc.xml, doc4.xml, ownership.xml 또는 submission xml 우선순위
                     xml_filename = item.get("name")
-                    if "doc4" in name or "ownership" in name or "form4" in name:
+                    if name == "primary_doc.xml" or "doc4" in name or "ownership" in name or "form4" in name:
                         break
 
             if not xml_filename:
-                # 파일 목록에서 못 찾을 경우 일반적인 네이밍 fallback
-                xml_filename = "ownership.xml"
+                xml_filename = "primary_doc.xml"
 
             xml_url = f"{SEC_ARCHIVE_BASE_URL}/{meta.cik}/{meta.clean_acc_no}/{xml_filename}"
             xml_resp = self._get(xml_url)
@@ -133,3 +193,4 @@ class SECClient:
         except Exception as e:
             logger.debug(f"Failed to fetch XML for {meta.accession_number}: {e}")
             return None
+

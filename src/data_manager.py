@@ -30,6 +30,10 @@ def trade_to_dict(trade: InsiderTrade) -> Dict[str, Any]:
         "transaction_date": trade.transaction_date,
         "sec_form4_url": trade.sec_form4_url,
         "trade_type": trade.trade_type,
+        "category": trade.category,
+        "percent_of_class": round(trade.percent_of_class, 2) if trade.percent_of_class is not None else None,
+        "investor_type": trade.investor_type,
+        "is_amendment": trade.is_amendment,
         "items": [
             {
                 "security_title": item.security_title,

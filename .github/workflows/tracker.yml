@@ -1,4 +1,4 @@
-name: SEC Form 4 Insider Buying Tracker
+name: SEC Form 4 & Schedule 13D/G Radar Tracker
 
 on:
   schedule:
@@ -29,9 +29,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run SEC Insider Radar Scanner
+      - name: Run SEC Insider & Institutional Radar Scanner
         run: |
-          python -m src.main --count 100 --min-value 100000
+          python -m src.main --count 100 --min-value 50000
 
       - name: Commit and Push Updated Data
         run: |
@@ -39,8 +39,8 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/data/trades.json
           if git diff --staged --quiet; then
-            echo "No new insider trades detected. Nothing to commit."
+            echo "No new radar filings detected. Nothing to commit."
           else
-            git commit -m "Auto-update: SEC Form 4 insider buying data [skip ci]"
+            git commit -m "Auto-update: SEC Form 4 and Schedule 13D/G radar data [skip ci]"
             git push
           fi
