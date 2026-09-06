@@ -109,4 +109,74 @@ def save_trades(new_trades: List[InsiderTrade], file_path: str = DEFAULT_DATA_PA
         json.dump(output_data, f, ensure_ascii=False, indent=2)
         
     logger.info(f"Saved {len(merged_trades)} trades to {file_path} (New added: {added_count})")
+    
+    # Supabase 클라우드 데이터베이스 동기화 시도
+    sync_trades_to_supabase(merged_trades)
+    
     return added_count
+
+def sync_trades_to_supabase(trades: List[Dict[str, Any]]) -> bool:
+    """Supabase REST API를 통해 trades 테이블에 벌크 Upsert (on_conflict=accession_number)"""
+    import urllib.request
+    from src.config import SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+    
+    if not SUPABASE_URL:
+        return False
+        
+    api_key = SUPABASE_SERVICE_ROLE_KEY or SUPABASE_ANON_KEY
+    if not api_key:
+        return False
+        
+    endpoint = f"{SUPABASE_URL.rstrip('/')}/rest/v1/trades?on_conflict=accession_number"
+    headers = {
+        "apikey": api_key,
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+        "Prefer": "resolution=merge-duplicates,return=minimal"
+    }
+    
+    payload = []
+    for t in trades:
+        acc_no = t.get("accession_number")
+        if not acc_no:
+            continue
+        record = {
+            "accession_number": acc_no,
+            "ticker": t.get("ticker", "N/A"),
+            "issuer_name": t.get("issuer_name"),
+            "reporter_name": t.get("reporter_name"),
+            "role_title": t.get("role_title"),
+            "role_summary": t.get("role_summary"),
+            "is_officer": bool(t.get("is_officer", False)),
+            "is_director": bool(t.get("is_director", False)),
+            "is_ten_percent": bool(t.get("is_ten_percent", False)),
+            "total_shares": t.get("total_shares"),
+            "avg_price": t.get("avg_price"),
+            "total_value_usd": t.get("total_value_usd"),
+            "shares_owned_after": t.get("shares_owned_after"),
+            "pct_increase": t.get("pct_increase"),
+            "transaction_date": t.get("transaction_date"),
+            "sec_form4_url": t.get("sec_form4_url"),
+            "trade_type": t.get("trade_type", "BUY"),
+            "category": t.get("category", "INSIDER"),
+            "percent_of_class": t.get("percent_of_class"),
+            "investor_type": t.get("investor_type"),
+            "is_amendment": bool(t.get("is_amendment", False)),
+            "items": t.get("items", [])
+        }
+        payload.append(record)
+            
+    if not payload:
+        return True
+        
+    try:
+        data_bytes = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        req = urllib.request.Request(endpoint, data=data_bytes, headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=10) as response:
+            if response.status in (200, 201, 204):
+                logger.info(f"Successfully synced {len(payload)} trades to Supabase DB.")
+                return True
+    except Exception as e:
+        logger.debug(f"Supabase sync notice: {e} (로컬 trades.json에 안전 저장됨)")
+        return False
+

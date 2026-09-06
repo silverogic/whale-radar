@@ -21,6 +21,11 @@ REQUEST_DELAY_SECONDS = 0.15  # SEC Rate limit: 초당 10회 미만 (안전하�
 REQUEST_TIMEOUT_SECONDS = 15
 DEFAULT_FEED_COUNT = 80  # 최신 공시 조회 건수
 
+# Supabase Configuration
+SUPABASE_URL = os.getenv("SUPABASE_URL", "https://wjhowfyyahlffdewmtzh.supabase.co")
+SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", os.getenv("SUPABASE_KEY", "sb_publishable_A8Gdn1_vJMvnNvtMtVIAuQ_jOK0mmva"))
+SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
+
 def get_realtime_usd_krw_rate() -> float:
     """실시간 USD/KRW 환율 조회 (실패 시 1,350.0 기본값 폴백)"""
     import urllib.request

@@ -61,6 +61,11 @@
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           <span>USD/KRW: <strong id="current-rate-text" class="text-emerald-400 font-semibold">1,350.0</strong>원</span>
         </span>
+        <!-- 데이터 소스 뱃지 (Supabase Cloud DB 온디맨드 / 정적 백업) -->
+        <span id="data-source-badge" class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 hidden md:inline-flex items-center gap-1.5 shadow-sm" title="데이터 소스 연동 상태">
+          <i id="data-source-icon" class="fa-solid fa-database text-indigo-400"></i>
+          <span id="data-source-text">데이터 로딩 중...</span>
+        </span>
         <span id="last-updated-text" class="text-xs text-slate-400 hidden lg:inline-block">
           <i class="fa-regular fa-clock mr-1"></i>데이터 확인 중...
         </span>
@@ -339,6 +344,7 @@
     }
 
     let allTrades = [];
+    let isSupabaseConnected = false;
     let activeFilterDays = '30'; // 'all', '7', '30', '90', '180'
     let activeFilterTradeType = 'all'; // 'all', 'BUY', 'SELL', '13D', '13G'
     let activeFilterMin = 0;
@@ -503,12 +509,45 @@
       const refreshIcon = document.getElementById('refresh-icon');
       refreshIcon.classList.add('fa-spin');
       
+      const dataSourceText = document.getElementById('data-source-text');
+      const dataSourceIcon = document.getElementById('data-source-icon');
+
       try {
+        // 1. Supabase Cloud PostgreSQL 우선 조회 시도 (최신 100건)
+        if (supabaseClient) {
+          try {
+            const { data: supaTrades, error: supaError } = await supabaseClient
+              .from('trades')
+              .select('*')
+              .order('transaction_date', { ascending: false })
+              .limit(100);
+
+            if (!supaError && Array.isArray(supaTrades) && supaTrades.length > 0) {
+              allTrades = supaTrades;
+              isSupabaseConnected = true;
+              if (dataSourceText) dataSourceText.innerText = 'Supabase Cloud (On-Demand)';
+              if (dataSourceIcon) dataSourceIcon.className = 'fa-solid fa-cloud text-emerald-400';
+              document.getElementById('last-updated-text').innerHTML = 
+                `<i class="fa-solid fa-database text-emerald-400 mr-1"></i>Supabase 연결됨 (${supaTrades.length}건)`;
+              
+              render();
+              fetchRealtimeExchangeRate().then(() => render());
+              return;
+            }
+          } catch (supaErr) {
+            console.info('Supabase query notice, falling back to static trades.json:', supaErr);
+          }
+        }
+
+        // 2. Supabase 미생성/장애 시 정적 trades.json으로 자동 안전 폴백
         const res = await fetch(DATA_URL + '?t=' + Date.now());
         if (!res.ok) throw new Error('Failed to load trades.json');
         const data = await res.json();
         
         allTrades = data.trades || [];
+        isSupabaseConnected = false;
+        if (dataSourceText) dataSourceText.innerText = '정적 백업 모드 (trades.json)';
+        if (dataSourceIcon) dataSourceIcon.className = 'fa-solid fa-file-lines text-slate-400';
         
         if (data.usd_to_krw_rate) {
           usdToKrwRate = parseFloat(data.usd_to_krw_rate);
@@ -539,6 +578,37 @@
       } finally {
         refreshIcon.classList.remove('fa-spin');
         document.getElementById('loading-state').classList.add('hidden');
+      }
+    }
+
+    // 🔍 Supabase 실시간 온디맨드 종목 검색 (장기 누적 데이터 쿼리)
+    async function searchSupabaseOnDemand(ticker) {
+      if (!isSupabaseConnected || !supabaseClient || !ticker) return;
+      const cleanTicker = ticker.trim().toUpperCase();
+      if (cleanTicker.length < 1 || cleanTicker.length > 6) return;
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('trades')
+          .select('*')
+          .eq('ticker', cleanTicker)
+          .order('transaction_date', { ascending: false });
+
+        if (!error && Array.isArray(data) && data.length > 0) {
+          const existingAccNos = new Set(allTrades.map(t => t.accession_number));
+          let newlyFetchedCount = 0;
+          data.forEach(item => {
+            if (!existingAccNos.has(item.accession_number)) {
+              allTrades.push(item);
+              newlyFetchedCount++;
+            }
+          });
+          if (newlyFetchedCount > 0) {
+            render();
+          }
+        }
+      } catch (e) {
+        console.warn('On-demand Supabase ticker search notice:', e);
       }
     }
 
@@ -637,6 +707,7 @@
       } else {
         searchInput.value = ticker;
         clearBtn.classList.remove('hidden');
+        searchSupabaseOnDemand(ticker);
       }
       render();
     }
@@ -1221,10 +1292,16 @@
       // 검색창
       const searchInput = document.getElementById('search-input');
       const clearBtn = document.getElementById('clear-search-btn');
+      let searchDebounceTimer = null;
 
       searchInput.addEventListener('input', () => {
-        if (searchInput.value.trim().length > 0) {
+        const val = searchInput.value.trim();
+        if (val.length > 0) {
           clearBtn.classList.remove('hidden');
+          clearTimeout(searchDebounceTimer);
+          searchDebounceTimer = setTimeout(() => {
+            searchSupabaseOnDemand(val);
+          }, 350);
         } else {
           clearBtn.classList.add('hidden');
         }
