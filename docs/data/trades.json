@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-06T04:56:19.218108+00:00",
-  "usd_to_krw_rate": 1349.84,
+  "last_updated": "2026-09-07T21:39:21.038540+00:00",
+  "usd_to_krw_rate": 1346.56,
   "total_count": 207,
   "total_volume_usd": 2654583080.35,
   "total_buy_volume_usd": 14518782.67,
@@ -397,6 +397,10 @@
       "transaction_date": "2026-09-04",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2059741/000162828026060784/0001628280-26-060784-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Class A Common Stock",
@@ -590,6 +594,10 @@
       "transaction_date": "2026-09-03",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1437107/000118693326000006/0001186933-26-000006-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Series A Common Stock",
@@ -927,6 +935,10 @@
       "transaction_date": "2026-09-03",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1509470/000149315226041624/0001493152-26-041624-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
@@ -1152,6 +1164,10 @@
       "transaction_date": "2026-09-02",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1700836/000170083626000003/0001700836-26-000003-index.htm",
       "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
       "items": [
         {
           "security_title": "Common Stock",
