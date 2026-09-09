@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-09-09T21:38:46.250700+00:00",
+  "last_updated": "2026-09-09T23:12:29.312993+00:00",
   "usd_to_krw_rate": 1340.86,
-  "total_count": 292,
-  "total_volume_usd": 3047773845.82,
-  "total_buy_volume_usd": 73664429.22,
-  "total_sell_volume_usd": 2974109416.6,
+  "total_count": 311,
+  "total_volume_usd": 3077285128.39,
+  "total_buy_volume_usd": 75834655.88,
+  "total_sell_volume_usd": 3001450472.51,
   "trades": [
     {
       "accession_number": "0002123975-26-000011",
@@ -89,6 +89,194 @@
       ]
     },
     {
+      "accession_number": "0000919574-26-006221",
+      "ticker": "LPG",
+      "issuer_name": "DORIAN LPG LTD.",
+      "reporter_name": "Young Theodore B.",
+      "role_title": "Chief Financial Officer",
+      "role_summary": "Chief Financial Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 14081.0,
+      "avg_price": 53.52,
+      "total_value_usd": 753576.01,
+      "shares_owned_after": 119713.0,
+      "pct_increase": -10.52,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1638233/000091957426006221/0000919574-26-006221-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Shares, $0.01 par value per share",
+          "transaction_date": "2026-09-08",
+          "shares": 9081.0,
+          "price_per_share": 53.25,
+          "total_value": 483536.01,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Shares, $0.01 par value per share",
+          "transaction_date": "2026-09-09",
+          "shares": 5000.0,
+          "price_per_share": 54.01,
+          "total_value": 270040.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001140361-26-036089",
+      "ticker": "PRTS",
+      "issuer_name": "CarParts.com, Inc.",
+      "reporter_name": "Meniane David",
+      "role_title": "CEO",
+      "role_summary": "CEO",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 79539.0,
+      "avg_price": 9.42,
+      "total_value_usd": 749239.16,
+      "shares_owned_after": 299414.0,
+      "pct_increase": 36.17,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1770720/000114036126036089/0001140361-26-036089-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 21154.0,
+          "price_per_share": 9.11,
+          "total_value": 192712.94,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 21742.0,
+          "price_per_share": 9.35,
+          "total_value": 203287.7,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 36643.0,
+          "price_per_share": 9.64,
+          "total_value": 353238.52,
+          "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001140361-26-036090",
+      "ticker": "PRTS",
+      "issuer_name": "CarParts.com, Inc.",
+      "reporter_name": "Huffaker Michael",
+      "role_title": "COO",
+      "role_summary": "COO",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 79458.0,
+      "avg_price": 9.42,
+      "total_value_usd": 748462.1,
+      "shares_owned_after": 139560.0,
+      "pct_increase": 132.21,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1956633/000114036126036090/0001140361-26-036090-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 21160.0,
+          "price_per_share": 9.11,
+          "total_value": 192767.6,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 21718.0,
+          "price_per_share": 9.35,
+          "total_value": 203063.3,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 36580.0,
+          "price_per_share": 9.64,
+          "total_value": 352631.2,
+          "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-386771",
+      "ticker": "ENHA",
+      "issuer_name": "Enhanced Group Inc.",
+      "reporter_name": "Apeiron Investment Group Ltd.",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 179713.0,
+      "avg_price": 1.59,
+      "total_value_usd": 286348.78,
+      "shares_owned_after": 37263771.0,
+      "pct_increase": 0.48,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2132854/000119312526386771/0001193125-26-386771-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 21034.0,
+          "price_per_share": 1.61,
+          "total_value": 33898.39,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 59337.0,
+          "price_per_share": 1.57,
+          "total_value": 93076.02,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 99342.0,
+          "price_per_share": 1.6,
+          "total_value": 159374.37,
+          "trade_type": "BUY"
+        }
+      ]
+    },
+    {
       "accession_number": "0001837347-26-000003",
       "ticker": "DY",
       "issuer_name": "DYCOM INDUSTRIES INC",
@@ -117,6 +305,39 @@
           "shares": 850.0,
           "price_per_share": 296.76,
           "total_value": 252246.0,
+          "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000075288-26-000089",
+      "ticker": "OXM",
+      "issuer_name": "OXFORD INDUSTRIES INC",
+      "reporter_name": "Chubb Thomas Caldecot III",
+      "role_title": "CEO and President",
+      "role_summary": "CEO and President, Director",
+      "is_officer": true,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 3500.0,
+      "avg_price": 30.93,
+      "total_value_usd": 108268.3,
+      "shares_owned_after": 33700.0,
+      "pct_increase": 11.59,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1296939/000007528826000089/0000075288-26-000089-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3500.0,
+          "price_per_share": 30.93,
+          "total_value": 108268.3,
           "trade_type": "BUY"
         }
       ]
@@ -357,6 +578,39 @@
       ]
     },
     {
+      "accession_number": "0001184158-26-000016",
+      "ticker": "SBRA",
+      "issuer_name": "Sabra Health Care REIT, Inc.",
+      "reporter_name": "MATROS RICHARD K",
+      "role_title": "Chair, CEO and President",
+      "role_summary": "Chair, CEO and President, Director",
+      "is_officer": true,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 200000.0,
+      "avg_price": 20.83,
+      "total_value_usd": 4166000.0,
+      "shares_owned_after": 1657686.0,
+      "pct_increase": -10.77,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1492298/000118415826000016/0001184158-26-000016-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 200000.0,
+          "price_per_share": 20.83,
+          "total_value": 4166000.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001140361-26-035951",
       "ticker": "SUJA",
       "issuer_name": "SUJA LIFE, INC.",
@@ -558,6 +812,39 @@
           "price_per_share": 18.8,
           "total_value": 1033956.0,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001104659-26-106432",
+      "ticker": "TSLA",
+      "issuer_name": "Tesla, Inc.",
+      "reporter_name": "Taneja Vaibhav",
+      "role_title": "Chief Financial Officer",
+      "role_summary": "Chief Financial Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 2605.75,
+      "avg_price": 360.13,
+      "total_value_usd": 938419.17,
+      "shares_owned_after": 25972.25,
+      "pct_increase": -9.12,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1771340/000110465926106432/0001104659-26-106432-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 2605.75,
+          "price_per_share": 360.13,
+          "total_value": 938419.17,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -861,6 +1148,96 @@
           "shares": 1253.0,
           "price_per_share": 31.53,
           "total_value": 39507.09,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001171843-26-005964",
+      "ticker": "AGPU",
+      "issuer_name": "Axe Compute Inc.",
+      "reporter_name": "Zhu Theodore",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 8750.0,
+      "avg_price": 11.24,
+      "total_value_usd": 98325.0,
+      "shares_owned_after": 16314.0,
+      "pct_increase": 115.68,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2133026/000117184326005964/0001171843-26-005964-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 5000.0,
+          "price_per_share": 10.88,
+          "total_value": 54375.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 3750.0,
+          "price_per_share": 11.72,
+          "total_value": 43950.0,
+          "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001437749-26-030003",
+      "ticker": "GNRC",
+      "issuer_name": "GENERAC HOLDINGS INC.",
+      "reporter_name": "Taffe Norman P",
+      "role_title": "President Generac Home",
+      "role_summary": "President Generac Home",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 400.0,
+      "avg_price": 188.7,
+      "total_value_usd": 75481.0,
+      "shares_owned_after": 11276.0,
+      "pct_increase": -3.43,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1474735/000143774926030003/0001437749-26-030003-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 200.0,
+          "price_per_share": 188.27,
+          "total_value": 37654.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 100.0,
+          "price_per_share": 188.27,
+          "total_value": 18827.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 100.0,
+          "price_per_share": 190.0,
+          "total_value": 19000.0,
           "trade_type": "SELL"
         }
       ]
@@ -1266,6 +1643,39 @@
           "price_per_share": 305.74,
           "total_value": 220135.18,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001246215-26-000003",
+      "ticker": "SNOW",
+      "issuer_name": "Snowflake Inc.",
+      "reporter_name": "GARRETT MARK",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 50000.0,
+      "avg_price": 350.0,
+      "total_value_usd": 17500000.0,
+      "shares_owned_after": 10074.0,
+      "pct_increase": -83.23,
+      "transaction_date": "2026-09-04",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1640147/000124621526000003/0001246215-26-000003-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 50000.0,
+          "price_per_share": 350.0,
+          "total_value": 17500000.0,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -1766,6 +2176,143 @@
       ]
     },
     {
+      "accession_number": "0001177609-26-000035",
+      "ticker": "FIVE",
+      "issuer_name": "FIVE BELOW, INC",
+      "reporter_name": "BULL KENNETH R",
+      "role_title": "COO",
+      "role_summary": "COO",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 10510.0,
+      "avg_price": 248.06,
+      "total_value_usd": 2607113.33,
+      "shares_owned_after": 75064.0,
+      "pct_increase": -12.28,
+      "transaction_date": "2026-09-04",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1222399/000117760926000035/0001177609-26-000035-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 1500.0,
+          "price_per_share": 240.73,
+          "total_value": 361095.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 1130.0,
+          "price_per_share": 242.01,
+          "total_value": 273471.3,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 1564.0,
+          "price_per_share": 242.91,
+          "total_value": 379911.24,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 183.0,
+          "price_per_share": 243.93,
+          "total_value": 44639.19,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 168.0,
+          "price_per_share": 244.82,
+          "total_value": 41129.76,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 163.0,
+          "price_per_share": 246.07,
+          "total_value": 40109.41,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 403.0,
+          "price_per_share": 246.94,
+          "total_value": 99516.82,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 611.0,
+          "price_per_share": 247.9,
+          "total_value": 151466.9,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 82.0,
+          "price_per_share": 248.75,
+          "total_value": 20397.5,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 600.0,
+          "price_per_share": 249.98,
+          "total_value": 149988.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 186.0,
+          "price_per_share": 252.09,
+          "total_value": 46888.74,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 143.0,
+          "price_per_share": 252.9,
+          "total_value": 36164.7,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 1192.0,
+          "price_per_share": 253.96,
+          "total_value": 302720.32,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 2585.0,
+          "price_per_share": 255.17,
+          "total_value": 659614.45,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001684713-26-000003",
       "ticker": "RXT",
       "issuer_name": "Rackspace Technology, Inc.",
@@ -1827,6 +2374,47 @@
           "shares": 2203.0,
           "price_per_share": 532.08,
           "total_value": 1172177.97,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001177609-26-000034",
+      "ticker": "FIVE",
+      "issuer_name": "FIVE BELOW, INC",
+      "reporter_name": "DEVINE MICHAEL F III",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 4250.0,
+      "avg_price": 250.61,
+      "total_value_usd": 1065084.0,
+      "shares_owned_after": 12953.0,
+      "pct_increase": -24.7,
+      "transaction_date": "2026-09-04",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1238533/000117760926000034/0001177609-26-000034-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 3400.0,
+          "price_per_share": 250.44,
+          "total_value": 851496.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 850.0,
+          "price_per_share": 251.28,
+          "total_value": 213588.0,
           "trade_type": "SELL"
         }
       ]
@@ -2083,6 +2671,39 @@
           "price_per_share": 19.15,
           "total_value": 249620.25,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000829224-26-000135",
+      "ticker": "SBUX",
+      "issuer_name": "STARBUCKS CORP",
+      "reporter_name": "BREWER BRADY",
+      "role_title": "ceo, International",
+      "role_summary": "ceo, International",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 2229.0,
+      "avg_price": 105.6,
+      "total_value_usd": 235382.4,
+      "shares_owned_after": 73148.502,
+      "pct_increase": -2.96,
+      "transaction_date": "2026-09-04",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2018223/000082922426000135/0000829224-26-000135-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-04",
+          "shares": 2229.0,
+          "price_per_share": 105.6,
+          "total_value": 235382.4,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -3683,6 +4304,47 @@
       ]
     },
     {
+      "accession_number": "0001140361-26-036091",
+      "ticker": "PRTS",
+      "issuer_name": "CarParts.com, Inc.",
+      "reporter_name": "PHELPS BARRY",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 10000.0,
+      "avg_price": 6.48,
+      "total_value_usd": 64767.0,
+      "shares_owned_after": 43577.0,
+      "pct_increase": 29.78,
+      "transaction_date": "2026-08-25",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1378950/000114036126036091/0001140361-26-036091-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-08-20",
+          "shares": 100.0,
+          "price_per_share": 6.15,
+          "total_value": 615.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-08-25",
+          "shares": 9900.0,
+          "price_per_share": 6.48,
+          "total_value": 64152.0,
+          "trade_type": "BUY"
+        }
+      ]
+    },
+    {
       "accession_number": "0001557979-26-000008",
       "ticker": "AMZN",
       "issuer_name": "AMAZON COM INC",
@@ -4339,6 +5001,111 @@
           "price_per_share": 307.75,
           "total_value": 442852.25,
           "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001202557-26-000005",
+      "ticker": "CVSI",
+      "issuer_name": "CV Sciences, Inc.",
+      "reporter_name": "CHEEVER CHARLIE E III",
+      "role_title": "",
+      "role_summary": "10% Owner",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 5740816.0,
+      "avg_price": 0.02,
+      "total_value_usd": 114816.32,
+      "shares_owned_after": 26648711.0,
+      "pct_increase": 27.46,
+      "transaction_date": "2026-08-07",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1510964/000120255726000005/0001202557-26-000005-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-16",
+          "shares": 91387.0,
+          "price_per_share": 0.02,
+          "total_value": 1827.74,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-17",
+          "shares": 749000.0,
+          "price_per_share": 0.02,
+          "total_value": 14980.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-21",
+          "shares": 335000.0,
+          "price_per_share": 0.02,
+          "total_value": 6700.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-22",
+          "shares": 272500.0,
+          "price_per_share": 0.02,
+          "total_value": 5450.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-24",
+          "shares": 470075.0,
+          "price_per_share": 0.02,
+          "total_value": 9401.5,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-28",
+          "shares": 1830000.0,
+          "price_per_share": 0.02,
+          "total_value": 36600.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-29",
+          "shares": 60000.0,
+          "price_per_share": 0.02,
+          "total_value": 1200.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-07-31",
+          "shares": 1730000.0,
+          "price_per_share": 0.02,
+          "total_value": 34600.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-08-04",
+          "shares": 108000.0,
+          "price_per_share": 0.02,
+          "total_value": 2160.0,
+          "trade_type": "BUY"
+        },
+        {
+          "security_title": "Common Stock, $0.0001 par value per share",
+          "transaction_date": "2026-08-07",
+          "shares": 94854.0,
+          "price_per_share": 0.02,
+          "total_value": 1897.08,
+          "trade_type": "BUY"
         }
       ]
     },
@@ -13706,6 +14473,30 @@
       ]
     },
     {
+      "accession_number": "0001202557-26-000003",
+      "ticker": "CVSI",
+      "issuer_name": "CV Sciences, Inc.",
+      "reporter_name": "CHEEVER CHARLIE E III",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "단순투자 기관 (Schedule 13G)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 26648711.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 26648711.0,
+      "pct_increase": 13.1,
+      "transaction_date": "11/24/2024",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1510964/000120255726000003/0001202557-26-000003-index.htm",
+      "trade_type": "BUY",
+      "category": "13G",
+      "percent_of_class": 13.1,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": false,
+      "items": []
+    },
+    {
       "accession_number": "0000038777-26-000254",
       "ticker": "N/A",
       "issuer_name": "CLARION PARTNERS REAL ESTATE INCOME FUND INC.",
@@ -14210,6 +15001,30 @@
       "items": []
     },
     {
+      "accession_number": "0000950142-26-002532",
+      "ticker": "XTIA",
+      "issuer_name": "XTI Aerospace, Inc.",
+      "reporter_name": "Grossman Bruce",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "단순투자 기관 (Schedule 13G)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 2621433.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 2621433.0,
+      "pct_increase": 6.8,
+      "transaction_date": "09/02/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1638139/000095014226002532/0000950142-26-002532-index.htm",
+      "trade_type": "BUY",
+      "category": "13G",
+      "percent_of_class": 6.8,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": false,
+      "items": []
+    },
+    {
       "accession_number": "0001104659-26-105535",
       "ticker": "N/A",
       "issuer_name": "AMG Pantheon Infrastructure Fund, LLC",
@@ -14370,6 +15185,30 @@
       "pct_increase": 5.8,
       "transaction_date": "09/01/2026",
       "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2118509/000091228226001247/0000912282-26-001247-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 5.8,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": false,
+      "items": []
+    },
+    {
+      "accession_number": "0000912282-26-001255",
+      "ticker": "HELP",
+      "issuer_name": "Cybin Inc.",
+      "reporter_name": "So Eric H. L.",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 4423894.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 4423894.0,
+      "pct_increase": 5.8,
+      "transaction_date": "09/01/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2116526/000091228226001255/0000912282-26-001255-index.htm",
       "trade_type": "BUY",
       "category": "13D",
       "percent_of_class": 5.8,
@@ -14831,6 +15670,30 @@
       "percent_of_class": 0.0,
       "investor_type": "개인 대주주 (Individual)",
       "is_amendment": true,
+      "items": []
+    },
+    {
+      "accession_number": "0001753926-26-001737",
+      "ticker": "CDTTW",
+      "issuer_name": "CDT Equity Inc.",
+      "reporter_name": "Wigglesworth Craig Stuart",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "단순투자 기관 (Schedule 13G)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 1258042.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 1258042.0,
+      "pct_increase": 9.6,
+      "transaction_date": "07/30/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2154266/000175392626001737/0001753926-26-001737-index.htm",
+      "trade_type": "BUY",
+      "category": "13G",
+      "percent_of_class": 9.6,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": false,
       "items": []
     },
     {
