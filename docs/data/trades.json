@@ -1,11 +1,93 @@
 {
-  "last_updated": "2026-09-09T23:12:29.312993+00:00",
-  "usd_to_krw_rate": 1340.86,
-  "total_count": 311,
-  "total_volume_usd": 3077285128.39,
-  "total_buy_volume_usd": 75834655.88,
-  "total_sell_volume_usd": 3001450472.51,
+  "last_updated": "2026-09-10T21:38:05.015959+00:00",
+  "usd_to_krw_rate": 1339.0,
+  "total_count": 329,
+  "total_volume_usd": 3092029661.8,
+  "total_buy_volume_usd": 75889735.88,
+  "total_sell_volume_usd": 3016139925.92,
   "trades": [
+    {
+      "accession_number": "0001489550-26-000010",
+      "ticker": "LITE",
+      "issuer_name": "Lumentum Holdings Inc.",
+      "reporter_name": "Wupen Yuen",
+      "role_title": "PRESIDENT, GLOBAL BUS. UNITS",
+      "role_summary": "PRESIDENT, GLOBAL BUS. UNITS",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 1500.0,
+      "avg_price": 945.32,
+      "total_value_usd": 1417985.0,
+      "shares_owned_after": 114627.0,
+      "pct_increase": -1.29,
+      "transaction_date": "2026-09-10",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1633978/000148955026000010/0001489550-26-000010-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 500.0,
+          "price_per_share": 895.99,
+          "total_value": 447995.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 500.0,
+          "price_per_share": 978.54,
+          "total_value": 489270.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-10",
+          "shares": 500.0,
+          "price_per_share": 961.44,
+          "total_value": 480720.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001766478-26-000048",
+      "ticker": "AOMR",
+      "issuer_name": "Angel Oak Mortgage REIT, Inc.",
+      "reporter_name": "MINAMI W D",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 6800.0,
+      "avg_price": 8.1,
+      "total_value_usd": 55080.0,
+      "shares_owned_after": 87118.0,
+      "pct_increase": 8.47,
+      "transaction_date": "2026-09-10",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1766478/000176647826000048/0001766478-26-000048-index.htm",
+      "trade_type": "BUY",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-10",
+          "shares": 6800.0,
+          "price_per_share": 8.1,
+          "total_value": 55080.0,
+          "trade_type": "BUY"
+        }
+      ]
+    },
     {
       "accession_number": "0002123975-26-000011",
       "ticker": "BNTX",
@@ -48,6 +130,39 @@
       ]
     },
     {
+      "accession_number": "0001123292-26-001282",
+      "ticker": "ESTC",
+      "issuer_name": "Elastic N.V.",
+      "reporter_name": "Kulkarni Ashutosh",
+      "role_title": "Chief Executive Officer",
+      "role_summary": "Chief Executive Officer, Director",
+      "is_officer": true,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 29227.0,
+      "avg_price": 87.78,
+      "total_value_usd": 2565546.06,
+      "shares_owned_after": 599525.0,
+      "pct_increase": -4.65,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1829070/000112329226001282/0001123292-26-001282-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Ordinary Shares",
+          "transaction_date": "2026-09-09",
+          "shares": 29227.0,
+          "price_per_share": 87.78,
+          "total_value": 2565546.06,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001773914-26-000025",
       "ticker": "PINS",
       "issuer_name": "PINTEREST, INC.",
@@ -84,6 +199,283 @@
           "shares": 46875.0,
           "price_per_share": 20.04,
           "total_value": 939487.5,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001213900-26-098884",
+      "ticker": "LUNR",
+      "issuer_name": "Intuitive Machines, Inc.",
+      "reporter_name": "Ghaffarian Kamal Seyed",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 96304.0,
+      "avg_price": 15.41,
+      "total_value_usd": 1483831.62,
+      "shares_owned_after": 3494768.0,
+      "pct_increase": -2.68,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1965320/000121390026098884/0001213900-26-098884-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 93105.0,
+          "price_per_share": 15.39,
+          "total_value": 1433006.99,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 1501.0,
+          "price_per_share": 15.76,
+          "total_value": 23651.71,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1698.0,
+          "price_per_share": 16.0,
+          "total_value": 27172.92,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001628280-26-061413",
+      "ticker": "IBTA",
+      "issuer_name": "Ibotta, Inc.",
+      "reporter_name": "Leach Bryan",
+      "role_title": "CEO AND PRESIDENT",
+      "role_summary": "CEO AND PRESIDENT, Director, 10% Owner",
+      "is_officer": true,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 39103.0,
+      "avg_price": 37.71,
+      "total_value_usd": 1474472.51,
+      "shares_owned_after": 823886.0,
+      "pct_increase": -4.53,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1875168/000162828026061413/0001628280-26-061413-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 7503.0,
+          "price_per_share": 37.25,
+          "total_value": 279514.51,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 26497.0,
+          "price_per_share": 37.83,
+          "total_value": 1002394.76,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 5103.0,
+          "price_per_share": 37.74,
+          "total_value": 192563.24,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000900729-26-000017",
+      "ticker": "ADI",
+      "issuer_name": "ANALOG DEVICES INC",
+      "reporter_name": "STATA RAY",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 2832.0,
+      "avg_price": 363.32,
+      "total_value_usd": 1028915.39,
+      "shares_owned_after": 110263.0,
+      "pct_increase": -2.5,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/900729/000090072926000017/0000900729-26-000017-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-08",
+          "shares": 364.0,
+          "price_per_share": 361.26,
+          "total_value": 131497.8,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-08",
+          "shares": 462.0,
+          "price_per_share": 362.2,
+          "total_value": 167336.95,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-08",
+          "shares": 222.0,
+          "price_per_share": 363.38,
+          "total_value": 80669.67,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-08",
+          "shares": 200.0,
+          "price_per_share": 364.37,
+          "total_value": 72873.98,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-08",
+          "shares": 156.0,
+          "price_per_share": 365.51,
+          "total_value": 57019.83,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-08",
+          "shares": 12.0,
+          "price_per_share": 366.05,
+          "total_value": 4392.54,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-09",
+          "shares": 158.0,
+          "price_per_share": 361.93,
+          "total_value": 57184.66,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-09",
+          "shares": 369.0,
+          "price_per_share": 362.94,
+          "total_value": 133924.6,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-09",
+          "shares": 461.0,
+          "price_per_share": 363.9,
+          "total_value": 167759.88,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-09",
+          "shares": 356.0,
+          "price_per_share": 364.9,
+          "total_value": 129905.4,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Comm Stock - $.16-2/3 value",
+          "transaction_date": "2026-09-09",
+          "shares": 72.0,
+          "price_per_share": 365.97,
+          "total_value": 26350.08,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001123292-26-001279",
+      "ticker": "ESTC",
+      "issuer_name": "Elastic N.V.",
+      "reporter_name": "Dodds Mark Eugene",
+      "role_title": "Chief Revenue Officer",
+      "role_summary": "Chief Revenue Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 9673.0,
+      "avg_price": 87.78,
+      "total_value_usd": 849095.94,
+      "shares_owned_after": 288538.0,
+      "pct_increase": -3.24,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2003569/000112329226001279/0001123292-26-001279-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Ordinary Shares",
+          "transaction_date": "2026-09-09",
+          "shares": 9673.0,
+          "price_per_share": 87.78,
+          "total_value": 849095.94,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001123292-26-001278",
+      "ticker": "ESTC",
+      "issuer_name": "Elastic N.V.",
+      "reporter_name": "Welihinda Navam",
+      "role_title": "Chief Financial Officer",
+      "role_summary": "Chief Financial Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 8961.0,
+      "avg_price": 87.78,
+      "total_value_usd": 786596.58,
+      "shares_owned_after": 200293.0,
+      "pct_increase": -4.28,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1894706/000112329226001278/0001123292-26-001278-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Ordinary Shares",
+          "transaction_date": "2026-09-09",
+          "shares": 8961.0,
+          "price_per_share": 87.78,
+          "total_value": 786596.58,
           "trade_type": "SELL"
         }
       ]
@@ -228,6 +620,80 @@
       ]
     },
     {
+      "accession_number": "0001225208-26-007731",
+      "ticker": "TPR",
+      "issuer_name": "TAPESTRY, INC.",
+      "reporter_name": "Kulikowsky Denise",
+      "role_title": "Chief People Officer",
+      "role_summary": "Chief People Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 5810.0,
+      "avg_price": 115.38,
+      "total_value_usd": 670329.24,
+      "shares_owned_after": 21136.0,
+      "pct_increase": -21.56,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1808278/000122520826007731/0001225208-26-007731-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2191.0,
+          "price_per_share": 115.4,
+          "total_value": 252841.4,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3619.0,
+          "price_per_share": 115.36,
+          "total_value": 417487.84,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001123292-26-001280",
+      "ticker": "ESTC",
+      "issuer_name": "Elastic N.V.",
+      "reporter_name": "Herzog Carolyn",
+      "role_title": "Chief Legal Officer",
+      "role_summary": "Chief Legal Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 5485.0,
+      "avg_price": 87.78,
+      "total_value_usd": 481473.3,
+      "shares_owned_after": 112954.0,
+      "pct_increase": -4.63,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1927549/000112329226001280/0001123292-26-001280-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Ordinary Shares",
+          "transaction_date": "2026-09-09",
+          "shares": 5485.0,
+          "price_per_share": 87.78,
+          "total_value": 481473.3,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001193125-26-386771",
       "ticker": "ENHA",
       "issuer_name": "Enhanced Group Inc.",
@@ -310,6 +776,105 @@
       ]
     },
     {
+      "accession_number": "0000320187-26-000163",
+      "ticker": "NKE",
+      "issuer_name": "NIKE, Inc.",
+      "reporter_name": "Alagirisamy Venkatesh",
+      "role_title": "EVP: CHIEF OPERATING OFFICER",
+      "role_summary": "EVP: CHIEF OPERATING OFFICER",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 3671.0,
+      "avg_price": 37.59,
+      "total_value_usd": 137992.89,
+      "shares_owned_after": 104861.9272,
+      "pct_increase": -3.38,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2101296/000032018726000163/0000320187-26-000163-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class B Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3671.0,
+          "price_per_share": 37.59,
+          "total_value": 137992.89,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000320187-26-000165",
+      "ticker": "NKE",
+      "issuer_name": "NIKE, Inc.",
+      "reporter_name": "Leinwand Robert",
+      "role_title": "EVP: Chief Legal Officer",
+      "role_summary": "EVP: Chief Legal Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 3646.0,
+      "avg_price": 37.59,
+      "total_value_usd": 137053.14,
+      "shares_owned_after": 87758.159,
+      "pct_increase": -3.99,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2044264/000032018726000165/0000320187-26-000165-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class B Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3646.0,
+          "price_per_share": 37.59,
+          "total_value": 137053.14,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001123292-26-001281",
+      "ticker": "ESTC",
+      "issuer_name": "Elastic N.V.",
+      "reporter_name": "Bone Jane E",
+      "role_title": "GVP & CAO",
+      "role_summary": "GVP & CAO",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 1542.0,
+      "avg_price": 87.78,
+      "total_value_usd": 135356.76,
+      "shares_owned_after": 47697.0,
+      "pct_increase": -3.13,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1707753/000112329226001281/0001123292-26-001281-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Ordinary Shares",
+          "transaction_date": "2026-09-09",
+          "shares": 1542.0,
+          "price_per_share": 87.78,
+          "total_value": 135356.76,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0000075288-26-000089",
       "ticker": "OXM",
       "issuer_name": "OXFORD INDUSTRIES INC",
@@ -339,6 +904,72 @@
           "price_per_share": 30.93,
           "total_value": 108268.3,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000320187-26-000167",
+      "ticker": "NKE",
+      "issuer_name": "NIKE, Inc.",
+      "reporter_name": "McCartney Philip",
+      "role_title": "EVP: CHIEF INN,PROD&DSG OFCR",
+      "role_summary": "EVP: CHIEF INN,PROD&DSG OFCR",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 2559.0,
+      "avg_price": 37.59,
+      "total_value_usd": 96192.81,
+      "shares_owned_after": 78120.9272,
+      "pct_increase": -3.17,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2074830/000032018726000167/0000320187-26-000167-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class B Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2559.0,
+          "price_per_share": 37.59,
+          "total_value": 96192.81,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001745268-26-000008",
+      "ticker": "BWB",
+      "issuer_name": "Bridgewater Bancshares Inc",
+      "reporter_name": "Parish Douglas J.",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 4000.0,
+      "avg_price": 21.38,
+      "total_value_usd": 85536.0,
+      "shares_owned_after": 4107.0,
+      "pct_increase": -49.34,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1745268/000174526826000008/0001745268-26-000008-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 4000.0,
+          "price_per_share": 21.38,
+          "total_value": 85536.0,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -656,6 +1287,55 @@
           "price_per_share": 9.9,
           "total_value": 495000.0,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000105770-26-000108",
+      "ticker": "WST",
+      "issuer_name": "WEST PHARMACEUTICAL SERVICES INC",
+      "reporter_name": "Favorite Annette F",
+      "role_title": "Sr. VP & Chief HR Officer",
+      "role_summary": "Sr. VP & Chief HR Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 8135.0,
+      "avg_price": 340.81,
+      "total_value_usd": 2772489.35,
+      "shares_owned_after": 16844.5548,
+      "pct_increase": -32.57,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1654975/000010577026000108/0000105770-26-000108-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 2817.0,
+          "price_per_share": 340.81,
+          "total_value": 960061.77,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 2818.0,
+          "price_per_share": 340.81,
+          "total_value": 960402.58,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 2500.0,
+          "price_per_share": 340.81,
+          "total_value": 852025.0,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -1047,6 +1727,39 @@
       ]
     },
     {
+      "accession_number": "0001464521-26-000143",
+      "ticker": "HTFL",
+      "issuer_name": "Heartflow, Inc.",
+      "reporter_name": "Verghese Vikram",
+      "role_title": "Chief Financial Officer",
+      "role_summary": "Chief Financial Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 6640.0,
+      "avg_price": 50.03,
+      "total_value_usd": 332211.82,
+      "shares_owned_after": 214503.0,
+      "pct_increase": -3.0,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2079946/000146452126000143/0001464521-26-000143-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock.",
+          "transaction_date": "2026-09-08",
+          "shares": 6640.0,
+          "price_per_share": 50.03,
+          "total_value": 332211.82,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001213900-26-098153",
       "ticker": "KRT",
       "issuer_name": "Karat Packaging Inc.",
@@ -1083,6 +1796,39 @@
           "shares": 2000.0,
           "price_per_share": 48.5,
           "total_value": 97000.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001817425-26-000012",
+      "ticker": "HOOD",
+      "issuer_name": "Robinhood Markets, Inc.",
+      "reporter_name": "Treseder Oluwadara Johnson",
+      "role_title": "",
+      "role_summary": "Director",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 1875.0,
+      "avg_price": 125.0,
+      "total_value_usd": 234375.0,
+      "shares_owned_after": 70567.0,
+      "pct_increase": -2.59,
+      "transaction_date": "2026-09-08",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1817425/000181742526000012/0001817425-26-000012-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-08",
+          "shares": 1875.0,
+          "price_per_share": 125.0,
+          "total_value": 234375.0,
           "trade_type": "SELL"
         }
       ]
