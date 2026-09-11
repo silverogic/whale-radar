@@ -1,11 +1,52 @@
 {
-  "last_updated": "2026-09-11T21:36:33.811732+00:00",
+  "last_updated": "2026-09-11T23:11:59.408096+00:00",
   "usd_to_krw_rate": 1345.06,
-  "total_count": 394,
-  "total_volume_usd": 3184064638.19,
+  "total_count": 413,
+  "total_volume_usd": 3401868515.49,
   "total_buy_volume_usd": 107206609.84,
-  "total_sell_volume_usd": 3076858028.35,
+  "total_sell_volume_usd": 3294661905.65,
   "trades": [
+    {
+      "accession_number": "0001104659-26-107145",
+      "ticker": "HGTY",
+      "issuer_name": "Hagerty, Inc.",
+      "reporter_name": "Hagerty Holding Corp.",
+      "role_title": "",
+      "role_summary": "10% Owner",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 10637500.0,
+      "avg_price": 11.47,
+      "total_value_usd": 122033400.0,
+      "shares_owned_after": 0.0,
+      "pct_increase": -100.0,
+      "transaction_date": "2026-09-11",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1899295/000110465926107145/0001104659-26-107145-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 9250000.0,
+          "price_per_share": 11.47,
+          "total_value": 106116000.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 1387500.0,
+          "price_per_share": 11.47,
+          "total_value": 15917400.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
     {
       "accession_number": "0001543895-26-000004",
       "ticker": "CG",
@@ -40,6 +81,88 @@
       ]
     },
     {
+      "accession_number": "0001884996-26-000023",
+      "ticker": "LTH",
+      "issuer_name": "Life Time Group Holdings, Inc.",
+      "reporter_name": "Singh Ritadhwaja Jebens",
+      "role_title": "EVP & CHIEF DIGITAL OFFICER",
+      "role_summary": "EVP & CHIEF DIGITAL OFFICER",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 173641.0,
+      "avg_price": 42.0,
+      "total_value_usd": 7293661.8,
+      "shares_owned_after": 138351.0,
+      "pct_increase": -55.66,
+      "transaction_date": "2026-09-11",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1884996/000188499626000023/0001884996-26-000023-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 18729.0,
+          "price_per_share": 42.04,
+          "total_value": 787357.8,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 154912.0,
+          "price_per_share": 42.0,
+          "total_value": 6506304.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001873905-26-000002",
+      "ticker": "CADL",
+      "issuer_name": "Candel Therapeutics, Inc.",
+      "reporter_name": "Tak Paul Peter",
+      "role_title": "Chief Executive Officer",
+      "role_summary": "Chief Executive Officer, Director",
+      "is_officer": true,
+      "is_director": true,
+      "is_ten_percent": false,
+      "total_shares": 280245.0,
+      "avg_price": 11.28,
+      "total_value_usd": 3160783.32,
+      "shares_owned_after": 113321.0,
+      "pct_increase": -71.21,
+      "transaction_date": "2026-09-11",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1873905/000187390526000002/0001873905-26-000002-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-10",
+          "shares": 220866.0,
+          "price_per_share": 11.5,
+          "total_value": 2539892.74,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 59379.0,
+          "price_per_share": 10.46,
+          "total_value": 620890.58,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001193125-26-389433",
       "ticker": "CXW",
       "issuer_name": "CoreCivic, Inc.",
@@ -68,6 +191,103 @@
           "shares": 20000.0,
           "price_per_share": 34.85,
           "total_value": 697000.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000804328-26-000094",
+      "ticker": "QCOM",
+      "issuer_name": "QUALCOMM INC/DE",
+      "reporter_name": "Palkhiwala Akash J.",
+      "role_title": "EVP, CFO & COO",
+      "role_summary": "EVP, CFO & COO",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 2500.0,
+      "avg_price": 182.85,
+      "total_value_usd": 457129.03,
+      "shares_owned_after": 18184.0,
+      "pct_increase": -12.09,
+      "transaction_date": "2026-09-11",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1786420/000080432826000094/0000804328-26-000094-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 32.0,
+          "price_per_share": 177.62,
+          "total_value": 5683.74,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 36.0,
+          "price_per_share": 178.63,
+          "total_value": 6430.71,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 48.0,
+          "price_per_share": 179.76,
+          "total_value": 8628.54,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 82.0,
+          "price_per_share": 180.87,
+          "total_value": 14831.39,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 696.0,
+          "price_per_share": 181.89,
+          "total_value": 126595.79,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 508.0,
+          "price_per_share": 182.69,
+          "total_value": 92808.4,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 739.0,
+          "price_per_share": 183.84,
+          "total_value": 135860.94,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 347.0,
+          "price_per_share": 184.63,
+          "total_value": 64065.74,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Common Stock",
+          "transaction_date": "2026-09-11",
+          "shares": 12.0,
+          "price_per_share": 185.31,
+          "total_value": 2223.78,
           "trade_type": "SELL"
         }
       ]
@@ -661,6 +881,554 @@
           "price_per_share": 8.1,
           "total_value": 55080.0,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-389498",
+      "ticker": "DELL",
+      "issuer_name": "Dell Technologies Inc.",
+      "reporter_name": "Silver Lake Partners IV, L.P.",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 54608.0,
+      "avg_price": 540.18,
+      "total_value_usd": 29498148.67,
+      "shares_owned_after": 1397035.0,
+      "pct_increase": -3.76,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1672568/000119312526389498/0001193125-26-389498-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 247.0,
+          "price_per_share": 534.09,
+          "total_value": 131920.23,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 8484.0,
+          "price_per_share": 535.13,
+          "total_value": 4540042.92,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 7301.0,
+          "price_per_share": 535.97,
+          "total_value": 3913116.97,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 5402.0,
+          "price_per_share": 536.89,
+          "total_value": 2900279.78,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2363.0,
+          "price_per_share": 538.03,
+          "total_value": 1271364.89,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 744.0,
+          "price_per_share": 538.63,
+          "total_value": 400740.72,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2613.0,
+          "price_per_share": 540.56,
+          "total_value": 1412483.28,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1382.0,
+          "price_per_share": 541.33,
+          "total_value": 748118.06,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 4733.0,
+          "price_per_share": 542.47,
+          "total_value": 2567510.51,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3683.0,
+          "price_per_share": 543.5,
+          "total_value": 2001710.5,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 7630.0,
+          "price_per_share": 544.42,
+          "total_value": 4153924.6,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3283.0,
+          "price_per_share": 545.4,
+          "total_value": 1790548.2,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2410.0,
+          "price_per_share": 546.53,
+          "total_value": 1317137.3,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1423.0,
+          "price_per_share": 547.31,
+          "total_value": 778822.13,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 558.0,
+          "price_per_share": 548.78,
+          "total_value": 306219.24,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 167.0,
+          "price_per_share": 549.74,
+          "total_value": 91806.58,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 285.0,
+          "price_per_share": 550.71,
+          "total_value": 156952.35,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 600.0,
+          "price_per_share": 533.7,
+          "total_value": 320220.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1057.0,
+          "price_per_share": 534.63,
+          "total_value": 565103.91,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 243.0,
+          "price_per_share": 535.5,
+          "total_value": 130126.5,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-389488",
+      "ticker": "DELL",
+      "issuer_name": "Dell Technologies Inc.",
+      "reporter_name": "SL SPV-2, L.P.",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 48097.0,
+      "avg_price": 540.39,
+      "total_value_usd": 25990973.77,
+      "shares_owned_after": 47386.0,
+      "pct_increase": -50.37,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1767116/000119312526389488/0001193125-26-389488-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 226.0,
+          "price_per_share": 534.09,
+          "total_value": 120704.34,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 7742.0,
+          "price_per_share": 535.13,
+          "total_value": 4142976.46,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 6662.0,
+          "price_per_share": 535.97,
+          "total_value": 3570632.14,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 4929.0,
+          "price_per_share": 536.89,
+          "total_value": 2646330.81,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2157.0,
+          "price_per_share": 538.03,
+          "total_value": 1160530.71,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 679.0,
+          "price_per_share": 538.63,
+          "total_value": 365729.77,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2384.0,
+          "price_per_share": 540.56,
+          "total_value": 1288695.04,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1261.0,
+          "price_per_share": 541.33,
+          "total_value": 682617.13,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 4319.0,
+          "price_per_share": 542.47,
+          "total_value": 2342927.93,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3360.0,
+          "price_per_share": 543.5,
+          "total_value": 1826160.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 6962.0,
+          "price_per_share": 544.42,
+          "total_value": 3790252.04,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2996.0,
+          "price_per_share": 545.4,
+          "total_value": 1634018.4,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2199.0,
+          "price_per_share": 546.53,
+          "total_value": 1201819.47,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1299.0,
+          "price_per_share": 547.31,
+          "total_value": 710955.69,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 509.0,
+          "price_per_share": 548.78,
+          "total_value": 279329.02,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 153.0,
+          "price_per_share": 549.74,
+          "total_value": 84110.22,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 260.0,
+          "price_per_share": 550.71,
+          "total_value": 143184.6,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-389503",
+      "ticker": "DELL",
+      "issuer_name": "Dell Technologies Inc.",
+      "reporter_name": "Silver Lake Partners V DE (AIV), L.P.",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 27629.0,
+      "avg_price": 540.39,
+      "total_value_usd": 14930330.17,
+      "shares_owned_after": 24488.0,
+      "pct_increase": -53.01,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1737659/000119312526389503/0001193125-26-389503-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 130.0,
+          "price_per_share": 534.09,
+          "total_value": 69431.7,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 4447.0,
+          "price_per_share": 535.13,
+          "total_value": 2379723.11,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3827.0,
+          "price_per_share": 535.97,
+          "total_value": 2051157.19,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2832.0,
+          "price_per_share": 536.89,
+          "total_value": 1520472.48,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1239.0,
+          "price_per_share": 538.03,
+          "total_value": 666619.17,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 390.0,
+          "price_per_share": 538.63,
+          "total_value": 210065.7,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1370.0,
+          "price_per_share": 540.56,
+          "total_value": 740567.2,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 725.0,
+          "price_per_share": 541.33,
+          "total_value": 392464.25,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2481.0,
+          "price_per_share": 542.47,
+          "total_value": 1345868.07,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1930.0,
+          "price_per_share": 543.5,
+          "total_value": 1048955.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3999.0,
+          "price_per_share": 544.42,
+          "total_value": 2177135.58,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1721.0,
+          "price_per_share": 545.4,
+          "total_value": 938633.4,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1263.0,
+          "price_per_share": 546.53,
+          "total_value": 690267.39,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 746.0,
+          "price_per_share": 547.31,
+          "total_value": 408293.26,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 292.0,
+          "price_per_share": 548.78,
+          "total_value": 160243.76,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 88.0,
+          "price_per_share": 549.74,
+          "total_value": 48377.12,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 149.0,
+          "price_per_share": 550.71,
+          "total_value": 82055.79,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0000950103-26-013860",
+      "ticker": "META",
+      "issuer_name": "Meta Platforms, Inc.",
+      "reporter_name": "Cox Christopher K",
+      "role_title": "Chief Product Officer",
+      "role_summary": "Chief Product Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 20000.0,
+      "avg_price": 650.28,
+      "total_value_usd": 13005575.12,
+      "shares_owned_after": 244516.0,
+      "pct_increase": -7.56,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1607459/000095010326013860/0000950103-26-013860-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 18578.0,
+          "price_per_share": 650.21,
+          "total_value": 12079640.39,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1422.0,
+          "price_per_share": 651.15,
+          "total_value": 925934.73,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -1393,6 +2161,167 @@
       ]
     },
     {
+      "accession_number": "0001193125-26-389502",
+      "ticker": "DELL",
+      "issuer_name": "Dell Technologies Inc.",
+      "reporter_name": "Silver Lake Technology Investors IV, L.P.",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 1075.0,
+      "avg_price": 540.38,
+      "total_value_usd": 580907.74,
+      "shares_owned_after": 0.0,
+      "pct_increase": -100.0,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1672568/000119312526389502/0001193125-26-389502-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 5.0,
+          "price_per_share": 534.09,
+          "total_value": 2670.45,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 174.0,
+          "price_per_share": 535.13,
+          "total_value": 93112.62,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 149.0,
+          "price_per_share": 535.97,
+          "total_value": 79859.53,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 110.0,
+          "price_per_share": 536.89,
+          "total_value": 59057.9,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 48.0,
+          "price_per_share": 538.03,
+          "total_value": 25825.44,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 15.0,
+          "price_per_share": 538.63,
+          "total_value": 8079.45,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 53.0,
+          "price_per_share": 540.56,
+          "total_value": 28649.68,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 28.0,
+          "price_per_share": 541.33,
+          "total_value": 15157.24,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 97.0,
+          "price_per_share": 542.47,
+          "total_value": 52619.59,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 75.0,
+          "price_per_share": 543.5,
+          "total_value": 40762.5,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 156.0,
+          "price_per_share": 544.42,
+          "total_value": 84929.52,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 67.0,
+          "price_per_share": 545.4,
+          "total_value": 36541.8,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 49.0,
+          "price_per_share": 546.53,
+          "total_value": 26779.97,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 29.0,
+          "price_per_share": 547.31,
+          "total_value": 15871.99,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 11.0,
+          "price_per_share": 548.78,
+          "total_value": 6036.58,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3.0,
+          "price_per_share": 549.74,
+          "total_value": 1649.22,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 6.0,
+          "price_per_share": 550.71,
+          "total_value": 3304.26,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001123292-26-001280",
       "ticker": "ESTC",
       "issuer_name": "Elastic N.V.",
@@ -1492,6 +2421,47 @@
       ]
     },
     {
+      "accession_number": "0002057569-26-000038",
+      "ticker": "RNG",
+      "issuer_name": "RingCentral, Inc.",
+      "reporter_name": "Arora Tarun",
+      "role_title": "Chief Accounting Officer",
+      "role_summary": "Chief Accounting Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 4172.0,
+      "avg_price": 70.36,
+      "total_value_usd": 293549.79,
+      "shares_owned_after": 65692.0,
+      "pct_increase": -5.97,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/2057569/000205756926000038/0002057569-26-000038-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 1493.0,
+          "price_per_share": 69.69,
+          "total_value": 104042.69,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2679.0,
+          "price_per_share": 70.74,
+          "total_value": 189507.1,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
       "accession_number": "0001193125-26-386771",
       "ticker": "ENHA",
       "issuer_name": "Enhanced Group Inc.",
@@ -1537,6 +2507,167 @@
           "price_per_share": 1.6,
           "total_value": 159374.37,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-389501",
+      "ticker": "DELL",
+      "issuer_name": "Dell Technologies Inc.",
+      "reporter_name": "Silver Lake Technology Investors V, L.P.",
+      "role_title": "",
+      "role_summary": "Director, 10% Owner",
+      "is_officer": false,
+      "is_director": true,
+      "is_ten_percent": true,
+      "total_shares": 486.0,
+      "avg_price": 540.4,
+      "total_value_usd": 262633.89,
+      "shares_owned_after": 0.0,
+      "pct_increase": -100.0,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1737657/000119312526389501/0001193125-26-389501-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2.0,
+          "price_per_share": 534.09,
+          "total_value": 1068.18,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 78.0,
+          "price_per_share": 535.13,
+          "total_value": 41740.14,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 67.0,
+          "price_per_share": 535.97,
+          "total_value": 35909.99,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 50.0,
+          "price_per_share": 536.89,
+          "total_value": 26844.5,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 22.0,
+          "price_per_share": 538.03,
+          "total_value": 11836.66,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 7.0,
+          "price_per_share": 538.63,
+          "total_value": 3770.41,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 24.0,
+          "price_per_share": 540.56,
+          "total_value": 12973.44,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 13.0,
+          "price_per_share": 541.33,
+          "total_value": 7037.29,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 44.0,
+          "price_per_share": 542.47,
+          "total_value": 23868.68,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 34.0,
+          "price_per_share": 543.5,
+          "total_value": 18479.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 70.0,
+          "price_per_share": 544.42,
+          "total_value": 38109.4,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 30.0,
+          "price_per_share": 545.4,
+          "total_value": 16362.0,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 22.0,
+          "price_per_share": 546.53,
+          "total_value": 12023.66,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 13.0,
+          "price_per_share": 547.31,
+          "total_value": 7115.03,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 5.0,
+          "price_per_share": 548.78,
+          "total_value": 2743.9,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 2.0,
+          "price_per_share": 549.74,
+          "total_value": 1099.48,
+          "trade_type": "SELL"
+        },
+        {
+          "security_title": "Class C Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 3.0,
+          "price_per_share": 550.71,
+          "total_value": 1652.13,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -1850,6 +2981,39 @@
           "price_per_share": 30.93,
           "total_value": 108268.3,
           "trade_type": "BUY"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001193125-26-389523",
+      "ticker": "SNAP",
+      "issuer_name": "Snap Inc",
+      "reporter_name": "Morrow Rebecca",
+      "role_title": "Chief Accounting Officer",
+      "role_summary": "Chief Accounting Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 20000.0,
+      "avg_price": 5.35,
+      "total_value_usd": 106984.0,
+      "shares_owned_after": 578105.0,
+      "pct_increase": -3.34,
+      "transaction_date": "2026-09-09",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1727396/000119312526389523/0001193125-26-389523-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-09-09",
+          "shares": 20000.0,
+          "price_per_share": 5.35,
+          "total_value": 106984.0,
+          "trade_type": "SELL"
         }
       ]
     },
@@ -7033,6 +8197,39 @@
           "shares": 400.0,
           "price_per_share": 265.09,
           "total_value": 106037.0,
+          "trade_type": "SELL"
+        }
+      ]
+    },
+    {
+      "accession_number": "0001922054-26-000005",
+      "ticker": "SMR",
+      "issuer_name": "NUSCALE POWER Corp",
+      "reporter_name": "Hamady Robert Ramsey",
+      "role_title": "Chief Financial Officer",
+      "role_summary": "Chief Financial Officer",
+      "is_officer": true,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 20000.0,
+      "avg_price": 9.49,
+      "total_value_usd": 189800.0,
+      "shares_owned_after": 97192.0,
+      "pct_increase": -17.07,
+      "transaction_date": "2026-08-17",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1922054/000192205426000005/0001922054-26-000005-index.htm",
+      "trade_type": "SELL",
+      "category": "INSIDER",
+      "percent_of_class": null,
+      "investor_type": null,
+      "is_amendment": false,
+      "items": [
+        {
+          "security_title": "Class A Common Stock",
+          "transaction_date": "2026-08-17",
+          "shares": 20000.0,
+          "price_per_share": 9.49,
+          "total_value": 189800.0,
           "trade_type": "SELL"
         }
       ]
@@ -16707,6 +17904,30 @@
       "items": []
     },
     {
+      "accession_number": "0001193125-26-389440",
+      "ticker": "AMH-PH",
+      "issuer_name": "American Homes 4 Rent",
+      "reporter_name": "Tamara Hughes Gustavson",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 21470284.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 21470284.0,
+      "pct_increase": 5.98,
+      "transaction_date": "09/11/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1562401/000119312526389440/0001193125-26-389440-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 5.98,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": false,
+      "items": []
+    },
+    {
       "accession_number": "0000921895-26-002530",
       "ticker": "GME-WT",
       "issuer_name": "GameStop Corp.",
@@ -16803,6 +18024,54 @@
       "items": []
     },
     {
+      "accession_number": "0000895345-26-000408",
+      "ticker": "GREEL",
+      "issuer_name": "Vulcan Infrastructure and Power Inc.",
+      "reporter_name": "Conversant PIF VIP Holdco LLC",
+      "role_title": "기타 기관 (Other)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 3479532.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 3479532.0,
+      "pct_increase": 9.8,
+      "transaction_date": "09/10/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1850901/000089534526000408/0000895345-26-000408-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 9.8,
+      "investor_type": "기타 기관 (Other)",
+      "is_amendment": false,
+      "items": []
+    },
+    {
+      "accession_number": "0000921895-26-002536",
+      "ticker": "UEIC",
+      "issuer_name": "UNIVERSAL ELECTRONICS INC",
+      "reporter_name": "Singer Eric",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D (정정/수정))",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": false,
+      "total_shares": 1288357.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 1288357.0,
+      "pct_increase": 9.2,
+      "transaction_date": "09/10/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1970265/000092189526002536/0000921895-26-002536-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 9.2,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": true,
+      "items": []
+    },
+    {
       "accession_number": "0001213900-26-098810",
       "ticker": "FTW-WT",
       "issuer_name": "PRESIDIO PRODUCTION Co",
@@ -16847,6 +18116,54 @@
       "category": "13D",
       "percent_of_class": 6.4,
       "investor_type": "지주회사 (Parent Holding Company)",
+      "is_amendment": true,
+      "items": []
+    },
+    {
+      "accession_number": "0001193125-26-389485",
+      "ticker": "DELL",
+      "issuer_name": "Dell Technologies Inc.",
+      "reporter_name": "Silver Lake Group, L.L.C.",
+      "role_title": "기타 기관 (Other)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D (정정/수정))",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 42809317.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 42809317.0,
+      "pct_increase": 11.9,
+      "transaction_date": "09/09/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1571996/000119312526389485/0001193125-26-389485-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 11.9,
+      "investor_type": "기타 기관 (Other)",
+      "is_amendment": true,
+      "items": []
+    },
+    {
+      "accession_number": "0001104659-26-107138",
+      "ticker": "HGTY",
+      "issuer_name": "Hagerty, Inc.",
+      "reporter_name": "HAGERTY HOLDING CORP.",
+      "role_title": "일반법인 (Corporation)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D (정정/수정))",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 155914656.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 155914656.0,
+      "pct_increase": 56.5,
+      "transaction_date": "09/09/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1899295/000110465926107138/0001104659-26-107138-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 56.5,
+      "investor_type": "일반법인 (Corporation)",
       "is_amendment": true,
       "items": []
     },
@@ -17974,6 +19291,30 @@
       "trade_type": "BUY",
       "category": "13D",
       "percent_of_class": 5.8,
+      "investor_type": "개인 대주주 (Individual)",
+      "is_amendment": false,
+      "items": []
+    },
+    {
+      "accession_number": "0001640334-26-001508",
+      "ticker": "GPOX",
+      "issuer_name": "GPO Plus, Inc.",
+      "reporter_name": "Brett H. Pojunis",
+      "role_title": "개인 대주주 (Individual)",
+      "role_summary": "행동주의/경영참여 기관 (Schedule 13D)",
+      "is_officer": false,
+      "is_director": false,
+      "is_ten_percent": true,
+      "total_shares": 14437500.0,
+      "avg_price": 0.0,
+      "total_value_usd": 0.0,
+      "shares_owned_after": 14437500.0,
+      "pct_increase": 12.69,
+      "transaction_date": "09/01/2026",
+      "sec_form4_url": "https://www.sec.gov/Archives/edgar/data/1713173/000164033426001508/0001640334-26-001508-index.htm",
+      "trade_type": "BUY",
+      "category": "13D",
+      "percent_of_class": 12.69,
       "investor_type": "개인 대주주 (Individual)",
       "is_amendment": false,
       "items": []
